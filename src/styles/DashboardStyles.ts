@@ -23,7 +23,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   salaryList: {
-    maxHeight: heightPercentageToDP(80),
+    minHeight: heightPercentageToDP(74),
+    height: heightPercentageToDP(74),
+    maxHeight: heightPercentageToDP(74),
     marginHorizontal: FONT_SIZE,
   },
   balanceFooter: {

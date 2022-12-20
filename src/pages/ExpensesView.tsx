@@ -10,6 +10,8 @@ import useSalaryRecordStore from '../stores/SalaryStore';
 import ExpensesViewStyles from '../styles/ExpensesViewStyles';
 import SalaryItem from '../components/SalaryItem';
 import ExpenseItem from '../components/ExpenseItem';
+import BalanceView from '../components/BalanceView';
+import NoResultsView from '../components/NoResultsView';
 
 const styles = ExpensesViewStyles;
 
@@ -78,47 +80,17 @@ const ExpensesViewPage = ({navigation, route}) => {
           <SalaryItem {...salaryRecord} />
         </View>
       )}
-      {(expenseList && expenseList.length < 1) || !expenseList ? (
-        <View style={styles.noResultsContainer}>
-          <Text style={styles.noResultsText}>
-            No expenses found for salary record.
-          </Text>
-        </View>
-      ) : null}
       <FlatList
         data={expenseList}
-        renderItem={({item}) => {
-          /*
-            <Card style={styles.expenseItem}>
-              <View style={styles.expenseItemInnerContainer}>
-                <View style={styles.expenseDetails}>
-                  <Text>{item.description}</Text>
-                  <Text>{item.accounting_date}</Text>
-                </View>
-                <View style={styles.expenseAmount}>
-                  <Text>{item.amount}</Text>
-                </View>
-              </View>
-            </Card>
-          */
-          return <ExpenseItem {...item} navigation={navigation} />;
-        }}
+        renderItem={({item}) => (<ExpenseItem {...item} navigation={navigation} />)
+        }
         keyExtractor={(item, index) => `expense-item-${item.id}-${index}`}
         onScrollBeginDrag={onScrollStart}
         onScrollEndDrag={onScrollEnd}
+        ListEmptyComponent={<NoResultsView message="No expenses found for salary record." />}
         style={styles.expensesList}
       />
-      <View style={styles.balanceFooter}>
-        <Text>Balance:</Text>
-        <Text
-          style={
-            balance > 0
-              ? styles.balanceFooterAmountPositive
-              : styles.balanceFooterAmountNegative
-          }>
-          {balance.toFixed(2)}
-        </Text>
-      </View>
+      <BalanceView balance={balance} />
       {!isScrolling ? (
         <FAB
           icon="cash-plus"

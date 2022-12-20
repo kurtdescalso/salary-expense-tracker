@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     // marginBottom: FONT_SIZE / 8,
   },
   expensesList: {
-    maxHeight: heightPercentageToDP(67.5),
+    maxHeight: heightPercentageToDP(62.5),
     marginHorizontal: FONT_SIZE,
     // marginVertical: FONT_SIZE / 8,
   },
@@ -43,13 +43,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'flex-end',
-  },
-  balanceFooter: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingHorizontal: FONT_SIZE * 2,
-    paddingVertical: FONT_SIZE,
   },
   balanceFooterAmountPositive: {
     color: 'green',

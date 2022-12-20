@@ -5,6 +5,7 @@ import {FONT_SIZE} from '../constants';
 const styles = StyleSheet.create({
   mainContainer: {
     marginVertical: FONT_SIZE / 2,
+    maxHeight: heightPercentageToDP(50),
   },
   inputContainer: {
     paddingHorizontal: FONT_SIZE,
@@ -22,6 +23,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     alignItems: 'center',
     height: heightPercentageToDP(50),
+    maxHeight: heightPercentageToDP(50),
   },
 });
 

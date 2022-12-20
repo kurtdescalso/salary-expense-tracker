@@ -2,12 +2,6 @@ import {StyleSheet} from 'react-native';
 import {FONT_SIZE} from '../constants';
 
 const styles = StyleSheet.create({
-  headerText: {
-    fontWeight: 'bold',
-    fontSize: FONT_SIZE * 1.25,
-    paddingHorizontal: FONT_SIZE,
-    paddingVertical: FONT_SIZE / 2,
-  },
   amountInputContainer: {
     display: 'flex',
     flexDirection: 'row',

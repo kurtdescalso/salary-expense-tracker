@@ -17,10 +17,14 @@ import {
   getSalaryRecords,
 } from '../services/database';
 import useSalaryRecordStore from '../stores/SalaryStore';
+import {useNavigation} from '@react-navigation/native';
 
 const styles = EditSalaryFormStyles;
 
-const EditSalaryForm = ({navigation, route}) => {
+const EditSalaryForm = ({route}) => {
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const navigation = useNavigation();
+
   const setSalaryRecords = useSalaryRecordStore(
     state => state.setSalaryRecords,
   );
@@ -36,6 +40,8 @@ const EditSalaryForm = ({navigation, route}) => {
   });
 
   const onSubmit = async () => {
+    setIsLoading(true);
+
     const data: ISalaryRecord = form.getValues();
     if (!data.accounting_date) {
       data.accounting_date = new Date().toISOString();
@@ -51,6 +57,10 @@ const EditSalaryForm = ({navigation, route}) => {
 
     const newSalaryRecords = await getSalaryRecords(db);
     setSalaryRecords(newSalaryRecords[0].rows.raw());
+
+    form.reset();
+    setIsLoading(false);
+    navigation.goBack();
   };
 
   return (
@@ -81,14 +91,6 @@ const EditSalaryForm = ({navigation, route}) => {
           style={styles.amountPesos}
         />
       </View>
-      {/*<FormCharField
-        label="Date"
-        name="accounting_date"
-        control={form.control}
-        rules={{
-          required: false,
-        }}
-      />*/}
       <DateTimePicker
         dateTime={form.getValues().accounting_date}
         setDateTime={value => form.setValue('accounting_date', value)}

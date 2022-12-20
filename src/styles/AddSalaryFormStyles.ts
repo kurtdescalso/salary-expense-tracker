@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import {heightPercentageToDP} from 'react-native-responsive-screen';
 import {FONT_SIZE} from '../constants';
 
 const styles = StyleSheet.create({

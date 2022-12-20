@@ -11,13 +11,15 @@ import useSalaryRecordStore from '../stores/SalaryStore';
 import DashboardStyles from '../styles/DashboardStyles';
 import CommonStyles from '../styles/CommonStyles';
 import SalaryItem from '../components/SalaryItem';
+import NoResultsView from '../components/NoResultsView';
+import BalanceView from '../components/BalanceView';
 
 const styles = DashboardStyles;
 
 const DashboardPage = ({navigation}) => {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [isScrolling, setIsScrolling] = React.useState(false);
-  const [balance, setBalance] = React.useState(0);
+  const [balance, setBalance] = React.useState<number>(0);
   const salaryList = useSalaryRecordStore(state => state.salaryRecords);
   const setSalaryList = useSalaryRecordStore(state => state.setSalaryRecords);
 
@@ -75,11 +77,6 @@ const DashboardPage = ({navigation}) => {
         <Text style={CommonStyles.headerText}>Salary Records</Text>
       </View>
       {isLoading ? <ProgressBar indeterminate /> : null}
-      {(salaryList && salaryList.length < 1) || !salaryList ? (
-        <View style={styles.noResultsContainer}>
-          <Text style={styles.noResultsText}>No salary records found.</Text>
-        </View>
-      ) : null}
       <FlatList
         data={salaryList}
         renderItem={({item}) => {
@@ -88,19 +85,12 @@ const DashboardPage = ({navigation}) => {
         keyExtractor={(item, index) => `salary-record-item-${item.id}-${index}`}
         onScrollBeginDrag={onScrollStart}
         onScrollEndDrag={onScrollEnd}
+        ListEmptyComponent={<NoResultsView message="No salary records found." />}
         style={styles.salaryList}
       />
-      <View style={styles.balanceFooter}>
-        <Text>Balance:</Text>
-        <Text
-          style={
-            balance > 0
-              ? styles.balanceFooterAmountPositive
-              : styles.balanceFooterAmountNegative
-          }>
-          {balance.toFixed(2)}
-        </Text>
-      </View>
+      {salaryList.length > 0 ? (
+        <BalanceView balance={balance} />
+      ) : null}
       {!isScrolling ? (
         <FAB
           icon="cash-plus"

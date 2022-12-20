@@ -7,7 +7,7 @@ import DateTimePicker from '../components/DateTimePicker';
 import {useForm} from 'react-hook-form';
 import 'intl';
 import 'intl/locale-data/jsonp/en';
-import AddExpenseFormStyles from '../styles/AddExpenseFormStyles';
+import EditExpenseFormStyles from '../styles/EditExpenseFormStyles';
 import CommonStyles from '../styles/CommonStyles';
 import {
   getDBConnection,
@@ -16,11 +16,15 @@ import {
   getExpensesBySalaryRecordId,
 } from '../services/database';
 import useSalaryRecordStore from '../stores/SalaryStore';
+import DeleteExpenseConfirmationDialog from '../components/DeleteExpenseConfirmationDialog';
+import {useNavigation} from '@react-navigation/native';
 
-const styles = AddExpenseFormStyles;
+const styles = EditExpenseFormStyles;
 
-const EditExpenseForm = ({_navigation, route}) => {
+const EditExpenseForm = ({route}) => {
   const [isLoading, setIsLoading] = React.useState(false);
+
+  const navigation = useNavigation();
 
   const setSalaryRecords = useSalaryRecordStore(
     state => state.setSalaryRecords,
@@ -68,11 +72,17 @@ const EditExpenseForm = ({_navigation, route}) => {
     setExpenseRecords(newExpenseRecords[0].rows.raw());
 
     setIsLoading(false);
+    navigation.goBack();
   };
 
   return (
     <View>
-      <Text style={CommonStyles.headerText}>Edit Expense Record</Text>
+      <View style={styles.headerContainer}>
+        <Text style={CommonStyles.headerText}>Edit Expense Record</Text>
+        <DeleteExpenseConfirmationDialog
+          expenseEntry={expenseItem}
+        />
+      </View>
       <FormCharField
         label="Description"
         name="description"
