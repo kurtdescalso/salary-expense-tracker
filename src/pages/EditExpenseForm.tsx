@@ -1,6 +1,8 @@
 import * as React from 'react';
 import {View} from 'react-native';
 import {Button, ProgressBar, Text} from 'react-native-paper';
+import {AppStackParamList} from '../../App';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import FormCharField from '../components/FormCharField';
 import FormNumberField from '../components/FormNumberField';
 import DateTimePicker from '../components/DateTimePicker';
@@ -21,7 +23,12 @@ import {useNavigation} from '@react-navigation/native';
 
 const styles = EditExpenseFormStyles;
 
-const EditExpenseForm = ({route}) => {
+type EditExpenseFormStackScreenProps<T extends keyof AppStackParamList> =
+  NativeStackScreenProps<AppStackParamList, T>;
+
+const EditExpenseForm = ({
+  route,
+}: EditExpenseFormStackScreenProps<'Edit Expense'>) => {
   const [isLoading, setIsLoading] = React.useState(false);
 
   const navigation = useNavigation();
@@ -79,9 +86,7 @@ const EditExpenseForm = ({route}) => {
     <View>
       <View style={styles.headerContainer}>
         <Text style={CommonStyles.headerText}>Edit Expense Record</Text>
-        <DeleteExpenseConfirmationDialog
-          expenseEntry={expenseItem}
-        />
+        <DeleteExpenseConfirmationDialog expenseEntry={expenseItem} />
       </View>
       <FormCharField
         label="Description"

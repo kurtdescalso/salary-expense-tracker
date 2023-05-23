@@ -1,6 +1,8 @@
 import * as React from 'react';
 import {View} from 'react-native';
 import {Button, Text} from 'react-native-paper';
+import {AppStackParamList} from '../../App';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import DeleteSalaryConfirmationDialog from '../components/DeleteSalaryConfirmationDialog';
 import FormCharField from '../components/FormCharField';
 import FormNumberField from '../components/FormNumberField';
@@ -21,7 +23,12 @@ import {useNavigation} from '@react-navigation/native';
 
 const styles = EditSalaryFormStyles;
 
-const EditSalaryForm = ({route}) => {
+type EditSalaryFormStackScreenProps<T extends keyof AppStackParamList> =
+  NativeStackScreenProps<AppStackParamList, T>;
+
+const EditSalaryForm = ({
+  route,
+}: EditSalaryFormStackScreenProps<'Edit Salary'>) => {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const navigation = useNavigation();
 

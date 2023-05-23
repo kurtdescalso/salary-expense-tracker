@@ -1,6 +1,8 @@
 import * as React from 'react';
 import {View} from 'react-native';
 import {Button, ProgressBar, Text} from 'react-native-paper';
+import {AppStackParamList} from '../../App';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import FormCharField from '../components/FormCharField';
 import FormNumberField from '../components/FormNumberField';
 import DateTimePicker from '../components/DateTimePicker';
@@ -19,7 +21,12 @@ import useSalaryRecordStore from '../stores/SalaryStore';
 
 const styles = AddExpenseFormStyles;
 
-const AddExpenseForm = ({_navigation, route}) => {
+type AddExpenseFormStackScreenProps<T extends keyof AppStackParamList> =
+  NativeStackScreenProps<AppStackParamList, T>;
+
+const AddExpenseForm = ({
+  route,
+}: AddExpenseFormStackScreenProps<'Add Expense'>) => {
   const {salaryId} = route.params;
 
   const [isLoading, setIsLoading] = React.useState(false);

@@ -34,8 +34,7 @@ const AddSalaryForm = () => {
     },
   });
 
-  const onSubmit = async event => {
-    event.persist();
+  const onSubmit = async () => {
     setIsLoading(true);
 
     const data: ISalaryRecord = form.getValues();
@@ -84,7 +83,7 @@ const AddSalaryForm = () => {
         setDateTime={value => form.setValue('accounting_date', value)}
       />
       <View style={styles.submitButtonContainer}>
-        <Button mode="contained" onPress={onSubmit}>
+        <Button mode="contained" onPress={async () => await onSubmit()}>
           Save Salary Record
         </Button>
       </View>

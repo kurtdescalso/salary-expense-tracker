@@ -1,6 +1,8 @@
 import * as React from 'react';
 import {FlatList, View} from 'react-native';
 import {FAB, Text, ProgressBar} from 'react-native-paper';
+import {AppStackParamList} from '../../App';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {
   getDBConnection,
   getSalaryRecords,
@@ -16,7 +18,12 @@ import BalanceView from '../components/BalanceView';
 
 const styles = DashboardStyles;
 
-const DashboardPage = ({navigation}) => {
+type DashboardPageStackScreenProps<T extends keyof AppStackParamList> =
+  NativeStackScreenProps<AppStackParamList, T>;
+
+const DashboardPage = ({
+  navigation,
+}: DashboardPageStackScreenProps<'Dashboard'>) => {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [isScrolling, setIsScrolling] = React.useState(false);
   const [balance, setBalance] = React.useState<number>(0);
@@ -85,12 +92,12 @@ const DashboardPage = ({navigation}) => {
         keyExtractor={(item, index) => `salary-record-item-${item.id}-${index}`}
         onScrollBeginDrag={onScrollStart}
         onScrollEndDrag={onScrollEnd}
-        ListEmptyComponent={<NoResultsView message="No salary records found." />}
+        ListEmptyComponent={
+          <NoResultsView message="No salary records found." />
+        }
         style={styles.salaryList}
       />
-      {salaryList.length > 0 ? (
-        <BalanceView balance={balance} />
-      ) : null}
+      {salaryList.length > 0 ? <BalanceView balance={balance} /> : null}
       {!isScrolling ? (
         <FAB
           icon="cash-plus"

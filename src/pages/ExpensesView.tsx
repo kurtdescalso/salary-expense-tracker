@@ -12,10 +12,18 @@ import SalaryItem from '../components/SalaryItem';
 import ExpenseItem from '../components/ExpenseItem';
 import BalanceView from '../components/BalanceView';
 import NoResultsView from '../components/NoResultsView';
+import {AppStackParamList} from '../../App';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
 const styles = ExpensesViewStyles;
 
-const ExpensesViewPage = ({navigation, route}) => {
+type ExpensesViewPageStackScreenProps<T extends keyof AppStackParamList> =
+  NativeStackScreenProps<AppStackParamList, T>;
+
+const ExpensesViewPage = ({
+  navigation,
+  route,
+}: ExpensesViewPageStackScreenProps<'Expenses'>) => {
   const {salaryId} = route.params;
 
   const [isLoading, setIsLoading] = React.useState(false);
@@ -82,12 +90,15 @@ const ExpensesViewPage = ({navigation, route}) => {
       )}
       <FlatList
         data={expenseList}
-        renderItem={({item}) => (<ExpenseItem {...item} navigation={navigation} />)
-        }
+        renderItem={({item}) => (
+          <ExpenseItem {...item} navigation={navigation} />
+        )}
         keyExtractor={(item, index) => `expense-item-${item.id}-${index}`}
         onScrollBeginDrag={onScrollStart}
         onScrollEndDrag={onScrollEnd}
-        ListEmptyComponent={<NoResultsView message="No expenses found for salary record." />}
+        ListEmptyComponent={
+          <NoResultsView message="No expenses found for salary record." />
+        }
         style={styles.expensesList}
       />
       <BalanceView balance={balance} />

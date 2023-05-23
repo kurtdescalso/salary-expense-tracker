@@ -24,7 +24,26 @@ import EditExpenseForm from './src/pages/EditExpenseForm';
 
 import {getDBConnection, createTables} from './src/services/database';
 
+import {IExpenseEntry, ISalaryRecord} from './src/schemas/salaries';
+
 const Stack = createNativeStackNavigator();
+
+export type AppStackParamList = {
+  Dashboard: undefined;
+  Expenses: {
+    salaryId: number;
+  };
+  'Add Salary': undefined;
+  'Edit Salary': {
+    salaryItem: ISalaryRecord;
+  };
+  'Add Expense': {
+    salaryId: number;
+  };
+  'Edit Expense': {
+    expenseItem: IExpenseEntry;
+  };
+};
 
 const App = () => {
   const initializeDatabase = React.useCallback(async () => {
