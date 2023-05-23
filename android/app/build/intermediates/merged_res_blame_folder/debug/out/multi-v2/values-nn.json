@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "/home/nyan/rn_proj/salary-expense-tracker/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-nn/values-nn.xml",
+            "outputFile": "com.salaryexpensetracker.app-mergeDebugResources-28:/values-nn/values-nn.xml",
             "map": [
                 {
                     "source": "/home/nyan/rn_proj/salary-expense-tracker/node_modules/react-native-date-picker/android/build/intermediates/packaged_res/debug/values-nn/values-nn.xml",

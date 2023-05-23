@@ -1,46 +1,46 @@
 [
     {
-        "merged": "/home/nyan/rn_proj/salary-expense-tracker/android/app/build/intermediates/merged_res/debug/mipmap-xhdpi_ic_launcher_round.png.flat",
-        "source": "/home/nyan/rn_proj/salary-expense-tracker/android/app/src/main/res/mipmap-xhdpi/ic_launcher_round.png"
+        "merged": "com.salaryexpensetracker.app-merged_res-30:/mipmap-hdpi_ic_launcher_round.png.flat",
+        "source": "com.salaryexpensetracker.app-main-32:/mipmap-hdpi/ic_launcher_round.png"
     },
     {
-        "merged": "/home/nyan/rn_proj/salary-expense-tracker/android/app/build/intermediates/merged_res/debug/mipmap-xxxhdpi_ic_launcher_round.png.flat",
-        "source": "/home/nyan/rn_proj/salary-expense-tracker/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png"
+        "merged": "com.salaryexpensetracker.app-merged_res-30:/mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "com.salaryexpensetracker.app-main-32:/mipmap-xxhdpi/ic_launcher.png"
     },
     {
-        "merged": "/home/nyan/rn_proj/salary-expense-tracker/android/app/build/intermediates/merged_res/debug/mipmap-hdpi_ic_launcher_round.png.flat",
-        "source": "/home/nyan/rn_proj/salary-expense-tracker/android/app/src/main/res/mipmap-hdpi/ic_launcher_round.png"
+        "merged": "com.salaryexpensetracker.app-merged_res-30:/mipmap-xhdpi_ic_launcher_round.png.flat",
+        "source": "com.salaryexpensetracker.app-main-32:/mipmap-xhdpi/ic_launcher_round.png"
     },
     {
-        "merged": "/home/nyan/rn_proj/salary-expense-tracker/android/app/build/intermediates/merged_res/debug/mipmap-xxhdpi_ic_launcher.png.flat",
-        "source": "/home/nyan/rn_proj/salary-expense-tracker/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png"
+        "merged": "com.salaryexpensetracker.app-merged_res-30:/mipmap-xxhdpi_ic_launcher_round.png.flat",
+        "source": "com.salaryexpensetracker.app-main-32:/mipmap-xxhdpi/ic_launcher_round.png"
     },
     {
-        "merged": "/home/nyan/rn_proj/salary-expense-tracker/android/app/build/intermediates/merged_res/debug/mipmap-mdpi_ic_launcher.png.flat",
-        "source": "/home/nyan/rn_proj/salary-expense-tracker/android/app/src/main/res/mipmap-mdpi/ic_launcher.png"
+        "merged": "com.salaryexpensetracker.app-merged_res-30:/mipmap-mdpi_ic_launcher_round.png.flat",
+        "source": "com.salaryexpensetracker.app-main-32:/mipmap-mdpi/ic_launcher_round.png"
     },
     {
-        "merged": "/home/nyan/rn_proj/salary-expense-tracker/android/app/build/intermediates/merged_res/debug/mipmap-xxhdpi_ic_launcher_round.png.flat",
-        "source": "/home/nyan/rn_proj/salary-expense-tracker/android/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.png"
+        "merged": "com.salaryexpensetracker.app-merged_res-30:/mipmap-xxxhdpi_ic_launcher_round.png.flat",
+        "source": "com.salaryexpensetracker.app-main-32:/mipmap-xxxhdpi/ic_launcher_round.png"
     },
     {
-        "merged": "/home/nyan/rn_proj/salary-expense-tracker/android/app/build/intermediates/merged_res/debug/drawable_rn_edit_text_material.xml.flat",
-        "source": "/home/nyan/rn_proj/salary-expense-tracker/android/app/src/main/res/drawable/rn_edit_text_material.xml"
+        "merged": "com.salaryexpensetracker.app-merged_res-30:/drawable_rn_edit_text_material.xml.flat",
+        "source": "com.salaryexpensetracker.app-main-32:/drawable/rn_edit_text_material.xml"
     },
     {
-        "merged": "/home/nyan/rn_proj/salary-expense-tracker/android/app/build/intermediates/merged_res/debug/mipmap-mdpi_ic_launcher_round.png.flat",
-        "source": "/home/nyan/rn_proj/salary-expense-tracker/android/app/src/main/res/mipmap-mdpi/ic_launcher_round.png"
+        "merged": "com.salaryexpensetracker.app-merged_res-30:/mipmap-mdpi_ic_launcher.png.flat",
+        "source": "com.salaryexpensetracker.app-main-32:/mipmap-mdpi/ic_launcher.png"
     },
     {
-        "merged": "/home/nyan/rn_proj/salary-expense-tracker/android/app/build/intermediates/merged_res/debug/mipmap-xhdpi_ic_launcher.png.flat",
-        "source": "/home/nyan/rn_proj/salary-expense-tracker/android/app/src/main/res/mipmap-xhdpi/ic_launcher.png"
+        "merged": "com.salaryexpensetracker.app-merged_res-30:/mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "com.salaryexpensetracker.app-main-32:/mipmap-xhdpi/ic_launcher.png"
     },
     {
-        "merged": "/home/nyan/rn_proj/salary-expense-tracker/android/app/build/intermediates/merged_res/debug/mipmap-xxxhdpi_ic_launcher.png.flat",
-        "source": "/home/nyan/rn_proj/salary-expense-tracker/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png"
+        "merged": "com.salaryexpensetracker.app-merged_res-30:/mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "com.salaryexpensetracker.app-main-32:/mipmap-xxxhdpi/ic_launcher.png"
     },
     {
-        "merged": "/home/nyan/rn_proj/salary-expense-tracker/android/app/build/intermediates/merged_res/debug/mipmap-hdpi_ic_launcher.png.flat",
-        "source": "/home/nyan/rn_proj/salary-expense-tracker/android/app/src/main/res/mipmap-hdpi/ic_launcher.png"
+        "merged": "com.salaryexpensetracker.app-merged_res-30:/mipmap-hdpi_ic_launcher.png.flat",
+        "source": "com.salaryexpensetracker.app-main-32:/mipmap-hdpi/ic_launcher.png"
     }
 ]

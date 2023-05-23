@@ -1442,6 +1442,8 @@ id TOP_END
 id TOP_START
 id accessibility_action_clickable_span
 id accessibility_actions
+id accessibility_collection
+id accessibility_collection_item
 id accessibility_custom_action_0
 id accessibility_custom_action_1
 id accessibility_custom_action_10
@@ -1659,9 +1661,7 @@ id password_toggle
 id peekHeight
 id pickerWrapper
 id pin
-id pointer_enter
-id pointer_leave
-id pointer_move
+id pointer_events
 id progress_circular
 id progress_horizontal
 id radio
@@ -2290,8 +2290,6 @@ style CalendarDatePickerStyle
 style CardView
 style CardView_Dark
 style CardView_Light
-style ClockTimePickerDialog
-style ClockTimePickerStyle
 style DatePickerBaseTheme
 style DatePickerTheme
 style DialogAnimationFade
@@ -2359,8 +2357,10 @@ style ShapeAppearanceOverlay_MaterialComponents_TextInputLayout_FilledBox
 style ShapeAppearanceOverlay_TopLeftCut
 style ShapeAppearanceOverlay_TopRightDifferentCornerSize
 style SpinnerDatePickerDialog
+style SpinnerDatePickerDialogBase
 style SpinnerDatePickerStyle
 style SpinnerTimePickerDialog
+style SpinnerTimePickerDialogBase
 style SpinnerTimePickerStyle
 style Test_ShapeAppearanceOverlay_MaterialComponents_MaterialCalendar_Day
 style Test_Theme_MaterialComponents_MaterialCalendar

@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/home/nyan/rn_proj/salary-expense-tracker/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-watch-v20/values-watch-v20.xml",
+            "outputFile": "com.salaryexpensetracker.app-mergeDebugResources-28:/values-watch-v20/values-watch-v20.xml",
             "map": [
                 {
-                    "source": "/home/nyan/.gradle/caches/transforms-3/53122dfddfd0b682fe74c9823d5d0125/transformed/appcompat-1.4.1/res/values-watch-v20/values-watch-v20.xml",
+                    "source": "/home/nyan/.gradle/caches/transforms-3/f1d1ab23dab8287877579e55fe66408f/transformed/appcompat-1.4.1/res/values-watch-v20/values-watch-v20.xml",
                     "from": {
                         "startLines": "2,5,8",
                         "startColumns": "4,4,4",

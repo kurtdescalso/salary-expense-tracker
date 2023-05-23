@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/home/nyan/rn_proj/salary-expense-tracker/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-h360dp-land-v13/values-h360dp-land-v13.xml",
+            "outputFile": "com.salaryexpensetracker.app-mergeDebugResources-28:/values-h360dp-land-v13/values-h360dp-land-v13.xml",
             "map": [
                 {
-                    "source": "/home/nyan/.gradle/caches/transforms-3/d66390e9f57cd03f4fe478c67b878d95/transformed/material-1.1.0/res/values-h360dp-land-v13/values-h360dp-land-v13.xml",
+                    "source": "/home/nyan/.gradle/caches/transforms-3/9006b3d97a62824c9f5ac5abf25ca76c/transformed/material-1.1.0/res/values-h360dp-land-v13/values-h360dp-land-v13.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10",
                         "startColumns": "4,4,4,4,4,4,4,4,4",

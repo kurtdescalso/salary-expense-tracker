@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/home/nyan/rn_proj/salary-expense-tracker/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-zh-rTW/values-zh-rTW.xml",
+            "outputFile": "com.salaryexpensetracker.app-mergeDebugResources-28:/values-zh-rTW/values-zh-rTW.xml",
             "map": [
                 {
-                    "source": "/home/nyan/.gradle/caches/transforms-3/53122dfddfd0b682fe74c9823d5d0125/transformed/appcompat-1.4.1/res/values-zh-rTW/values-zh-rTW.xml",
+                    "source": "/home/nyan/.gradle/caches/transforms-3/f1d1ab23dab8287877579e55fe66408f/transformed/appcompat-1.4.1/res/values-zh-rTW/values-zh-rTW.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -14,7 +14,7 @@
                     }
                 },
                 {
-                    "source": "/home/nyan/.gradle/caches/transforms-3/efc5fbdc5cddabff1e6dbe6ad771c56d/transformed/core-1.7.0/res/values-zh-rTW/values-zh-rTW.xml",
+                    "source": "/home/nyan/.gradle/caches/transforms-3/bec0e8b555c2ab940dffacc9a03b362d/transformed/core-1.7.0/res/values-zh-rTW/values-zh-rTW.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
