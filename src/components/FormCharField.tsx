@@ -1,9 +1,8 @@
 import * as React from 'react';
-import {View} from 'react-native';
+import {View, StyleProp, ViewStyle} from 'react-native';
 import {TextInput} from 'react-native-paper';
 import FormCharFieldStyles from '../styles/FormCharFieldStyles';
 import {Controller} from 'react-hook-form';
-import {StyleSheet} from 'react-native';
 
 const styles = FormCharFieldStyles;
 
@@ -12,7 +11,7 @@ interface IFormCharField {
   name: string;
   control: any;
   rules: any;
-  style?: StyleSheet<ViewStyle>;
+  style?: StyleProp<ViewStyle>;
 }
 
 const FormCharField = (props: IFormCharField) => {

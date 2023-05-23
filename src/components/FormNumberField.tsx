@@ -1,9 +1,8 @@
 import * as React from 'react';
-import {View} from 'react-native';
+import {View, StyleProp, ViewStyle} from 'react-native';
 import {TextInput} from 'react-native-paper';
 import FormNumberFieldStyles from '../styles/FormNumberFieldStyles';
 import {Controller} from 'react-hook-form';
-import {StyleProp, ViewStyle} from 'react-native';
 
 const styles = FormNumberFieldStyles;
 
