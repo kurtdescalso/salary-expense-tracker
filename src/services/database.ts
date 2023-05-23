@@ -84,13 +84,17 @@ export const addSalaryRecord = async (
     accounting_date,
     created_at
   ) VALUES (
-    ${salary.amount},
-    '${salary.description}',
-    '${salary.accounting_date}',
-    '${salary.created_at}'
+    ?, ?, ?, ?
   )`;
 
-  await db.executeSql(query);
+  await db.transaction(async tx => {
+    await tx.executeSql(query, [
+      salary.amount,
+      salary.description,
+      salary.accounting_date,
+      salary.created_at,
+    ]);
+  });
 };
 
 export const editSalaryRecord = async (
@@ -98,13 +102,21 @@ export const editSalaryRecord = async (
   salary: ISalaryRecord,
 ) => {
   const query = `UPDATE ${SALARIES_TABLE_NAME} SET
-    amount=${salary.amount},
-    description='${salary.description}',
-    accounting_date='${salary.accounting_date}',
-    created_at='${salary.created_at}'
-  WHERE id=${salary.id}`;
+    amount=?,
+    description=?,
+    accounting_date=?,
+    created_at=?
+  WHERE id=?`;
 
-  await db.executeSql(query);
+  await db.transaction(async tx => {
+    await tx.executeSql(query, [
+      salary.amount,
+      salary.description,
+      salary.accounting_date,
+      salary.created_at,
+      salary.id,
+    ]);
+  });
 };
 
 export const deleteSalaryRecord = async (
@@ -112,9 +124,11 @@ export const deleteSalaryRecord = async (
   salary: ISalaryRecord,
 ) => {
   const query = `DELETE FROM ${SALARIES_TABLE_NAME}
-    WHERE id=${salary.id}`;
+    WHERE id=?`;
 
-  await db.executeSql(query);
+  await db.transaction(async tx => {
+    await tx.executeSql(query, [salary.id]);
+  });
 };
 
 export const getExpensesBySalaryRecordId = async (
@@ -137,14 +151,19 @@ export const addExpenseRecord = async (
     salary_id,
     created_at
   ) VALUES (
-    ${expense.amount},
-    '${expense.description}',
-    '${expense.accounting_date}',
-    '${expense.salary_id}',
-    '${expense.created_at}'
+    ?, ?, ?,
+    ?, ?
   )`;
 
-  await db.executeSql(query);
+  await db.transaction(async tx => {
+    await tx.executeSql(query, [
+      expense.amount,
+      expense.description,
+      expense.accounting_date,
+      expense.salary_id,
+      expense.created_at,
+    ]);
+  });
 };
 
 export const editExpenseRecord = async (
@@ -152,12 +171,19 @@ export const editExpenseRecord = async (
   expense: IExpenseEntry,
 ) => {
   const query = `UPDATE ${EXPENSES_TABLE_NAME} SET
-    amount=${expense.amount},
-    description='${expense.description}',
-    accounting_date='${expense.accounting_date}'
-  WHERE id=${expense.id}`;
+    amount=?,
+    description=?,
+    accounting_date=?
+  WHERE id=?`;
 
-  await db.executeSql(query);
+  await db.transaction(async tx => {
+    await tx.executeSql(query, [
+      expense.amount,
+      expense.description,
+      expense.accounting_date,
+      expense.salary_id,
+    ]);
+  });
 };
 
 export const deleteExpenseRecord = async (
@@ -165,7 +191,10 @@ export const deleteExpenseRecord = async (
   expense: IExpenseEntry,
 ) => {
   const query = `DELETE FROM ${EXPENSES_TABLE_NAME}
-    WHERE id=${expense.id}`;
+    WHERE id=?`;
 
+  await db.transaction(async tx => {
+    await tx.executeSql(query, [expense.id]);
+  });
   await db.executeSql(query);
 };
