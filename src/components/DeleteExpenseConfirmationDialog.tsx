@@ -3,11 +3,9 @@ import {View} from 'react-native';
 import {Button, Dialog, Paragraph, Portal, Text} from 'react-native-paper';
 import {IExpenseEntry} from '../schemas/salaries';
 import {useNavigation} from '@react-navigation/native';
-import {
-  getDBConnection,
-  deleteExpenseRecord,
-  getSalaryRecords,
-} from '../services/database';
+import {getDBConnection} from '../services/database';
+import {deleteExpenseRecord} from '../services/expense';
+import {getSalaryRecords} from '../services/salary';
 import useSalaryRecordStore from '../stores/SalaryStore';
 
 interface IDeleteExpenseConfirmationDialog {
@@ -32,7 +30,7 @@ const DeleteExpenseConfirmationDialog = (
     const db = await getDBConnection();
 
     try {
-      const result = await deleteExpenseRecord(db, props.expenseEntry);
+      await deleteExpenseRecord(db, props.expenseEntry);
       const newSalaryRecords = await getSalaryRecords(db);
       setSalaryRecords(newSalaryRecords[0].rows.raw());
     } catch (e) {
@@ -41,7 +39,7 @@ const DeleteExpenseConfirmationDialog = (
     }
 
     setIsLoading(false);
-    navigation.goBack()
+    navigation.goBack();
   };
 
   return (

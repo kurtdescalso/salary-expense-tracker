@@ -5,21 +5,24 @@ import {AppStackParamList} from '../../App';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import FormCharField from '../components/FormCharField';
 import FormNumberField from '../components/FormNumberField';
+import FormSelectField from '../components/FormSelectField';
 import DateTimePicker from '../components/DateTimePicker';
 import {useForm} from 'react-hook-form';
 import 'intl';
 import 'intl/locale-data/jsonp/en';
-import EditExpenseFormStyles from '../styles/EditExpenseFormStyles';
-import CommonStyles from '../styles/CommonStyles';
+import {getDBConnection} from '../services/database';
 import {
-  getDBConnection,
   editExpenseRecord,
-  getSalaryRecords,
   getExpensesBySalaryRecordId,
-} from '../services/database';
+} from '../services/expense';
+import {getSalaryRecords} from '../services/salary';
 import useSalaryRecordStore from '../stores/SalaryStore';
 import DeleteExpenseConfirmationDialog from '../components/DeleteExpenseConfirmationDialog';
 import {useNavigation} from '@react-navigation/native';
+import {format, parse} from 'date-fns';
+import {CATEGORY_OPTIONS} from '../constants';
+import CommonStyles from '../styles/CommonStyles';
+import EditExpenseFormStyles from '../styles/EditExpenseFormStyles';
 
 const styles = EditExpenseFormStyles;
 
@@ -46,6 +49,7 @@ const EditExpenseForm = ({
     defaultValues: {
       description: expenseItem ? expenseItem.description : '',
       amount: expenseItem ? expenseItem.amount : 0,
+      category: expenseItem ? expenseItem.category : '',
       accounting_date: expenseItem ? expenseItem.accounting_date : '',
     },
   });
@@ -54,7 +58,7 @@ const EditExpenseForm = ({
     setIsLoading(true);
     const data = form.getValues();
     if (!data.accounting_date) {
-      data.accounting_date = new Date();
+      data.accounting_date = format(new Date(), 'uuuu-MM-dd');
     }
 
     const db = await getDBConnection();
@@ -64,9 +68,9 @@ const EditExpenseForm = ({
       id: expenseItem.id,
       salary_id: expenseItem.salary_id,
       accounting_date: data.accounting_date
-        ? new Date(data.accounting_date).toISOString()
+        ? format(new Date(), 'uuuu-MM-dd')
         : new Date().toISOString(),
-      created_at: new Date().toISOString(),
+      created_at: format(new Date(), 'uuuu-MM-dd'),
     });
 
     const newSalaryRecords = await getSalaryRecords(db);
@@ -96,20 +100,29 @@ const EditExpenseForm = ({
           required: true,
         }}
       />
-      <View style={styles.amountInputContainer}>
-        <FormNumberField
-          label="Amount"
-          name="amount"
-          control={form.control}
-          rules={{
-            required: true,
-          }}
-          style={styles.amountPesos}
-        />
-      </View>
+      <FormNumberField
+        label="Amount"
+        name="amount"
+        control={form.control}
+        rules={{
+          required: true,
+        }}
+        style={styles.amountPesos}
+      />
+      <FormSelectField
+        label="Category"
+        name="category"
+        control={form.control}
+        rules={{required: true}}
+        options={CATEGORY_OPTIONS}
+      />
       <DateTimePicker
-        dateTime={form.getValues().accounting_date}
-        setDateTime={value => form.setValue('accounting_date', value)}
+        dateTime={parse(
+          form.getValues().accounting_date,
+          'uuuu-MM-dd',
+          new Date(),
+        )}
+        setDateTime={value => value}
       />
       <View style={styles.submitButtonContainer}>
         <Button mode="contained" onPress={onSubmit}>

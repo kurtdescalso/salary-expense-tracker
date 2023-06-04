@@ -20,6 +20,7 @@ const SalaryItem = (props: IExpenseEntryItemProps & IExpenseEntry) => {
             id: props.id,
             description: props.description,
             amount: props.amount,
+            category: props.category,
             accounting_date: props.accounting_date,
             created_at: props.created_at,
             salary_id: props.salary_id,
@@ -32,6 +33,7 @@ const SalaryItem = (props: IExpenseEntryItemProps & IExpenseEntry) => {
       <View style={styles.expenseItemInnerContainer}>
         <View style={styles.expenseDetails}>
           <Text>{props.description}</Text>
+          <Text>{props.category}</Text>
           <Text>{props.accounting_date}</Text>
         </View>
         <View style={styles.expenseAmount}>

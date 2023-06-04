@@ -48,6 +48,7 @@ export const editExpenseRecord = async (
   db: SQLiteDatabase,
   expense: IExpenseEntry,
 ) => {
+  console.log(expense);
   const query = `UPDATE ${EXPENSES_TABLE_NAME} SET
     amount=?,
     description=?,
@@ -61,7 +62,7 @@ export const editExpenseRecord = async (
       expense.description,
       expense.category,
       expense.accounting_date,
-      expense.salary_id,
+      expense.id,
     ]);
   });
 };

@@ -8,10 +8,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  amountInputContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-  },
   amountPesos: {
     flexGrow: 4,
   },
