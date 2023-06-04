@@ -40,8 +40,6 @@ const AddSalaryForm = () => {
     const data: ISalaryRecord = form.getValues();
     if (!data.accounting_date) {
       data.accounting_date = format(new Date(), 'uuuu-MM-dd');
-    } else {
-      data.accounting_date = format(data.accounting_date, 'uuuu-MM-dd');
     }
 
     const db = await getDBConnection();

@@ -18,18 +18,18 @@ const styles = StyleSheet.create({
   },
   salaryItemContainer: {
     paddingVertical: FONT_SIZE,
-    marginHorizontal: FONT_SIZE,
+    // marginHorizontal: FONT_SIZE,
     // marginBottom: FONT_SIZE / 8,
   },
   expensesList: {
     maxHeight: heightPercentageToDP(62.5),
-    marginHorizontal: FONT_SIZE,
+    // marginHorizontal: FONT_SIZE,
     // marginVertical: FONT_SIZE / 8,
   },
   expenseItem: {
     paddingHorizontal: FONT_SIZE,
     paddingVertical: FONT_SIZE,
-    marginHorizontal: FONT_SIZE / 4,
+    // marginHorizontal: FONT_SIZE / 4,
     marginVertical: FONT_SIZE / 4,
   },
   expenseItemInnerContainer: {

@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     minHeight: heightPercentageToDP(74),
     height: heightPercentageToDP(74),
     maxHeight: heightPercentageToDP(74),
-    marginHorizontal: FONT_SIZE,
+    // marginHorizontal: FONT_SIZE,
   },
   balanceFooter: {
     display: 'flex',

@@ -2,11 +2,8 @@ import React from 'react';
 import {View} from 'react-native';
 import {Button, Dialog, Paragraph, Portal, Text} from 'react-native-paper';
 import {ISalaryRecord} from '../schemas/salaries';
-import {
-  getDBConnection,
-  deleteSalaryRecord,
-  getSalaryRecords,
-} from '../services/database';
+import {getDBConnection} from '../services/database';
+import {deleteSalaryRecord, getSalaryRecords} from '../services/salary';
 import useSalaryRecordStore from '../stores/SalaryStore';
 
 interface IDeleteSalaryConfirmationDialog {
