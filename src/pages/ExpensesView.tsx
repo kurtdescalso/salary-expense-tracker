@@ -1,11 +1,9 @@
 import * as React from 'react';
 import {FlatList, View} from 'react-native';
 import {Card, FAB, ProgressBar, Text} from 'react-native-paper';
-import {
-  getDBConnection,
-  getSalaryRecordById,
-  getExpensesBySalaryRecordId,
-} from '../services/database';
+import {getDBConnection} from '../services/database';
+import {getSalaryRecordById} from '../services/salary';
+import {getExpensesBySalaryRecordId} from '../services/expense';
 import useSalaryRecordStore from '../stores/SalaryStore';
 import ExpensesViewStyles from '../styles/ExpensesViewStyles';
 import SalaryItem from '../components/SalaryItem';

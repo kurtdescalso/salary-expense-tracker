@@ -3,12 +3,9 @@ import {FlatList, View} from 'react-native';
 import {FAB, Text, ProgressBar} from 'react-native-paper';
 import {AppStackParamList} from '../../App';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {
-  getDBConnection,
-  getSalaryRecords,
-  getTotalSalaries,
-  getTotalExpenses,
-} from '../services/database';
+import {getDBConnection} from '../services/database';
+import {getSalaryRecords, getTotalSalaries} from '../services/salary';
+import {getTotalExpenses} from '../services/expense';
 import useSalaryRecordStore from '../stores/SalaryStore';
 import DashboardStyles from '../styles/DashboardStyles';
 import CommonStyles from '../styles/CommonStyles';

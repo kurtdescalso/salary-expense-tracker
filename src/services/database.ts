@@ -3,10 +3,9 @@ import {
   openDatabase,
   SQLiteDatabase,
 } from 'react-native-sqlite-storage';
-import {ISalaryRecord, IExpenseEntry} from '../schemas/salaries';
 
-const SALARIES_TABLE_NAME = 'salaries';
-const EXPENSES_TABLE_NAME = 'expenses';
+export const SALARIES_TABLE_NAME = 'salaries';
+export const EXPENSES_TABLE_NAME = 'expenses';
 
 enablePromise(true);
 
@@ -22,7 +21,7 @@ export const createTables = async (db: SQLiteDatabase) => {
     id INTEGER NOT NULL PRIMARY KEY,
     amount REAL NOT NULL,
     description TEXT NOT NULL,
-    accounting_date TEXT NOT NULL,
+    accounting_date TEXT NOT NULL DEFAULT current_timestamp,
     created_at TEXT NOT NULL
   )`;
 
@@ -37,7 +36,8 @@ export const createTables = async (db: SQLiteDatabase) => {
     id INTEGER NOT NULL PRIMARY KEY,
     amount REAL NOT NULL,
     description TEXT NOT NULL,
-    accounting_date TEXT NOT NULL,
+    category TEXT NOT NULL,
+    accounting_date TEXT NOT NULL DEFAULT current_timestamp,
     created_at TEXT NOT NULL,
     salary_id INTEGER NOT NULL
   )`;
@@ -50,6 +50,7 @@ export const createTables = async (db: SQLiteDatabase) => {
   }
 };
 
+/*
 export const getSalaryRecords = async (db: SQLiteDatabase) => {
   const query = `SELECT * FROM ${SALARIES_TABLE_NAME}`;
   return await db.executeSql(query);
@@ -198,3 +199,4 @@ export const deleteExpenseRecord = async (
   });
   await db.executeSql(query);
 };
+*/

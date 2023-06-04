@@ -7,15 +7,15 @@ import DateTimePicker from '../components/DateTimePicker';
 import {useForm} from 'react-hook-form';
 import 'intl';
 import 'intl/locale-data/jsonp/en';
-import AddSalaryFormStyles from '../styles/AddSalaryFormStyles';
-import CommonStyles from '../styles/CommonStyles';
 import {ISalaryRecord} from '../schemas/salaries';
-import {
-  getDBConnection,
-  addSalaryRecord,
-  getSalaryRecords,
-} from '../services/database';
+import {getDBConnection} from '../services/database';
+import {addSalaryRecord, getSalaryRecords} from '../services/salary';
 import useSalaryRecordStore from '../stores/SalaryStore';
+import FormSelectField from '../components/FormSelectField';
+import {CATEGORY_OPTIONS} from '../constants';
+import {format, parse} from 'date-fns';
+import CommonStyles from '../styles/CommonStyles';
+import AddSalaryFormStyles from '../styles/AddSalaryFormStyles';
 
 const styles = AddSalaryFormStyles;
 
@@ -30,7 +30,7 @@ const AddSalaryForm = () => {
     defaultValues: {
       description: '',
       amount: 0,
-      accounting_date: new Date(),
+      accounting_date: format(new Date(), 'uuuu-MM-dd'),
     },
   });
 
@@ -39,14 +39,16 @@ const AddSalaryForm = () => {
 
     const data: ISalaryRecord = form.getValues();
     if (!data.accounting_date) {
-      data.accounting_date = new Date();
+      data.accounting_date = format(new Date(), 'uuuu-MM-dd');
+    } else {
+      data.accounting_date = format(data.accounting_date, 'uuuu-MM-dd');
     }
 
     const db = await getDBConnection();
 
     await addSalaryRecord(db, {
       ...data,
-      created_at: new Date(),
+      created_at: format(new Date(), 'uuuu-MM-dd'),
     });
 
     const newSalaryRecords = await getSalaryRecords(db);
@@ -67,23 +69,34 @@ const AddSalaryForm = () => {
           required: true,
         }}
       />
-      <View>
-        <FormNumberField
-          label="Amount"
-          name="amount"
-          control={form.control}
-          rules={{
-            required: true,
-          }}
-          style={styles.amountPesos}
-        />
-      </View>
+      <FormNumberField
+        label="Amount"
+        name="amount"
+        control={form.control}
+        rules={{
+          required: true,
+        }}
+        style={styles.amountPesos}
+      />
+      <FormSelectField
+        label="Category"
+        name="category"
+        control={form.control}
+        rules={{required: true}}
+        options={CATEGORY_OPTIONS}
+      />
       <DateTimePicker
-        dateTime={form.getValues().accounting_date}
-        setDateTime={value => form.setValue('accounting_date', value)}
+        dateTime={parse(
+          form.getValues().accounting_date,
+          'uuuu-MM-dd',
+          new Date(),
+        )}
+        setDateTime={value =>
+          form.setValue('accounting_date', format(value, 'uuuu-MM-dd'))
+        }
       />
       <View style={styles.submitButtonContainer}>
-        <Button mode="contained" onPress={async () => await onSubmit()}>
+        <Button mode="contained" onPress={onSubmit}>
           Save Salary Record
         </Button>
       </View>

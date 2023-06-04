@@ -2,6 +2,7 @@ interface IExpenseEntry {
   id?: number;
   amount: number;
   description: string;
+  category: string;
   accounting_date: string;
   created_at: string;
   salary_id: number;

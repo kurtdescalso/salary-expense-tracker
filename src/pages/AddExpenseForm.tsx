@@ -5,19 +5,22 @@ import {AppStackParamList} from '../../App';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import FormCharField from '../components/FormCharField';
 import FormNumberField from '../components/FormNumberField';
+import FormSelectField from '../components/FormSelectField';
 import DateTimePicker from '../components/DateTimePicker';
 import {useForm} from 'react-hook-form';
 import 'intl';
 import 'intl/locale-data/jsonp/en';
-import AddExpenseFormStyles from '../styles/AddExpenseFormStyles';
-import CommonStyles from '../styles/CommonStyles';
+import {getDBConnection} from '../services/database';
+import {getSalaryRecords} from '../services/salary';
 import {
-  getDBConnection,
   addExpenseRecord,
-  getSalaryRecords,
   getExpensesBySalaryRecordId,
-} from '../services/database';
+} from '../services/expense';
 import useSalaryRecordStore from '../stores/SalaryStore';
+import {CATEGORY_OPTIONS} from '../constants';
+import {format, parse} from 'date-fns';
+import CommonStyles from '../styles/CommonStyles';
+import AddExpenseFormStyles from '../styles/AddExpenseFormStyles';
 
 const styles = AddExpenseFormStyles;
 
@@ -42,7 +45,8 @@ const AddExpenseForm = ({
     defaultValues: {
       description: '',
       amount: 0,
-      accounting_date: new Date(),
+      category: '',
+      accounting_date: format(new Date(), 'uuuu-MM-dd'),
     },
   });
 
@@ -50,7 +54,7 @@ const AddExpenseForm = ({
     setIsLoading(true);
     const data = form.getValues();
     if (!data.accounting_date) {
-      data.accounting_date = new Date();
+      data.accounting_date = format(new Date(), 'uuuu-MM-dd');
     }
 
     const db = await getDBConnection();
@@ -58,8 +62,8 @@ const AddExpenseForm = ({
     await addExpenseRecord(db, {
       ...data,
       salary_id: salaryId,
-      accounting_date: data.accounting_date.toISOString(),
-      created_at: new Date().toISOString(),
+      accounting_date: data.accounting_date,
+      created_at: format(new Date(), 'uuuu-MM-dd'),
     });
 
     const newSalaryRecords = await getSalaryRecords(db);
@@ -97,9 +101,22 @@ const AddExpenseForm = ({
           style={styles.amountPesos}
         />
       </View>
+      <FormSelectField
+        label="Category"
+        name="category"
+        control={form.control}
+        rules={{required: true}}
+        options={CATEGORY_OPTIONS}
+      />
       <DateTimePicker
-        dateTime={form.getValues().accounting_date}
-        setDateTime={value => form.setValue('accounting_date', value)}
+        dateTime={parse(
+          form.getValues().accounting_date,
+          'uuuu-MM-dd',
+          new Date(),
+        )}
+        setDateTime={value =>
+          form.setValue('accounting_date', format(value, 'uuuu-MM-dd'))
+        }
       />
       <View style={styles.submitButtonContainer}>
         <Button mode="contained" onPress={onSubmit}>
