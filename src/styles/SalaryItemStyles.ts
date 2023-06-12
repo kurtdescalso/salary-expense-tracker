@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
   descriptionText: {
     fontWeight: 'bold',
   },
-  tempFontStyle: {
+  itemFontStyle: {
     fontSize: FONT_SIZE,
   },
 });

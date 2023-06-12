@@ -47,14 +47,14 @@ const SalaryItem = (props: ISalaryItemProps & ISalaryRecord) => {
       style={styles.salaryItem}>
       <View style={styles.salaryItemInnerContainer}>
         <View style={styles.detailsContainer}>
-          <Text style={[styles.tempFontStyle, styles.descriptionText]}>
+          <Text style={[styles.itemFontStyle, styles.descriptionText]}>
             {props.description}
           </Text>
-          <Text style={styles.tempFontStyle}>Recorded on:</Text>
-          <Text style={styles.tempFontStyle}>{dateDisplayString}</Text>
+          <Text style={styles.itemFontStyle}>Recorded on:</Text>
+          <Text style={styles.itemFontStyle}>{dateDisplayString}</Text>
         </View>
         <View style={styles.amountContainer}>
-          <Text style={styles.tempFontStyle}>{currencyDisplayString}</Text>
+          <Text style={styles.itemFontStyle}>{currencyDisplayString}</Text>
         </View>
       </View>
     </Card>

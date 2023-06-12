@@ -1,6 +1,8 @@
 import {StyleSheet} from 'react-native';
 import {FONT_SIZE} from '../constants';
 
+const EXPENSE_ITEM_DETAIL_FONT_SIZE = FONT_SIZE * 0.8;
+
 const styles = StyleSheet.create({
   expenseItem: {
     paddingHorizontal: FONT_SIZE,
@@ -15,7 +17,11 @@ const styles = StyleSheet.create({
     flex: 2,
   },
   expenseDescription: {
+    fontSize: EXPENSE_ITEM_DETAIL_FONT_SIZE,
     fontWeight: 'bold',
+  },
+  itemFontStyle: {
+    fontSize: EXPENSE_ITEM_DETAIL_FONT_SIZE,
   },
   expenseAmount: {
     flex: 1,

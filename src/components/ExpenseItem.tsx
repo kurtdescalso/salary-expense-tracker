@@ -44,11 +44,11 @@ const SalaryItem = (props: IExpenseEntryItemProps & IExpenseEntry) => {
       <View style={styles.expenseItemInnerContainer}>
         <View style={styles.expenseDetails}>
           <Text style={styles.expenseDescription}>{props.description}</Text>
-          <Text>{props.category}</Text>
-          <Text>{dateDisplayString}</Text>
+          <Text style={styles.itemFontStyle}>{props.category}</Text>
+          <Text style={styles.itemFontStyle}>{dateDisplayString}</Text>
         </View>
         <View style={styles.expenseAmount}>
-          <Text>{currencyDisplayString}</Text>
+          <Text style={styles.itemFontStyle}>{currencyDisplayString}</Text>
         </View>
       </View>
     </Card>
