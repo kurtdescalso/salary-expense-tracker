@@ -1,6 +1,13 @@
 import * as React from 'react';
-import {FlatList, View} from 'react-native';
-import {FAB, Text, ProgressBar} from 'react-native-paper';
+import {
+  Dimensions,
+  StatusBar,
+  FlatList,
+  SafeAreaView,
+  View,
+} from 'react-native';
+import {FAB, IconButton, Text, ProgressBar} from 'react-native-paper';
+import {useHeaderHeight} from '@react-navigation/elements';
 import {AppStackParamList} from '../../App';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {getDBConnection} from '../services/database';
@@ -12,6 +19,7 @@ import CommonStyles from '../styles/CommonStyles';
 import SalaryItem from '../components/SalaryItem';
 import NoResultsView from '../components/NoResultsView';
 import BalanceView from '../components/BalanceView';
+import {FONT_SIZE} from '../constants';
 
 const styles = DashboardStyles;
 
@@ -21,6 +29,8 @@ type DashboardPageStackScreenProps<T extends keyof AppStackParamList> =
 const DashboardPage = ({
   navigation,
 }: DashboardPageStackScreenProps<'Dashboard'>) => {
+  const headerHeight = useHeaderHeight();
+
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [isScrolling, setIsScrolling] = React.useState(false);
   const [balance, setBalance] = React.useState<number>(0);
@@ -76,33 +86,60 @@ const DashboardPage = ({
   }, [salaryList, setSalaryList]);
 
   return (
-    <View style={styles.mainContainer}>
-      <View>
-        <Text style={CommonStyles.headerText}>Salary Records</Text>
-      </View>
-      {isLoading ? <ProgressBar indeterminate /> : null}
-      <FlatList
-        data={salaryList}
-        renderItem={({item}) => {
-          return <SalaryItem navigation={navigation} {...item} />;
-        }}
-        keyExtractor={(item, index) => `salary-record-item-${item.id}-${index}`}
-        onScrollBeginDrag={onScrollStart}
-        onScrollEndDrag={onScrollEnd}
-        ListEmptyComponent={
-          <NoResultsView message="No salary records found." />
-        }
-        style={styles.salaryList}
-      />
-      {salaryList.length > 0 ? <BalanceView balance={balance} /> : null}
-      {!isScrolling ? (
-        <FAB
-          icon="cash-plus"
-          style={styles.addSalaryButton}
-          onPress={goToAddSalaryRecord}
+    <SafeAreaView
+      style={[
+        styles.mainContainer,
+        {
+          height:
+            Dimensions.get('window').height -
+            headerHeight -
+            (StatusBar.currentHeight || 0),
+        },
+      ]}>
+      <View style={styles.mainflexContainer}>
+        <View>
+          <Text style={CommonStyles.headerText}>Salary Records</Text>
+        </View>
+        {isLoading ? <ProgressBar indeterminate /> : null}
+        <FlatList
+          data={salaryList}
+          renderItem={({item}) => {
+            return <SalaryItem navigation={navigation} {...item} />;
+          }}
+          keyExtractor={(item, index) =>
+            `salary-record-item-${item.id}-${index}`
+          }
+          onScrollBeginDrag={onScrollStart}
+          onScrollEndDrag={onScrollEnd}
+          ListEmptyComponent={
+            <NoResultsView message="No salary records found." />
+          }
+          style={styles.salaryList}
         />
-      ) : null}
-    </View>
+        {/*salaryList.length > 0 ? <BalanceView balance={balance} /> : null}
+        {!isScrolling ? (
+          <FAB
+            icon="cash-plus"
+            style={styles.addSalaryButton}
+            onPress={goToAddSalaryRecord}
+          />
+        ) : null*/}
+        <View style={styles.controlsFooter}>
+          <View style={styles.controlsFooterInnerFlex}>
+            <View style={styles.balanceViewContainer}>
+              <BalanceView balance={balance} />
+            </View>
+            <IconButton
+              icon="cash-plus"
+              color="#01645a"
+              size={FONT_SIZE * 1.5}
+              style={styles.addSalaryIconButton}
+              onPress={goToAddSalaryRecord}
+            />
+          </View>
+        </View>
+      </View>
+    </SafeAreaView>
   );
 };
 

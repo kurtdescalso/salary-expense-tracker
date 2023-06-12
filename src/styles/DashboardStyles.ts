@@ -1,14 +1,13 @@
-import {StyleSheet} from 'react-native';
-import {
-  heightPercentageToDP,
-  widthPercentageToDP,
-} from 'react-native-responsive-screen';
+import {Dimensions, StyleSheet} from 'react-native';
+import {widthPercentageToDP} from 'react-native-responsive-screen';
 import {FONT_SIZE} from '../constants';
 
 const styles = StyleSheet.create({
   mainContainer: {
-    height: heightPercentageToDP(100),
     width: widthPercentageToDP(100),
+  },
+  mainflexContainer: {
+    flex: 1,
   },
   headerText: {
     fontWeight: 'bold',
@@ -23,33 +22,29 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   salaryList: {
-    minHeight: heightPercentageToDP(74),
-    height: heightPercentageToDP(74),
-    maxHeight: heightPercentageToDP(74),
-    // marginHorizontal: FONT_SIZE,
+    flex: 1,
   },
-  balanceFooter: {
-    display: 'flex',
+  controlsFooter: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingHorizontal: FONT_SIZE * 2,
-    paddingVertical: FONT_SIZE,
+    alignItems: 'center',
+    marginHorizontal: FONT_SIZE,
   },
-  balanceFooterLabel: {
-    fontWeight: 'bold',
+  controlsFooterInnerFlex: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
-  balanceFooterAmountPositive: {
-    color: 'green',
-    fontWeight: 'bold',
-  },
-  balanceFooterAmountNegative: {
-    color: 'red',
-    fontWeight: 'bold',
+  balanceViewContainer: {
+    flex: 1,
   },
   addSalaryButton: {
     position: 'absolute',
     bottom: FONT_SIZE * 10,
     right: FONT_SIZE * 2,
+  },
+  addSalaryIconButton: {
+    backgroundColor: '#03dac4',
   },
 });
 

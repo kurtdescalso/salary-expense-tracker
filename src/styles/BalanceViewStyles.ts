@@ -1,17 +1,16 @@
 import {StyleSheet} from 'react-native';
 import {FONT_SIZE} from '../constants';
-import {
-  heightPercentageToDP,
-  widthPercentageToDP,
-} from 'react-native-responsive-screen';
 
 const styles = StyleSheet.create({
   balanceFooter: {
+    paddingHorizontal: FONT_SIZE,
+    paddingVertical: FONT_SIZE / 2,
+    marginVertical: FONT_SIZE / 2,
+  },
+  innerFlexContainer: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingHorizontal: FONT_SIZE * 2,
-    paddingVertical: FONT_SIZE,
   },
   balanceFooterAmountPositive: {
     color: 'green',

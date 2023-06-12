@@ -1,6 +1,8 @@
-import * as React from "react";
-import {View, Text} from "react-native";
-import BalanceViewStyles from "../styles/BalanceViewStyles";
+import * as React from 'react';
+import {View, Text} from 'react-native';
+import {Card} from 'react-native-paper';
+import BalanceViewStyles from '../styles/BalanceViewStyles';
+import {formatToPhp} from '../utils/currency';
 
 const styles = BalanceViewStyles;
 
@@ -10,18 +12,20 @@ interface IBalanceViewProps {
 
 const BalanceView = (props: IBalanceViewProps) => {
   return (
-    <View style={styles.balanceFooter}>
-      <Text>Balance:</Text>
-      <Text
-        style={
-          props.balance > 0
-            ? styles.balanceFooterAmountPositive
-            : styles.balanceFooterAmountNegative
-        }>
-        {props.balance.toFixed(2)}
-      </Text>
-    </View>
-  )
-}
+    <Card style={styles.balanceFooter}>
+      <View style={styles.innerFlexContainer}>
+        <Text>Balance:</Text>
+        <Text
+          style={
+            props.balance > 0
+              ? styles.balanceFooterAmountPositive
+              : styles.balanceFooterAmountNegative
+          }>
+          {formatToPhp(props.balance)}
+        </Text>
+      </View>
+    </Card>
+  );
+};
 
 export default BalanceView;
