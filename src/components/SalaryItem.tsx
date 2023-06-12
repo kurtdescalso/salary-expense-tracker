@@ -2,6 +2,8 @@ import * as React from 'react';
 import {View} from 'react-native';
 import {Card, Text} from 'react-native-paper';
 import {ISalaryRecord} from '../schemas/salaries';
+import {formatToPhp} from '../utils/currency';
+import {parseIsoString, formatToStandardDate} from '../utils/datetime';
 import SalaryItemStyles from '../styles/SalaryItemStyles';
 
 interface ISalaryItemProps {
@@ -11,24 +13,37 @@ interface ISalaryItemProps {
 const styles = SalaryItemStyles;
 
 const SalaryItem = (props: ISalaryItemProps & ISalaryRecord) => {
+  const dateDisplayString = React.useMemo(() => {
+    const newDateObject = parseIsoString(props.accounting_date);
+    return formatToStandardDate(newDateObject);
+  }, [props.accounting_date]);
+
+  const currencyDisplayString = React.useMemo(() => {
+    return formatToPhp(props.amount);
+  }, [props.amount]);
+
+  const goToViewExpensesPage = () => {
+    if (props.navigation) {
+      props.navigation.navigate('Expenses', {salaryId: props.id});
+    }
+  };
+
+  const goToEditSalaryPage = () => {
+    if (props.navigation) {
+      const targetSalary: ISalaryRecord = {
+        id: props.id,
+        description: props.description,
+        amount: props.amount,
+        accounting_date: props.accounting_date,
+      };
+      props.navigation.navigate('Edit Salary', {salaryItem: targetSalary});
+    }
+  };
+
   return (
     <Card
-      onPress={() => {
-        if (props.navigation) {
-          props.navigation.navigate('Expenses', {salaryId: props.id});
-        }
-      }}
-      onLongPress={() => {
-        if (props.navigation) {
-          const targetSalary: ISalaryRecord = {
-            id: props.id,
-            description: props.description,
-            amount: props.amount,
-            accounting_date: props.accounting_date,
-          };
-          props.navigation.navigate('Edit Salary', {salaryItem: targetSalary});
-        }
-      }}
+      onPress={goToViewExpensesPage}
+      onLongPress={goToEditSalaryPage}
       style={styles.salaryItem}>
       <View style={styles.salaryItemInnerContainer}>
         <View style={styles.detailsContainer}>
@@ -36,14 +51,10 @@ const SalaryItem = (props: ISalaryItemProps & ISalaryRecord) => {
             {props.description}
           </Text>
           <Text style={styles.tempFontStyle}>Recorded on:</Text>
-          <Text style={styles.tempFontStyle}>
-            {props.accounting_date as string}
-          </Text>
+          <Text style={styles.tempFontStyle}>{dateDisplayString}</Text>
         </View>
         <View style={styles.amountContainer}>
-          <Text style={styles.tempFontStyle}>{`P ${props.amount.toFixed(
-            2,
-          )}`}</Text>
+          <Text style={styles.tempFontStyle}>{currencyDisplayString}</Text>
         </View>
       </View>
     </Card>

@@ -5,7 +5,6 @@ const styles = StyleSheet.create({
   expenseItem: {
     paddingHorizontal: FONT_SIZE,
     paddingVertical: FONT_SIZE,
-    // marginHorizontal: FONT_SIZE / 4,
     marginVertical: FONT_SIZE / 4,
   },
   expenseItemInnerContainer: {
@@ -14,6 +13,9 @@ const styles = StyleSheet.create({
   },
   expenseDetails: {
     flex: 2,
+  },
+  expenseDescription: {
+    fontWeight: 'bold',
   },
   expenseAmount: {
     flex: 1,

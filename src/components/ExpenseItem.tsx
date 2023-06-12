@@ -3,6 +3,8 @@ import {View} from 'react-native';
 import {Card, Text} from 'react-native-paper';
 import {IExpenseEntry} from '../schemas/salaries';
 import ExpenseItemStyles from '../styles/ExpenseItemStyles';
+import {formatToPhp} from '../utils/currency';
+import {parseIsoString, formatToStandardDate} from '../utils/datetime';
 
 interface IExpenseEntryItemProps {
   navigation?: any;
@@ -11,6 +13,15 @@ interface IExpenseEntryItemProps {
 const styles = ExpenseItemStyles;
 
 const SalaryItem = (props: IExpenseEntryItemProps & IExpenseEntry) => {
+  const dateDisplayString = React.useMemo(() => {
+    const newDateObject = parseIsoString(props.accounting_date);
+    return formatToStandardDate(newDateObject);
+  }, [props.accounting_date]);
+
+  const currencyDisplayString = React.useMemo(() => {
+    return formatToPhp(props.amount);
+  }, [props.amount]);
+
   return (
     <Card
       style={styles.expenseItem}
@@ -32,12 +43,12 @@ const SalaryItem = (props: IExpenseEntryItemProps & IExpenseEntry) => {
       }}>
       <View style={styles.expenseItemInnerContainer}>
         <View style={styles.expenseDetails}>
-          <Text>{props.description}</Text>
+          <Text style={styles.expenseDescription}>{props.description}</Text>
           <Text>{props.category}</Text>
-          <Text>{props.accounting_date}</Text>
+          <Text>{dateDisplayString}</Text>
         </View>
         <View style={styles.expenseAmount}>
-          <Text>{props.amount.toFixed(2)}</Text>
+          <Text>{currencyDisplayString}</Text>
         </View>
       </View>
     </Card>
