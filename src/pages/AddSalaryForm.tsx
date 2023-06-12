@@ -11,8 +11,6 @@ import {ISalaryRecord} from '../schemas/salaries';
 import {getDBConnection} from '../services/database';
 import {addSalaryRecord, getSalaryRecords} from '../services/salary';
 import useSalaryRecordStore from '../stores/SalaryStore';
-import FormSelectField from '../components/FormSelectField';
-import {CATEGORY_OPTIONS} from '../constants';
 import {format} from 'date-fns';
 import CommonStyles from '../styles/CommonStyles';
 import AddSalaryFormStyles from '../styles/AddSalaryFormStyles';
@@ -75,13 +73,6 @@ const AddSalaryForm = () => {
           required: true,
         }}
         style={styles.amountPesos}
-      />
-      <FormSelectField
-        label="Category"
-        name="category"
-        control={form.control}
-        rules={{required: true}}
-        options={CATEGORY_OPTIONS}
       />
       <DateTimePicker
         dateTime={form.watch('accounting_date')}

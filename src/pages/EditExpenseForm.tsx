@@ -113,6 +113,7 @@ const EditExpenseForm = ({
         label="Category"
         name="category"
         control={form.control}
+        value={expenseItem ? expenseItem.category : undefined}
         rules={{required: true}}
         options={CATEGORY_OPTIONS}
       />

@@ -11,6 +11,7 @@ interface IFormSelectField {
   label: string;
   name: string;
   control: any;
+  value?: string | number;
   rules: any;
   options: ISelectOption[];
   style?: StyleProp<ViewStyle>;
@@ -18,8 +19,18 @@ interface IFormSelectField {
 
 const FormSelectField = (props: IFormSelectField) => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-  const [selectedOptionLabel, setSelectedOptionLabel] =
-    React.useState('-Select-');
+  const [selectedOptionLabel, setSelectedOptionLabel] = React.useState(() => {
+    let initialAnchorLabel = '-Select-';
+    if (props.value) {
+      const previouslySetOption = props.options.find(option => {
+        return option.value === props.value;
+      });
+      if (previouslySetOption) {
+        initialAnchorLabel = previouslySetOption.label;
+      }
+    }
+    return initialAnchorLabel;
+  });
 
   const openMenu = () => {
     setIsMenuOpen(true);
