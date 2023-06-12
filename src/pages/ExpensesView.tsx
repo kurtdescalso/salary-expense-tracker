@@ -109,19 +109,7 @@ const ExpensesViewPage = ({
         <FlatList
           data={expenseList}
           renderItem={({item}) => (
-            <>
-              <ExpenseItem {...item} navigation={navigation} />
-              <ExpenseItem {...item} navigation={navigation} />
-              <ExpenseItem {...item} navigation={navigation} />
-              <ExpenseItem {...item} navigation={navigation} />
-              <ExpenseItem {...item} navigation={navigation} />
-              <ExpenseItem {...item} navigation={navigation} />
-              <ExpenseItem {...item} navigation={navigation} />
-              <ExpenseItem {...item} navigation={navigation} />
-              <ExpenseItem {...item} navigation={navigation} />
-              <ExpenseItem {...item} navigation={navigation} />
-              <ExpenseItem {...item} navigation={navigation} />
-            </>
+            <ExpenseItem {...item} navigation={navigation} />
           )}
           keyExtractor={(item, index) => `expense-item-${item.id}-${index}`}
           onScrollBeginDrag={onScrollStart}
