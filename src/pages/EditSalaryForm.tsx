@@ -10,16 +10,14 @@ import DateTimePicker from '../components/DateTimePicker';
 import {useForm} from 'react-hook-form';
 import 'intl';
 import 'intl/locale-data/jsonp/en';
-import EditSalaryFormStyles from '../styles/EditSalaryFormStyles';
-import CommonStyles from '../styles/CommonStyles';
 import {ISalaryRecord} from '../schemas/salaries';
-import {
-  getDBConnection,
-  editSalaryRecord,
-  getSalaryRecords,
-} from '../services/database';
+import {getDBConnection} from '../services/database';
+import {editSalaryRecord, getSalaryRecords} from '../services/salary';
 import useSalaryRecordStore from '../stores/SalaryStore';
 import {useNavigation} from '@react-navigation/native';
+import {format, parse} from 'date-fns';
+import CommonStyles from '../styles/CommonStyles';
+import EditSalaryFormStyles from '../styles/EditSalaryFormStyles';
 
 const styles = EditSalaryFormStyles;
 
@@ -100,7 +98,12 @@ const EditSalaryForm = ({
       </View>
       <DateTimePicker
         dateTime={form.getValues().accounting_date}
-        setDateTime={value => form.setValue('accounting_date', value)}
+        setDateTime={value => {
+          form.setValue(
+            'accounting_date',
+            format(value, 'uuuu-MM-dd HH:mm:ss'),
+          );
+        }}
       />
       <View style={styles.submitButtonContainer}>
         <Button mode="contained" onPress={onSubmit}>

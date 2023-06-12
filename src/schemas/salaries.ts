@@ -13,7 +13,7 @@ interface ISalaryRecord {
   amount: number;
   description: string;
   expenses?: IExpenseEntry[];
-  accounting_date: Date | string;
+  accounting_date: string;
   created_at?: Date | string;
 }
 

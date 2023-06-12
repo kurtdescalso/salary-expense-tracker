@@ -13,7 +13,7 @@ import {addSalaryRecord, getSalaryRecords} from '../services/salary';
 import useSalaryRecordStore from '../stores/SalaryStore';
 import FormSelectField from '../components/FormSelectField';
 import {CATEGORY_OPTIONS} from '../constants';
-import {format, parse} from 'date-fns';
+import {format} from 'date-fns';
 import CommonStyles from '../styles/CommonStyles';
 import AddSalaryFormStyles from '../styles/AddSalaryFormStyles';
 
@@ -30,7 +30,7 @@ const AddSalaryForm = () => {
     defaultValues: {
       description: '',
       amount: 0,
-      accounting_date: format(new Date(), 'uuuu-MM-dd'),
+      accounting_date: format(new Date(), 'uuuu-MM-dd HH:mm:ss'),
     },
   });
 
@@ -39,14 +39,14 @@ const AddSalaryForm = () => {
 
     const data: ISalaryRecord = form.getValues();
     if (!data.accounting_date) {
-      data.accounting_date = format(new Date(), 'uuuu-MM-dd');
+      data.accounting_date = format(new Date(), 'uuuu-MM-dd HH:mm:ss');
     }
 
     const db = await getDBConnection();
 
     await addSalaryRecord(db, {
       ...data,
-      created_at: format(new Date(), 'uuuu-MM-dd'),
+      created_at: format(new Date(), 'uuuu-MM-dd HH:mm:ss'),
     });
 
     const newSalaryRecords = await getSalaryRecords(db);
@@ -84,14 +84,13 @@ const AddSalaryForm = () => {
         options={CATEGORY_OPTIONS}
       />
       <DateTimePicker
-        dateTime={parse(
-          form.getValues().accounting_date,
-          'uuuu-MM-dd',
-          new Date(),
-        )}
-        setDateTime={value =>
-          form.setValue('accounting_date', format(value, 'uuuu-MM-dd'))
-        }
+        dateTime={form.watch('accounting_date')}
+        setDateTime={value => {
+          form.setValue(
+            'accounting_date',
+            format(value, 'uuuu-MM-dd HH:mm:ss'),
+          );
+        }}
       />
       <View style={styles.submitButtonContainer}>
         <Button mode="contained" onPress={onSubmit}>

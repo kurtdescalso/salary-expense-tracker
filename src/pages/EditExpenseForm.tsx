@@ -58,7 +58,7 @@ const EditExpenseForm = ({
     setIsLoading(true);
     const data = form.getValues();
     if (!data.accounting_date) {
-      data.accounting_date = format(new Date(), 'uuuu-MM-dd');
+      data.accounting_date = format(new Date(), 'uuuu-MM-dd HH:mm:ss');
     }
 
     const db = await getDBConnection();
@@ -68,9 +68,9 @@ const EditExpenseForm = ({
       id: expenseItem.id,
       salary_id: expenseItem.salary_id,
       accounting_date: data.accounting_date
-        ? format(new Date(), 'uuuu-MM-dd')
+        ? format(new Date(), 'uuuu-MM-dd HH:mm:ss')
         : new Date().toISOString(),
-      created_at: format(new Date(), 'uuuu-MM-dd'),
+      created_at: format(new Date(), 'uuuu-MM-dd HH:mm:ss'),
     });
 
     const newSalaryRecords = await getSalaryRecords(db);
@@ -117,11 +117,7 @@ const EditExpenseForm = ({
         options={CATEGORY_OPTIONS}
       />
       <DateTimePicker
-        dateTime={parse(
-          form.getValues().accounting_date,
-          'uuuu-MM-dd',
-          new Date(),
-        )}
+        dateTime={form.getValues().accounting_date}
         setDateTime={value => value}
       />
       <View style={styles.submitButtonContainer}>

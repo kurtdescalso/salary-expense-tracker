@@ -6,24 +6,14 @@ const styles = StyleSheet.create({
   mainContainer: {
     marginVertical: FONT_SIZE / 2,
     maxHeight: heightPercentageToDP(50),
-  },
-  inputContainer: {
-    paddingHorizontal: FONT_SIZE,
-    paddingVertical: FONT_SIZE / 2,
-  },
-  dateTimeLabel: {
-    fontWeight: 'bold',
-  },
-  dateTimeValue: {
-    textAlign: 'center',
-  },
-  controlsContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-evenly',
     alignItems: 'center',
-    height: heightPercentageToDP(50),
-    maxHeight: heightPercentageToDP(50),
+  },
+  controlLabels: {
+    width: '92.5%',
+    textAlign: 'left',
+  },
+  controlButton: {
+    width: '92.5%',
   },
 });
 

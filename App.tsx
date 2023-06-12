@@ -21,8 +21,10 @@ import AddSalaryForm from './src/pages/AddSalaryForm';
 import EditSalaryForm from './src/pages/EditSalaryForm';
 import AddExpenseForm from './src/pages/AddExpenseForm';
 import EditExpenseForm from './src/pages/EditExpenseForm';
-
 import {getDBConnection, createTables} from './src/services/database';
+
+import {en, registerTranslation} from 'react-native-paper-dates';
+registerTranslation('en', en);
 
 import {IExpenseEntry, ISalaryRecord} from './src/schemas/salaries';
 

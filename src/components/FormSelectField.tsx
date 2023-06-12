@@ -67,7 +67,6 @@ const FormSelectField = (props: IFormSelectField) => {
             </Menu>
           </>
         )}
-        name={props.name}
       />
     </View>
   );

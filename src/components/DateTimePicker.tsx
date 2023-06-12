@@ -1,82 +1,130 @@
 import * as React from 'react';
 import {View} from 'react-native';
-import DatePicker from 'react-native-date-picker';
-import {Text} from 'react-native-paper';
-import {addTZOffset} from '../utils/datetime';
+import {Button, Text} from 'react-native-paper';
+import {DatePickerModal, TimePickerModal} from 'react-native-paper-dates';
+import {format, parse} from 'date-fns';
 import DateTimePickerStyles from '../styles/DateTimePickerStyles';
-import {CombinedDefaultTheme} from '../styles/Theme';
+import {
+  CalendarDate,
+  SingleChange,
+} from 'react-native-paper-dates/lib/typescript/Date/Calendar';
 
 interface IDateTimePickerProps {
-  dateTime: Date;
+  dateTime: string;
   setDateTime: (date: Date) => void;
 }
 
 const styles = DateTimePickerStyles;
 
 const DateTimePicker = (props: IDateTimePickerProps) => {
-  const [internalDate, setInternalDate] = React.useState(new Date());
-  const [internalTime, setInternalTime] = React.useState(new Date());
+  const [isDatePickerOpen, setIsDatePickerOpen] = React.useState(false);
+  const [isTimePickerOpen, setIsTimePickerOpen] = React.useState(false);
+  const [internalCachedTime, setInternalCachedTime] = React.useState(
+    new Date(),
+  );
 
-  const setExternalDate = (date: Date) => {
-    props.dateTime.setUTCFullYear(date.getFullYear());
-    props.dateTime.setMonth(date.getMonth());
-    props.dateTime.setDate(date.getDate());
-    props.setDateTime(props.dateTime);
+  const openDatePicker = () => {
+    setIsDatePickerOpen(true);
   };
 
-  const setExternalTime = (time: Date) => {
-    props.dateTime.setHours(time.getHours());
-    props.dateTime.setMinutes(time.getMinutes());
-    props.setDateTime(props.dateTime);
+  const closeDatePicker = () => {
+    setIsDatePickerOpen(false);
   };
 
-  const handleSetDate = (date: Date) => {
-    setInternalDate(date);
-    const newDate = new Date(
-      date.getFullYear(),
-      date.getMonth(),
-      date.getDate(),
-      props.dateTime.getHours(),
-      props.dateTime.getMinutes(),
-      props.dateTime.getSeconds(),
-    );
-    setExternalDate(newDate);
+  const openTimePicker = () => {
+    setIsTimePickerOpen(true);
   };
 
-  const handleSetTime = (time: Date) => {
-    setInternalTime(time);
-    const newTime = addTZOffset(
-      new Date(
-        props.dateTime.getFullYear(),
-        props.dateTime.getMonth(),
-        props.dateTime.getDate(),
-        time.getHours(),
-        time.getMinutes(),
-        time.getSeconds(),
-      ),
-    );
-    setExternalTime(newTime);
+  const closeTimePicker = () => {
+    setIsTimePickerOpen(false);
+  };
+
+  const dateButtonLabel = React.useMemo(() => {
+    try {
+      const formattedTime = format(
+        parse(props.dateTime, 'uuuu-MM-dd HH:mm:ss', new Date()),
+        'uuuu-MM-dd',
+      );
+      return formattedTime;
+    } catch (error) {
+      console.log('dateButtonLabel error:');
+      console.log(error);
+      const formattedTime = format(new Date(), 'uuuu-MM-dd');
+      return formattedTime;
+    }
+  }, [props.dateTime]);
+
+  const timeButtonLabel = React.useMemo(() => {
+    try {
+      const formattedTime = format(
+        parse(props.dateTime, 'uuuu-MM-dd HH:mm:ss', new Date()),
+        'HH:mm',
+      );
+      return formattedTime;
+    } catch (error) {
+      console.log('timeButtonLabel error:');
+      console.log(error);
+      const formattedTime = format(new Date(), 'HH:mm');
+      return formattedTime;
+    }
+  }, [props.dateTime]);
+
+  const confirmDate: SingleChange = (data: {date: CalendarDate}) => {
+    const processedDate = data.date as Date;
+    if (internalCachedTime) {
+      processedDate.setHours(
+        internalCachedTime.getHours(),
+        internalCachedTime.getMinutes(),
+        internalCachedTime.getSeconds(),
+        internalCachedTime.getMilliseconds(),
+      );
+    }
+    props.setDateTime(processedDate);
+    closeDatePicker();
+  };
+
+  const confirmTime = (data: {hours: number; minutes: number}) => {
+    const newDate = parse(props.dateTime, 'uuuu-MM-dd HH:mm:ss', new Date());
+    newDate.setHours(data.hours);
+    newDate.setMinutes(data.minutes);
+    props.setDateTime(newDate);
+    closeTimePicker();
   };
 
   return (
     <View style={styles.mainContainer}>
-      <View style={styles.inputContainer}>
-        <Text style={styles.dateTimeLabel}>Date & Time</Text>
-      </View>
-      <View style={styles.controlsContainer}>
-        <DatePicker
-          date={internalDate}
-          mode="date"
-          onDateChange={handleSetDate}
-          fadeToColor={CombinedDefaultTheme.colors.background}
-        />
-        <DatePicker
-          date={internalTime}
-          mode="time"
-          onDateChange={handleSetTime}
-          fadeToColor={CombinedDefaultTheme.colors.background}
-        />
-      </View>
+      <Text style={styles.controlLabels}>Date</Text>
+      <Button
+        mode="outlined"
+        onPress={openDatePicker}
+        style={styles.controlButton}>
+        {dateButtonLabel}
+      </Button>
+      <DatePickerModal
+        locale="en"
+        mode="single"
+        visible={isDatePickerOpen}
+        date={
+          props.dateTime
+            ? parse(props.dateTime, 'uuuu-MM-dd HH:mm:ss', new Date())
+            : new Date()
+        }
+        onConfirm={confirmDate}
+        onDismiss={closeDatePicker}
+      />
+      <Text style={styles.controlLabels}>Time</Text>
+      <Button
+        mode="outlined"
+        onPress={openTimePicker}
+        style={styles.controlButton}>
+        {timeButtonLabel}
+      </Button>
+      <TimePickerModal
+        locale="en"
+        visible={isTimePickerOpen}
+        onDismiss={closeTimePicker}
+        onConfirm={confirmTime}
+      />
     </View>
   );
 };
