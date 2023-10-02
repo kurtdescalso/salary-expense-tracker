@@ -3,7 +3,7 @@ import {SALARIES_TABLE_NAME} from './database';
 import {ISalaryRecord} from '../schemas/salaries';
 
 export const getSalaryRecords = async (db: SQLiteDatabase) => {
-  const query = `SELECT * FROM ${SALARIES_TABLE_NAME}`;
+  const query = `SELECT * FROM ${SALARIES_TABLE_NAME} ORDER BY accounting_date DESC`;
   return await db.executeSql(query);
 };
 
