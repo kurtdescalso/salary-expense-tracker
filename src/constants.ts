@@ -27,6 +27,18 @@ export const CATEGORY_OPTIONS: ISelectOption[] = [
     value: 'Entertainment',
   },
   {
+    label: 'One-Time Expense',
+    value: 'One-Time Expense',
+  },
+  {
+    label: 'Convenience Fees',
+    value: 'Convenience Fees',
+  },
+  {
+    label: 'Clothing',
+    value: 'Clothing',
+  },
+  {
     label: 'Emergency',
     value: 'Emergency',
   },

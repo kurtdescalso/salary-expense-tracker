@@ -16,6 +16,7 @@ import {CombinedDefaultTheme, CombinedDarkTheme} from './src/styles/Theme';
 import AppBar from './src/components/AppBar';
 
 import DashboardPage from './src/pages/Dashboard';
+import StatsPage from './src/pages/Stats';
 import ExpensesViewPage from './src/pages/ExpensesView';
 import AddSalaryForm from './src/pages/AddSalaryForm';
 import EditSalaryForm from './src/pages/EditSalaryForm';
@@ -28,10 +29,9 @@ registerTranslation('en', en);
 
 import {IExpenseEntry, ISalaryRecord} from './src/schemas/salaries';
 
-const Stack = createNativeStackNavigator();
-
 export type AppStackParamList = {
   Dashboard: undefined;
+  Stats: undefined;
   Expenses: {
     salaryId: number;
   };
@@ -46,6 +46,8 @@ export type AppStackParamList = {
     expenseItem: IExpenseEntry;
   };
 };
+
+const Stack = createNativeStackNavigator<AppStackParamList>();
 
 const App = () => {
   const initializeDatabase = React.useCallback(async () => {
@@ -64,7 +66,22 @@ const App = () => {
         screenOptions={{
           header: props => <AppBar {...props} />,
         }}>
-        <Stack.Screen name="Dashboard" component={DashboardPage} />
+        <Stack.Screen
+          name="Dashboard"
+          component={DashboardPage}
+          options={{
+            animation: 'none',
+          }}
+        />
+        <Stack.Screen
+          name="Stats"
+          component={StatsPage}
+          options={{
+            headerLeft: () => null,
+            headerBackVisible: false,
+            animation: 'none',
+          }}
+        />
         <Stack.Screen name="Expenses" component={ExpensesViewPage} />
         <Stack.Screen name="Add Salary" component={AddSalaryForm} />
         <Stack.Screen name="Edit Salary" component={EditSalaryForm} />

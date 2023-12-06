@@ -27,9 +27,7 @@ const DeleteSalaryConfirmationDialog = (
     const db = await getDBConnection();
 
     try {
-      const result = await deleteSalaryRecord(db, props.salaryItem);
-      console.log('delete salary record resolved');
-      console.log(result);
+      await deleteSalaryRecord(db, props.salaryItem);
       const newSalaryRecords = await getSalaryRecords(db);
       setSalaryRecords(newSalaryRecords[0].rows.raw());
     } catch (e) {

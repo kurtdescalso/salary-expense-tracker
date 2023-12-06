@@ -6,13 +6,13 @@ import {
   SafeAreaView,
   View,
 } from 'react-native';
-import {FAB, IconButton, Text, ProgressBar} from 'react-native-paper';
+import {IconButton, Text, ProgressBar} from 'react-native-paper';
 import {useHeaderHeight} from '@react-navigation/elements';
 import {AppStackParamList} from '../../App';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {getDBConnection} from '../services/database';
 import {getSalaryRecords, getTotalSalaries} from '../services/salary';
-import {getTotalExpenses} from '../services/expense';
+import {getAllExpenses, getTotalExpenses} from '../services/expense';
 import useSalaryRecordStore from '../stores/SalaryStore';
 import DashboardStyles from '../styles/DashboardStyles';
 import CommonStyles from '../styles/CommonStyles';
@@ -20,6 +20,8 @@ import SalaryItem from '../components/SalaryItem';
 import NoResultsView from '../components/NoResultsView';
 import BalanceView from '../components/BalanceView';
 import {FONT_SIZE} from '../constants';
+import BottomTabs from '../components/BottomTabs';
+import {IExpenseEntry} from '../schemas/salaries';
 
 const styles = DashboardStyles;
 
@@ -32,21 +34,15 @@ const DashboardPage = ({
   const headerHeight = useHeaderHeight();
 
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  const [isScrolling, setIsScrolling] = React.useState(false);
   const [balance, setBalance] = React.useState<number>(0);
   const salaryList = useSalaryRecordStore(state => state.salaryRecords);
   const setSalaryList = useSalaryRecordStore(state => state.setSalaryRecords);
+  const setAllExpensesList = useSalaryRecordStore(
+    state => state.setAllExpenseRecords,
+  );
 
   const goToAddSalaryRecord = () => {
     navigation.navigate('Add Salary');
-  };
-
-  const onScrollStart = () => {
-    setIsScrolling(true);
-  };
-
-  const onScrollEnd = () => {
-    setIsScrolling(false);
   };
 
   React.useEffect(() => {
@@ -66,6 +62,28 @@ const DashboardPage = ({
         });
     })();
   }, [setSalaryList]);
+
+  React.useEffect(() => {
+    (async () => {
+      const db = await getDBConnection();
+      const allExpensesRaw = await getAllExpenses(db);
+      const allExpensesList = allExpensesRaw[0].rows.raw();
+
+      setAllExpensesList(
+        allExpensesList.map(expense => {
+          return {
+            id: expense.id,
+            amount: expense.amount,
+            description: expense.description,
+            category: expense.category,
+            accounting_date: expense.accounting_date,
+            created_at: expense.created_at,
+            salary_id: expense.salary_id,
+          } as IExpenseEntry;
+        }),
+      );
+    })();
+  }, [setAllExpensesList]);
 
   React.useEffect(() => {
     if (salaryList && salaryList.length > 0) {
@@ -109,8 +127,6 @@ const DashboardPage = ({
           keyExtractor={(item, index) =>
             `salary-record-item-${item.id}-${index}`
           }
-          onScrollBeginDrag={onScrollStart}
-          onScrollEndDrag={onScrollEnd}
           ListEmptyComponent={
             <NoResultsView message="No salary records found." />
           }
@@ -139,6 +155,17 @@ const DashboardPage = ({
           </View>
         </View>
       </View>
+      <BottomTabs navigation={navigation} />
+      {/*<View>
+        <Surface style={styles.navButtonsContainer}>
+          <TouchableRipple onPress={goToDashboard} style={styles.navButton}>
+            <Text style={styles.navButtonLabel}>Dashboard</Text>
+          </TouchableRipple>
+          <TouchableRipple onPress={goToStats} style={styles.navButton}>
+            <Text style={styles.navButtonLabel}>Stats</Text>
+          </TouchableRipple>
+        </Surface>
+      </View>*/}
     </SafeAreaView>
   );
 };

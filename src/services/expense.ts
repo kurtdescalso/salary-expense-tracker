@@ -7,6 +7,12 @@ export const getTotalExpenses = async (db: SQLiteDatabase) => {
   return await db.executeSql(query);
 };
 
+export const getAllExpenses = async (db: SQLiteDatabase) => {
+  const query = `SELECT * FROM ${EXPENSES_TABLE_NAME}`;
+
+  return await db.executeSql(query);
+};
+
 export const getExpensesBySalaryRecordId = async (
   db: SQLiteDatabase,
   salaryId: number,
@@ -48,7 +54,6 @@ export const editExpenseRecord = async (
   db: SQLiteDatabase,
   expense: IExpenseEntry,
 ) => {
-  console.log(expense);
   const query = `UPDATE ${EXPENSES_TABLE_NAME} SET
     amount=?,
     description=?,
