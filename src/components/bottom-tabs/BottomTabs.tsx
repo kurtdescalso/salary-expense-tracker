@@ -1,6 +1,12 @@
 import * as React from 'react';
 import {View} from 'react-native';
-import {Surface, TouchableRipple, Text} from 'react-native-paper';
+import {
+  useTheme,
+  Surface,
+  Button,
+  TouchableRipple,
+  Text,
+} from 'react-native-paper';
 import {AppStackParamList} from '../../../App';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import styles from './BottomTabsStyles';
@@ -11,6 +17,8 @@ type BottomTabsNavigationProp = NativeStackNavigationProp<
 >;
 
 const BottomTabs = (navigation: BottomTabsNavigationProp) => {
+  const theme = useTheme();
+
   const goToDashboard = () => {
     ((navigation as any).navigation as BottomTabsNavigationProp).navigate(
       'Dashboard',
@@ -26,12 +34,20 @@ const BottomTabs = (navigation: BottomTabsNavigationProp) => {
   return (
     <View>
       <Surface style={styles.navButtonsContainer}>
-        <TouchableRipple onPress={goToDashboard} style={styles.navButton}>
-          <Text style={styles.navButtonLabel}>Salary List</Text>
-        </TouchableRipple>
-        <TouchableRipple onPress={goToStats} style={styles.navButton}>
-          <Text style={styles.navButtonLabel}>Expense View</Text>
-        </TouchableRipple>
+        <Button
+          icon="account-cash"
+          color={theme.colors.onSurface}
+          onPress={goToDashboard}
+          style={styles.navButton}>
+          Salary List
+        </Button>
+        <Button
+          icon="archive-search"
+          color={theme.colors.onSurface}
+          onPress={goToStats}
+          style={styles.navButton}>
+          Expense View
+        </Button>
       </Surface>
     </View>
   );

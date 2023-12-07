@@ -1,6 +1,6 @@
 import * as React from 'react';
-import {View, Text} from 'react-native';
-import {Card} from 'react-native-paper';
+import {View} from 'react-native';
+import {Card, Text} from 'react-native-paper';
 import {formatToPhp} from '../../utils/currency';
 import styles from './BalanceViewStyles';
 

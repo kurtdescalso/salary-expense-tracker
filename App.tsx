@@ -12,7 +12,9 @@ import React from 'react';
 
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {Provider as PaperProvider} from 'react-native-paper';
 import {CombinedDefaultTheme, CombinedDarkTheme} from './src/styles/Theme';
+import {useColorScheme} from 'react-native';
 import AppBar from './src/components/app-bar/AppBar';
 
 import DashboardPage from './src/pages/dashboard/Dashboard';
@@ -55,40 +57,48 @@ const App = () => {
     await createTables(db);
   }, []);
 
+  const colorScheme = useColorScheme();
+
   React.useEffect(() => {
     initializeDatabase();
   }, [initializeDatabase]);
 
   return (
-    <NavigationContainer theme={CombinedDefaultTheme}>
-      <Stack.Navigator
-        initialRouteName="Dashboard"
-        screenOptions={{
-          header: props => <AppBar {...props} />,
-        }}>
-        <Stack.Screen
-          name="Dashboard"
-          component={DashboardPage}
-          options={{
-            animation: 'none',
-          }}
-        />
-        <Stack.Screen
-          name="Stats"
-          component={StatsPage}
-          options={{
-            headerLeft: () => null,
-            headerBackVisible: false,
-            animation: 'none',
-          }}
-        />
-        <Stack.Screen name="Expenses" component={ExpensesViewPage} />
-        <Stack.Screen name="Add Salary" component={AddSalaryForm} />
-        <Stack.Screen name="Edit Salary" component={EditSalaryForm} />
-        <Stack.Screen name="Add Expense" component={AddExpenseForm} />
-        <Stack.Screen name="Edit Expense" component={EditExpenseForm} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <PaperProvider
+      theme={colorScheme !== 'dark' ? CombinedDefaultTheme : CombinedDarkTheme}>
+      <NavigationContainer
+        theme={
+          colorScheme !== 'dark' ? CombinedDefaultTheme : CombinedDarkTheme
+        }>
+        <Stack.Navigator
+          initialRouteName="Dashboard"
+          screenOptions={{
+            header: props => <AppBar {...props} />,
+          }}>
+          <Stack.Screen
+            name="Dashboard"
+            component={DashboardPage}
+            options={{
+              animation: 'none',
+            }}
+          />
+          <Stack.Screen
+            name="Stats"
+            component={StatsPage}
+            options={{
+              headerLeft: () => null,
+              headerBackVisible: false,
+              animation: 'none',
+            }}
+          />
+          <Stack.Screen name="Expenses" component={ExpensesViewPage} />
+          <Stack.Screen name="Add Salary" component={AddSalaryForm} />
+          <Stack.Screen name="Edit Salary" component={EditSalaryForm} />
+          <Stack.Screen name="Add Expense" component={AddExpenseForm} />
+          <Stack.Screen name="Edit Expense" component={EditExpenseForm} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </PaperProvider>
   );
 };
 
