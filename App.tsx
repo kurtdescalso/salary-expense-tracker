@@ -13,15 +13,15 @@ import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {CombinedDefaultTheme, CombinedDarkTheme} from './src/styles/Theme';
-import AppBar from './src/components/AppBar';
+import AppBar from './src/components/app-bar/AppBar';
 
-import DashboardPage from './src/pages/Dashboard';
-import StatsPage from './src/pages/Stats';
-import ExpensesViewPage from './src/pages/ExpensesView';
-import AddSalaryForm from './src/pages/AddSalaryForm';
-import EditSalaryForm from './src/pages/EditSalaryForm';
-import AddExpenseForm from './src/pages/AddExpenseForm';
-import EditExpenseForm from './src/pages/EditExpenseForm';
+import DashboardPage from './src/pages/dashboard/Dashboard';
+import StatsPage from './src/pages/stats/Stats';
+import ExpensesViewPage from './src/pages/expenses-view/ExpensesView';
+import AddSalaryForm from './src/pages/add-salary-form/AddSalaryForm';
+import EditSalaryForm from './src/pages/edit-salary-form/EditSalaryForm';
+import AddExpenseForm from './src/pages/add-expense-form/AddExpenseForm';
+import EditExpenseForm from './src/pages/edit-expense-form/EditExpenseForm';
 import {getDBConnection, createTables} from './src/services/database';
 
 import {en, registerTranslation} from 'react-native-paper-dates';
