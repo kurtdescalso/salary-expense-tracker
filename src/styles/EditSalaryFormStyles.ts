@@ -7,11 +7,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    marginRight: FONT_SIZE,
   },
   headerText: {
     fontWeight: 'bold',
     fontSize: FONT_SIZE * 1.25,
-    paddingHorizontal: FONT_SIZE,
     paddingVertical: FONT_SIZE / 2,
   },
   amountInputContainer: {

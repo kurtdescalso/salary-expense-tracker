@@ -7,7 +7,7 @@ const AppBar = ({navigation, back}: NativeStackHeaderProps) => {
   const route = useRoute();
 
   return (
-    <PaperAppBar.Header>
+    <PaperAppBar.Header style={{elevation: 0}}>
       {route.name !== 'Stats' && back ? (
         <PaperAppBar.BackAction onPress={navigation.goBack} />
       ) : null}

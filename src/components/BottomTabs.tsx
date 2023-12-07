@@ -32,7 +32,7 @@ const BottomTabs = (navigation: BottomTabsNavigationProp) => {
           <Text style={styles.navButtonLabel}>Salary List</Text>
         </TouchableRipple>
         <TouchableRipple onPress={goToStats} style={styles.navButton}>
-          <Text style={styles.navButtonLabel}>Stats</Text>
+          <Text style={styles.navButtonLabel}>Expense View</Text>
         </TouchableRipple>
       </Surface>
     </View>

@@ -7,6 +7,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    marginRight: FONT_SIZE,
   },
   amountPesos: {
     flexGrow: 4,
