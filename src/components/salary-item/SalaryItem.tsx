@@ -4,13 +4,11 @@ import {Card, Text} from 'react-native-paper';
 import {ISalaryRecord} from '../../schemas/salaries';
 import {formatToPhp} from '../../utils/currency';
 import {parseIsoString, formatToStandardDate} from '../../utils/datetime';
-import SalaryItemStyles from './SalaryItemStyles';
+import styles from './SalaryItemStyles';
 
 interface ISalaryItemProps {
   navigation?: any;
 }
-
-const styles = SalaryItemStyles;
 
 const SalaryItem = (props: ISalaryItemProps & ISalaryRecord) => {
   const dateDisplayString = React.useMemo(() => {

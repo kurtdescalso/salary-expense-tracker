@@ -15,11 +15,9 @@ import {getDBConnection} from '../../services/database';
 import {editSalaryRecord, getSalaryRecords} from '../../services/salary';
 import useSalaryRecordStore from '../../stores/SalaryStore';
 import {useNavigation} from '@react-navigation/native';
-import {format, parse} from 'date-fns';
+import {format} from 'date-fns';
 import CommonStyles from '../../styles/CommonStyles';
-import EditSalaryFormStyles from './EditSalaryFormStyles';
-
-const styles = EditSalaryFormStyles;
+import styles from './EditSalaryFormStyles';
 
 type EditSalaryFormStackScreenProps<T extends keyof AppStackParamList> =
   NativeStackScreenProps<AppStackParamList, T>;

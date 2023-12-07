@@ -1,10 +1,8 @@
 import * as React from 'react';
 import {View, StyleProp, ViewStyle} from 'react-native';
 import {TextInput} from 'react-native-paper';
-import FormCharFieldStyles from './FormCharFieldStyles';
 import {Controller} from 'react-hook-form';
-
-const styles = FormCharFieldStyles;
+import styles from './FormCharFieldStyles';
 
 interface IFormCharField {
   label: string;

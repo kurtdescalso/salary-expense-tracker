@@ -1,10 +1,8 @@
 import * as React from 'react';
 import {View, StyleProp, ViewStyle} from 'react-native';
 import {TextInput} from 'react-native-paper';
-import FormNumberFieldStyles from './FormNumberFieldStyles';
 import {Controller} from 'react-hook-form';
-
-const styles = FormNumberFieldStyles;
+import styles from './FormNumberFieldStyles';
 
 interface IFormNumberField {
   label: string;

@@ -1,10 +1,8 @@
 import * as React from 'react';
 import {View} from 'react-native';
 import {Card, Text} from 'react-native-paper';
-import TotalExpensesViewStyles from './TotalExpensesViewStyles';
 import {formatToPhp} from '../../utils/currency';
-
-const styles = TotalExpensesViewStyles;
+import styles from './TotalExpensesViewStyles';
 
 interface ITotalExpensesViewProps {
   total: number;

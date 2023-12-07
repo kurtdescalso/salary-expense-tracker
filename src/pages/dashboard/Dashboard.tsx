@@ -14,16 +14,14 @@ import {getDBConnection} from '../../services/database';
 import {getSalaryRecords, getTotalSalaries} from '../../services/salary';
 import {getAllExpenses, getTotalExpenses} from '../../services/expense';
 import useSalaryRecordStore from '../../stores/SalaryStore';
-import DashboardStyles from './DashboardStyles';
-import CommonStyles from '../../styles/CommonStyles';
 import SalaryItem from '../../components/salary-item/SalaryItem';
 import NoResultsView from '../../components/no-results-view/NoResultsView';
 import BalanceView from '../../components/balance-view/BalanceView';
 import {FONT_SIZE} from '../../constants';
 import BottomTabs from '../../components/bottom-tabs/BottomTabs';
 import {IExpenseEntry} from '../../schemas/salaries';
-
-const styles = DashboardStyles;
+import CommonStyles from '../../styles/CommonStyles';
+import styles from './DashboardStyles';
 
 type DashboardPageStackScreenProps<T extends keyof AppStackParamList> =
   NativeStackScreenProps<AppStackParamList, T>;

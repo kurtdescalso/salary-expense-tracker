@@ -4,7 +4,6 @@ import {widthPercentageToDP} from 'react-native-responsive-screen';
 
 const styles = StyleSheet.create({
   mainContainer: {
-    // height: heightPercentageToDP(100),
     width: widthPercentageToDP(100),
   },
   mainflexContainer: {
@@ -18,8 +17,6 @@ const styles = StyleSheet.create({
   },
   salaryItemContainer: {
     paddingVertical: FONT_SIZE,
-    // marginHorizontal: FONT_SIZE,
-    // marginBottom: FONT_SIZE / 8,
   },
   expensesList: {
     flex: 1,

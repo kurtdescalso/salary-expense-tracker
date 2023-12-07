@@ -1,10 +1,8 @@
 import * as React from 'react';
 import {View, Text} from 'react-native';
 import {Card} from 'react-native-paper';
-import BalanceViewStyles from './BalanceViewStyles';
 import {formatToPhp} from '../../utils/currency';
-
-const styles = BalanceViewStyles;
+import styles from './BalanceViewStyles';
 
 interface IBalanceViewProps {
   balance: number;

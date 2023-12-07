@@ -3,9 +3,7 @@ import {View, StyleProp, ViewStyle, Keyboard} from 'react-native';
 import {Text, Menu, Button, List} from 'react-native-paper';
 import {Controller} from 'react-hook-form';
 import {ISelectOption} from '../../constants';
-import FormNumberFieldStyles from './FormSelectFieldStyles';
-
-const styles = FormNumberFieldStyles;
+import styles from './FormSelectFieldStyles';
 
 interface IFormSelectField {
   label: string;
@@ -67,7 +65,6 @@ const FormSelectField = (props: IFormSelectField) => {
                   <List.Item
                     key={`select-option-${props.name}-${option.value}-${index}`}
                     title={option.label}
-                    style={styles.optionListItem}
                     onPress={() => {
                       onChange(option.value);
                       setSelectedOptionLabel(option.label);

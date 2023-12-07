@@ -13,9 +13,7 @@ import {addSalaryRecord, getSalaryRecords} from '../../services/salary';
 import useSalaryRecordStore from '../../stores/SalaryStore';
 import {format} from 'date-fns';
 import CommonStyles from '../../styles/CommonStyles';
-import AddSalaryFormStyles from './AddSalaryFormStyles';
-
-const styles = AddSalaryFormStyles;
+import styles from './AddSalaryFormStyles';
 
 const AddSalaryForm = () => {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);

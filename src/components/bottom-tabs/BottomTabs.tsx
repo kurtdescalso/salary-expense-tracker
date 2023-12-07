@@ -3,9 +3,7 @@ import {View} from 'react-native';
 import {Surface, TouchableRipple, Text} from 'react-native-paper';
 import {AppStackParamList} from '../../../App';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import BottomTabsStyles from './BottomTabsStyles';
-
-const styles = BottomTabsStyles;
+import styles from './BottomTabsStyles';
 
 type BottomTabsNavigationProp = NativeStackNavigationProp<
   AppStackParamList,

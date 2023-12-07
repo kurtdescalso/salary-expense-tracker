@@ -14,7 +14,6 @@ import TotalExpensesView from '../../components/total-expenses-view/TotalExpense
 import {useHeaderHeight} from '@react-navigation/elements';
 import {AppStackParamList} from '../../../App';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import StatsStyles from './StatsStyles';
 import {getAllExpenses} from '../../services/expense';
 import {getDBConnection} from '../../services/database';
 import {IExpenseEntry} from '../../schemas/salaries';
@@ -26,11 +25,10 @@ import {
 } from '../../constants';
 import {isAfter, isEqual, parse} from 'date-fns';
 import ExpenseListDateTimeFilter from '../../components/expense-list-date-time-filter/ExpenseListDateTimeFilter';
+import styles from './StatsStyles';
 
 type StatsPageStackScreenProps<T extends keyof AppStackParamList> =
   NativeStackScreenProps<AppStackParamList, T>;
-
-const styles = StatsStyles;
 
 const StatsPage = ({navigation}: StatsPageStackScreenProps<'Stats'>) => {
   const headerHeight = useHeaderHeight();

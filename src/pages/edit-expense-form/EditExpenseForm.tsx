@@ -19,12 +19,10 @@ import {getSalaryRecords} from '../../services/salary';
 import useSalaryRecordStore from '../../stores/SalaryStore';
 import DeleteExpenseConfirmationDialog from '../../components/delete-expense-confirmation-dialog/DeleteExpenseConfirmationDialog';
 import {useNavigation} from '@react-navigation/native';
-import {format, parse} from 'date-fns';
+import {format} from 'date-fns';
 import {CATEGORY_OPTIONS} from '../../constants';
 import CommonStyles from '../../styles/CommonStyles';
-import EditExpenseFormStyles from './EditExpenseFormStyles';
-
-const styles = EditExpenseFormStyles;
+import styles from './EditExpenseFormStyles';
 
 type EditExpenseFormStackScreenProps<T extends keyof AppStackParamList> =
   NativeStackScreenProps<AppStackParamList, T>;

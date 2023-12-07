@@ -3,25 +3,23 @@ import {View} from 'react-native';
 import {Button, Text} from 'react-native-paper';
 import {DatePickerModal, TimePickerModal} from 'react-native-paper-dates';
 import {format, parse} from 'date-fns';
-import DateTimePickerStyles from './DateTimePickerStyles';
 import {
   CalendarDate,
   SingleChange,
 } from 'react-native-paper-dates/lib/typescript/Date/Calendar';
+import styles from './DateTimePickerStyles';
 
 interface IDateTimePickerProps {
   dateTime: string;
   setDateTime: (date: Date) => void;
 }
 
-const styles = DateTimePickerStyles;
-
 const DateTimePicker = (props: IDateTimePickerProps) => {
   const [isDatePickerOpen, setIsDatePickerOpen] = React.useState(false);
   const [isTimePickerOpen, setIsTimePickerOpen] = React.useState(false);
-  const [internalCachedTime, setInternalCachedTime] = React.useState(
-    new Date(),
-  );
+  // const [internalCachedTime, setInternalCachedTime] = React.useState(
+  //   new Date(),
+  // );
 
   const openDatePicker = () => {
     setIsDatePickerOpen(true);
@@ -71,6 +69,7 @@ const DateTimePicker = (props: IDateTimePickerProps) => {
 
   const confirmDate: SingleChange = (data: {date: CalendarDate}) => {
     const processedDate = data.date as Date;
+    /*
     if (internalCachedTime) {
       processedDate.setHours(
         internalCachedTime.getHours(),
@@ -79,6 +78,7 @@ const DateTimePicker = (props: IDateTimePickerProps) => {
         internalCachedTime.getMilliseconds(),
       );
     }
+    */
     props.setDateTime(processedDate);
     closeDatePicker();
   };

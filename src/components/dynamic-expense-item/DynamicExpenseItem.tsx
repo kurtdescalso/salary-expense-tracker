@@ -11,9 +11,7 @@ import {formatToPhp} from '../../utils/currency';
 import {formatToStandardDate} from '../../utils/datetime';
 import {parse} from 'date-fns';
 import {FONT_SIZE} from '../../constants';
-import DynamicExpenseItemStyles from './DynamicExpenseItemStyles';
-
-const styles = DynamicExpenseItemStyles;
+import styles from './DynamicExpenseItemStyles';
 
 interface IDynamicExpenseItemProps {
   expense: IExpenseEntry;

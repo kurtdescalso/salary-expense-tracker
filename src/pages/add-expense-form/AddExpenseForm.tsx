@@ -18,11 +18,9 @@ import {
 } from '../../services/expense';
 import useSalaryRecordStore from '../../stores/SalaryStore';
 import {CATEGORY_OPTIONS} from '../../constants';
-import {format, parse} from 'date-fns';
+import {format} from 'date-fns';
 import CommonStyles from '../../styles/CommonStyles';
-import AddExpenseFormStyles from './AddExpenseFormStyles';
-
-const styles = AddExpenseFormStyles;
+import styles from './AddExpenseFormStyles';
 
 type AddExpenseFormStackScreenProps<T extends keyof AppStackParamList> =
   NativeStackScreenProps<AppStackParamList, T>;

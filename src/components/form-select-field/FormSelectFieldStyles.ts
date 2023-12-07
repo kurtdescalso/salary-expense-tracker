@@ -9,11 +9,6 @@ const styles = StyleSheet.create({
   menu: {
     width: '92.5%',
   },
-  optionListItem: {
-    // backgroundColor: 'red',
-    // minWidth: '100%',
-    // width: '100%',
-  },
 });
 
 export default styles;

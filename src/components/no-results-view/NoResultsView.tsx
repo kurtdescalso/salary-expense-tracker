@@ -1,8 +1,6 @@
 import * as React from 'react';
 import {View, Text} from 'react-native';
-import NoResultsViewStyles from './NoResultsViewStyles';
-
-const styles = NoResultsViewStyles;
+import styles from './NoResultsViewStyles';
 
 interface INoResultsViewProps {
   message: string;

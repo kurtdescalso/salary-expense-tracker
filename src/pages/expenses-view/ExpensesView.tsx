@@ -12,7 +12,6 @@ import {getDBConnection} from '../../services/database';
 import {getSalaryRecordById} from '../../services/salary';
 import {getExpensesBySalaryRecordId} from '../../services/expense';
 import useSalaryRecordStore from '../../stores/SalaryStore';
-import ExpensesViewStyles from './ExpensesViewStyles';
 import SalaryItem from '../../components/salary-item/SalaryItem';
 import ExpenseItem from '../../components/expense-item/ExpenseItem';
 import BalanceView from '../../components/balance-view/BalanceView';
@@ -20,8 +19,7 @@ import NoResultsView from '../../components/no-results-view/NoResultsView';
 import {AppStackParamList} from '../../../App';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {FONT_SIZE} from '../../constants';
-
-const styles = ExpensesViewStyles;
+import styles from './ExpensesViewStyles';
 
 type ExpensesViewPageStackScreenProps<T extends keyof AppStackParamList> =
   NativeStackScreenProps<AppStackParamList, T>;

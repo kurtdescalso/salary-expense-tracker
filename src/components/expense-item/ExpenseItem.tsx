@@ -2,15 +2,13 @@ import * as React from 'react';
 import {View} from 'react-native';
 import {Card, Text} from 'react-native-paper';
 import {IExpenseEntry} from '../../schemas/salaries';
-import ExpenseItemStyles from './ExpenseItemStyles';
 import {formatToPhp} from '../../utils/currency';
 import {parseIsoString, formatToStandardDate} from '../../utils/datetime';
+import styles from './ExpenseItemStyles';
 
 interface IExpenseEntryItemProps {
   navigation?: any;
 }
-
-const styles = ExpenseItemStyles;
 
 const SalaryItem = (props: IExpenseEntryItemProps & IExpenseEntry) => {
   const dateDisplayString = React.useMemo(() => {
