@@ -12,7 +12,6 @@ import {formatToStandardDate} from '../utils/datetime';
 import {parse} from 'date-fns';
 import {FONT_SIZE} from '../constants';
 import DynamicExpenseItemStyles from '../styles/DynamicExpenseItemStyles';
-import {useFocusEffect} from '@react-navigation/native';
 
 const styles = DynamicExpenseItemStyles;
 
@@ -42,12 +41,6 @@ const DynamicExpenseItem = (props: IDynamicExpenseItemProps) => {
       animationHeight.value = withSpring(EXPANDED_DETAILS_VIEW_HEIGHT);
     }
   }, [props.isCompactView]);
-
-  // useFocusEffect(
-  //   React.useCallback(() => {
-  //     animationHeight.value = withTiming(COMPACT_DETAILS_VIEW_HEIGHT);
-  //   }, []),
-  // );
 
   return (
     <Card style={styles.mainContainer}>

@@ -24,6 +24,8 @@ import {
   CATEGORY_OPTIONS_WITH_CHECK_FLAG,
   ICategoryOptionWithCheckFlag,
 } from '../constants';
+import {isAfter, isEqual, parse} from 'date-fns';
+import ExpenseListDateTimeFilter from '../components/ExpenseListDateTimeFilter';
 
 type StatsPageStackScreenProps<T extends keyof AppStackParamList> =
   NativeStackScreenProps<AppStackParamList, T>;
@@ -45,6 +47,9 @@ const StatsPage = ({navigation}: StatsPageStackScreenProps<'Stats'>) => {
   const toggleCompactView = () => {
     setIsCompactView(!isCompactView);
   };
+
+  const [startDate, setStartDate] = React.useState<Date | undefined>(undefined);
+  const [endDate, setEndDate] = React.useState<Date | undefined>(undefined);
 
   const [selectedCategories, setSelectedCategories] = React.useState<
     ICategoryOptionWithCheckFlag[]
@@ -83,7 +88,7 @@ const StatsPage = ({navigation}: StatsPageStackScreenProps<'Stats'>) => {
   };
 
   const filteredExpensesList = React.useMemo<IExpenseEntry[]>(() => {
-    const allExpensesByDescription = allExpenses.filter(expense => {
+    const filteredExpensesByDescription = allExpenses.filter(expense => {
       return expense.description
         .toLowerCase()
         .includes(searchQuery.toLowerCase());
@@ -95,12 +100,43 @@ const StatsPage = ({navigation}: StatsPageStackScreenProps<'Stats'>) => {
         return category.value;
       });
 
-    const allExpensesByCategories = allExpensesByDescription.filter(expense => {
-      return selectedCategoryFilters.includes(expense.category);
-    });
+    const filteredExpensesByCategories = filteredExpensesByDescription.filter(
+      expense => {
+        return selectedCategoryFilters.includes(expense.category);
+      },
+    );
 
-    return allExpensesByCategories;
-  }, [allExpenses, searchQuery, selectedCategories]);
+    let filteredExpensesByDate = filteredExpensesByCategories;
+
+    if (startDate) {
+      filteredExpensesByDate = filteredExpensesByCategories.filter(expense => {
+        const accountingDate = parse(
+          expense.accounting_date,
+          'uuuu-MM-dd HH:mm:ss',
+          new Date(),
+        );
+        return (
+          isEqual(accountingDate, startDate) ||
+          isAfter(accountingDate, startDate)
+        );
+      });
+    }
+
+    if (endDate) {
+      filteredExpensesByDate = filteredExpensesByCategories.filter(expense => {
+        const accountingDate = parse(
+          expense.accounting_date,
+          'uuuu-MM-dd HH:mm:ss',
+          new Date(),
+        );
+        return (
+          isEqual(accountingDate, endDate) || isAfter(endDate, accountingDate)
+        );
+      });
+    }
+
+    return filteredExpensesByDate;
+  }, [allExpenses, searchQuery, selectedCategories, startDate, endDate]);
 
   const totalExpense = React.useMemo<number>(() => {
     let totalExpense = 0;
@@ -162,7 +198,12 @@ const StatsPage = ({navigation}: StatsPageStackScreenProps<'Stats'>) => {
               color={theme.colors.surface}
               onPress={toggleCompactView}
             />
-            <IconButton icon="clock" color={theme.colors.surface} />
+            <ExpenseListDateTimeFilter
+              startDate={startDate}
+              endDate={endDate}
+              setStartDate={setStartDate}
+              setEndDate={setEndDate}
+            />
             <ExpenseListFilterMenu
               selectedCategories={selectedCategories}
               handleSetSelectedCategories={handleSetSelectedCategories}
