@@ -13,6 +13,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingHorizontal: FONT_SIZE * 0.5,
     paddingBottom: FONT_SIZE * 0.5,
+    marginBottom: FONT_SIZE * 0.25,
   },
   searchBar: {
     flexGrow: 1,
