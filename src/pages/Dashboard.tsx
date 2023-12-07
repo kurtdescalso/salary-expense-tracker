@@ -132,14 +132,6 @@ const DashboardPage = ({
           }
           style={styles.salaryList}
         />
-        {/*salaryList.length > 0 ? <BalanceView balance={balance} /> : null}
-        {!isScrolling ? (
-          <FAB
-            icon="cash-plus"
-            style={styles.addSalaryButton}
-            onPress={goToAddSalaryRecord}
-          />
-        ) : null*/}
         <View style={styles.controlsFooter}>
           <View style={styles.controlsFooterInnerFlex}>
             <View style={styles.balanceViewContainer}>
@@ -156,16 +148,6 @@ const DashboardPage = ({
         </View>
       </View>
       <BottomTabs navigation={navigation} />
-      {/*<View>
-        <Surface style={styles.navButtonsContainer}>
-          <TouchableRipple onPress={goToDashboard} style={styles.navButton}>
-            <Text style={styles.navButtonLabel}>Dashboard</Text>
-          </TouchableRipple>
-          <TouchableRipple onPress={goToStats} style={styles.navButton}>
-            <Text style={styles.navButtonLabel}>Stats</Text>
-          </TouchableRipple>
-        </Surface>
-      </View>*/}
     </SafeAreaView>
   );
 };

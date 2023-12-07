@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import com.reactcommunity.rndatetimepicker.RNDateTimePickerPackage;
 // react-native-date-picker
 import com.henninghall.date_picker.DatePickerPackage;
+// react-native-reanimated
+import com.swmansion.reanimated.ReanimatedPackage;
 // react-native-safe-area-context
 import com.th3rdwave.safeareacontext.SafeAreaContextPackage;
 // react-native-screens
@@ -70,6 +72,7 @@ public class PackageList {
       new MainReactPackage(mConfig),
       new RNDateTimePickerPackage(),
       new DatePickerPackage(),
+      new ReanimatedPackage(),
       new SafeAreaContextPackage(),
       new RNScreensPackage(),
       new SQLitePluginPackage(),

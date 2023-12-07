@@ -41,7 +41,7 @@ const StatsPage = ({navigation}: StatsPageStackScreenProps<'Stats'>) => {
 
   const [searchQuery, setSearchQuery] = React.useState('');
 
-  const [isCompactView, setIsCompactView] = React.useState(true);
+  const [isCompactView, setIsCompactView] = React.useState(false);
   const toggleCompactView = () => {
     setIsCompactView(!isCompactView);
   };
@@ -176,7 +176,12 @@ const StatsPage = ({navigation}: StatsPageStackScreenProps<'Stats'>) => {
             `stats-expense-list-${item.id}-${index}`
           }
           renderItem={({item}) => {
-            return <DynamicExpenseItem expense={item} />;
+            return (
+              <DynamicExpenseItem
+                expense={item}
+                isCompactView={isCompactView}
+              />
+            );
           }}
           ListEmptyComponent={<NoResultsView message="No expenses found." />}
         />

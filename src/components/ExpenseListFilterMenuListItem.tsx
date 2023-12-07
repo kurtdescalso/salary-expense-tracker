@@ -10,8 +10,6 @@ interface IExpenseListFilterMenuListItemProps {
 const ExpenseListFilterMenuListItem = (
   props: IExpenseListFilterMenuListItemProps,
 ) => {
-  const [isChecked, setIsChecked] = React.useState(props.category.isChecked);
-
   const toggleCheck = () => {
     const newIsCheckedValue = !props.category.isChecked;
     props.handleSetSelectedCategories({
