@@ -10,8 +10,19 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   searchBarContainer: {
+    flexDirection: 'row',
     paddingHorizontal: FONT_SIZE * 0.5,
     paddingBottom: FONT_SIZE * 0.5,
+  },
+  searchBar: {
+    flexGrow: 1,
+  },
+  searchBarInput: {
+    fontSize: FONT_SIZE,
+  },
+  controlsContainer: {
+    flexDirection: 'row',
+    flexShrink: 1,
   },
 });
 

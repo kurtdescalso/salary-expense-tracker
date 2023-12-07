@@ -43,3 +43,15 @@ export const CATEGORY_OPTIONS: ISelectOption[] = [
     value: 'Emergency',
   },
 ];
+
+export interface ICategoryOptionWithCheckFlag extends ISelectOption {
+  isChecked: boolean;
+}
+
+export const CATEGORY_OPTIONS_WITH_CHECK_FLAG: ICategoryOptionWithCheckFlag[] =
+  CATEGORY_OPTIONS.map(option => {
+    return {
+      ...option,
+      isChecked: true,
+    };
+  });

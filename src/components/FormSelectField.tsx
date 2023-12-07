@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {View, StyleProp, ViewStyle} from 'react-native';
+import {View, StyleProp, ViewStyle, Keyboard} from 'react-native';
 import {Text, Menu, Button, List} from 'react-native-paper';
 import {Controller} from 'react-hook-form';
 import {ISelectOption} from '../constants';
@@ -33,6 +33,7 @@ const FormSelectField = (props: IFormSelectField) => {
   });
 
   const openMenu = () => {
+    Keyboard.dismiss();
     setIsMenuOpen(true);
   };
 

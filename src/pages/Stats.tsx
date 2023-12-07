@@ -6,7 +6,7 @@ import {
   View,
   FlatList,
 } from 'react-native';
-import {Searchbar, useTheme} from 'react-native-paper';
+import {IconButton, Searchbar, useTheme} from 'react-native-paper';
 import BottomTabs from '../components/BottomTabs';
 import NoResultsView from '../components/NoResultsView';
 import DynamicExpenseItem from '../components/DynamicExpenseItem';
@@ -19,6 +19,11 @@ import {getAllExpenses} from '../services/expense';
 import {getDBConnection} from '../services/database';
 import {IExpenseEntry} from '../schemas/salaries';
 import useSalaryRecordStore from '../stores/SalaryStore';
+import ExpenseListFilterMenu from '../components/ExpenseListFilterMenu';
+import {
+  CATEGORY_OPTIONS_WITH_CHECK_FLAG,
+  ICategoryOptionWithCheckFlag,
+} from '../constants';
 
 type StatsPageStackScreenProps<T extends keyof AppStackParamList> =
   NativeStackScreenProps<AppStackParamList, T>;
@@ -36,13 +41,66 @@ const StatsPage = ({navigation}: StatsPageStackScreenProps<'Stats'>) => {
 
   const [searchQuery, setSearchQuery] = React.useState('');
 
+  const [isCompactView, setIsCompactView] = React.useState(true);
+  const toggleCompactView = () => {
+    setIsCompactView(!isCompactView);
+  };
+
+  const [selectedCategories, setSelectedCategories] = React.useState<
+    ICategoryOptionWithCheckFlag[]
+  >(CATEGORY_OPTIONS_WITH_CHECK_FLAG);
+
+  const handleSetSelectedCategories = (
+    targetCategory: ICategoryOptionWithCheckFlag,
+  ) => {
+    // NOTE: Preserves the order of category filter checkboxes
+    let targetCategoryIndex = 0;
+    for (let i = 0; i < selectedCategories.length; i++) {
+      if (selectedCategories[i].value === targetCategory.value) {
+        targetCategoryIndex = i;
+        break;
+      }
+    }
+
+    const selectedCategoryListStart = selectedCategories.slice(
+      0,
+      targetCategoryIndex,
+    );
+    const selectedCategoryListEnd = selectedCategories.slice(
+      targetCategoryIndex + 1,
+    );
+
+    const newSelectedCategories = [
+      ...selectedCategoryListStart,
+      targetCategory,
+      ...selectedCategoryListEnd,
+    ];
+    setSelectedCategories(newSelectedCategories);
+  };
+
+  const resetSelectedCategories = () => {
+    setSelectedCategories(CATEGORY_OPTIONS_WITH_CHECK_FLAG);
+  };
+
   const filteredExpensesList = React.useMemo<IExpenseEntry[]>(() => {
-    return allExpenses.filter(expense => {
+    const allExpensesByDescription = allExpenses.filter(expense => {
       return expense.description
         .toLowerCase()
         .includes(searchQuery.toLowerCase());
     });
-  }, [allExpenses, searchQuery]);
+
+    const selectedCategoryFilters = selectedCategories
+      .filter(category => category.isChecked)
+      .map(category => {
+        return category.value;
+      });
+
+    const allExpensesByCategories = allExpensesByDescription.filter(expense => {
+      return selectedCategoryFilters.includes(expense.category);
+    });
+
+    return allExpensesByCategories;
+  }, [allExpenses, searchQuery, selectedCategories]);
 
   const totalExpense = React.useMemo<number>(() => {
     let totalExpense = 0;
@@ -94,8 +152,23 @@ const StatsPage = ({navigation}: StatsPageStackScreenProps<'Stats'>) => {
           <Searchbar
             value={searchQuery}
             onChangeText={setSearchQuery}
-            placeholder="Search by name of expense"
+            placeholder="Search by description"
+            style={styles.searchBar}
+            inputStyle={styles.searchBarInput}
           />
+          <View style={styles.controlsContainer}>
+            <IconButton
+              icon={isCompactView ? 'arrow-expand' : 'arrow-collapse'}
+              color={theme.colors.surface}
+              onPress={toggleCompactView}
+            />
+            <IconButton icon="clock" color={theme.colors.surface} />
+            <ExpenseListFilterMenu
+              selectedCategories={selectedCategories}
+              handleSetSelectedCategories={handleSetSelectedCategories}
+              resetSelectedCategories={resetSelectedCategories}
+            />
+          </View>
         </View>
         <FlatList
           data={filteredExpensesList}
