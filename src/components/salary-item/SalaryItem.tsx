@@ -22,7 +22,7 @@ const SalaryItem = (props: ISalaryItemProps & ISalaryRecord) => {
 
   const goToViewExpensesPage = () => {
     if (props.navigation) {
-      props.navigation.navigate('Expenses', {salaryId: props.id});
+      props.navigation.navigate('Per Salary Expenses', {salaryId: props.id});
     }
   };
 

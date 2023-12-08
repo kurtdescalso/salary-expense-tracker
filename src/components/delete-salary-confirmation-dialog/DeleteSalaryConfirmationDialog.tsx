@@ -36,7 +36,7 @@ const DeleteSalaryConfirmationDialog = (
     }
 
     setIsLoading(false);
-    props.navigation.navigate('Dashboard');
+    props.navigation.navigate('Salary List');
   };
 
   return (

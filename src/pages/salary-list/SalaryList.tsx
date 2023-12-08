@@ -21,14 +21,14 @@ import {FONT_SIZE} from '../../constants';
 import BottomTabs from '../../components/bottom-tabs/BottomTabs';
 import {IExpenseEntry} from '../../schemas/salaries';
 import CommonStyles from '../../styles/CommonStyles';
-import styles from './DashboardStyles';
+import styles from './SalaryListStyles';
 
-type DashboardPageStackScreenProps<T extends keyof AppStackParamList> =
+type SalaryListPageStackScreenProps<T extends keyof AppStackParamList> =
   NativeStackScreenProps<AppStackParamList, T>;
 
-const DashboardPage = ({
+const SalaryListPage = ({
   navigation,
-}: DashboardPageStackScreenProps<'Dashboard'>) => {
+}: SalaryListPageStackScreenProps<'Salary List'>) => {
   const headerHeight = useHeaderHeight();
 
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -150,4 +150,4 @@ const DashboardPage = ({
   );
 };
 
-export default DashboardPage;
+export default SalaryListPage;

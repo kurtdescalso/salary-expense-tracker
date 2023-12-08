@@ -25,12 +25,14 @@ import {
 } from '../../constants';
 import {isAfter, isEqual, parse} from 'date-fns';
 import ExpenseListDateTimeFilter from '../../components/expense-list-date-time-filter/ExpenseListDateTimeFilter';
-import styles from './StatsStyles';
+import styles from './ExpenseViewStyles';
 
-type StatsPageStackScreenProps<T extends keyof AppStackParamList> =
+type ExpenseViewPageStackScreenProps<T extends keyof AppStackParamList> =
   NativeStackScreenProps<AppStackParamList, T>;
 
-const StatsPage = ({navigation}: StatsPageStackScreenProps<'Stats'>) => {
+const ExpenseViewPage = ({
+  navigation,
+}: ExpenseViewPageStackScreenProps<'Expense View'>) => {
   const headerHeight = useHeaderHeight();
   const theme = useTheme();
 
@@ -242,4 +244,4 @@ const StatsPage = ({navigation}: StatsPageStackScreenProps<'Stats'>) => {
   );
 };
 
-export default StatsPage;
+export default ExpenseViewPage;

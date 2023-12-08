@@ -40,7 +40,6 @@ const FormSelectField = (props: IFormSelectField) => {
   };
 
   React.useEffect(() => {
-    console.log(props.control);
     if (!props.value) {
       setSelectedOptionLabel('-Select-');
     }

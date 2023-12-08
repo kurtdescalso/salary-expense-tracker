@@ -19,15 +19,16 @@ import NoResultsView from '../../components/no-results-view/NoResultsView';
 import {AppStackParamList} from '../../../App';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {FONT_SIZE} from '../../constants';
-import styles from './ExpensesViewStyles';
+import styles from './PerSalaryExpenseViewStyles';
 
-type ExpensesViewPageStackScreenProps<T extends keyof AppStackParamList> =
-  NativeStackScreenProps<AppStackParamList, T>;
+type PerSalaryExpenseViewPageStackScreenProps<
+  T extends keyof AppStackParamList,
+> = NativeStackScreenProps<AppStackParamList, T>;
 
-const ExpensesViewPage = ({
+const PerSalaryExpenseViewPage = ({
   navigation,
   route,
-}: ExpensesViewPageStackScreenProps<'Expenses'>) => {
+}: PerSalaryExpenseViewPageStackScreenProps<'Per Salary Expenses'>) => {
   const headerHeight = useHeaderHeight();
 
   const {salaryId} = route.params;
@@ -125,4 +126,4 @@ const ExpensesViewPage = ({
   );
 };
 
-export default ExpensesViewPage;
+export default PerSalaryExpenseViewPage;

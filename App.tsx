@@ -17,9 +17,9 @@ import {CombinedDefaultTheme, CombinedDarkTheme} from './src/styles/Theme';
 import {useColorScheme} from 'react-native';
 import AppBar from './src/components/app-bar/AppBar';
 
-import DashboardPage from './src/pages/dashboard/Dashboard';
-import StatsPage from './src/pages/stats/Stats';
-import ExpensesViewPage from './src/pages/expenses-view/ExpensesView';
+import SalaryListPage from './src/pages/salary-list/SalaryList';
+import ExpenseViewPage from './src/pages/expense-view/ExpenseView';
+import PerSalaryExpenseViewPage from './src/pages/per-salary-expense-view/PerSalaryExpenseView';
 import AddSalaryForm from './src/pages/add-salary-form/AddSalaryForm';
 import EditSalaryForm from './src/pages/edit-salary-form/EditSalaryForm';
 import AddExpenseForm from './src/pages/add-expense-form/AddExpenseForm';
@@ -32,9 +32,9 @@ registerTranslation('en', en);
 import {IExpenseEntry, ISalaryRecord} from './src/schemas/salaries';
 
 export type AppStackParamList = {
-  Dashboard: undefined;
-  Stats: undefined;
-  Expenses: {
+  'Salary List': undefined;
+  'Expense View': undefined;
+  'Per Salary Expenses': {
     salaryId: number;
   };
   'Add Salary': undefined;
@@ -71,27 +71,30 @@ const App = () => {
           colorScheme !== 'dark' ? CombinedDefaultTheme : CombinedDarkTheme
         }>
         <Stack.Navigator
-          initialRouteName="Dashboard"
+          initialRouteName="Salary List"
           screenOptions={{
             header: props => <AppBar {...props} />,
           }}>
           <Stack.Screen
-            name="Dashboard"
-            component={DashboardPage}
+            name="Salary List"
+            component={SalaryListPage}
             options={{
               animation: 'none',
             }}
           />
           <Stack.Screen
-            name="Stats"
-            component={StatsPage}
+            name="Expense View"
+            component={ExpenseViewPage}
             options={{
               headerLeft: () => null,
               headerBackVisible: false,
               animation: 'none',
             }}
           />
-          <Stack.Screen name="Expenses" component={ExpensesViewPage} />
+          <Stack.Screen
+            name="Per Salary Expenses"
+            component={PerSalaryExpenseViewPage}
+          />
           <Stack.Screen name="Add Salary" component={AddSalaryForm} />
           <Stack.Screen name="Edit Salary" component={EditSalaryForm} />
           <Stack.Screen name="Add Expense" component={AddExpenseForm} />

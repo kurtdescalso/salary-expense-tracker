@@ -13,21 +13,21 @@ import styles from './BottomTabsStyles';
 
 type BottomTabsNavigationProp = NativeStackNavigationProp<
   AppStackParamList,
-  'Dashboard' | 'Stats'
+  'Salary List' | 'Expense View'
 >;
 
 const BottomTabs = (navigation: BottomTabsNavigationProp) => {
   const theme = useTheme();
 
-  const goToDashboard = () => {
+  const goToSalaryList = () => {
     ((navigation as any).navigation as BottomTabsNavigationProp).navigate(
-      'Dashboard',
+      'Salary List',
     );
   };
 
-  const goToStats = () => {
+  const goToExpenseView = () => {
     ((navigation as any).navigation as BottomTabsNavigationProp).navigate(
-      'Stats',
+      'Expense View',
     );
   };
 
@@ -37,14 +37,14 @@ const BottomTabs = (navigation: BottomTabsNavigationProp) => {
         <Button
           icon="account-cash"
           color={theme.colors.onSurface}
-          onPress={goToDashboard}
+          onPress={goToSalaryList}
           style={styles.navButton}>
           Salary List
         </Button>
         <Button
           icon="archive-search"
           color={theme.colors.onSurface}
-          onPress={goToStats}
+          onPress={goToExpenseView}
           style={styles.navButton}>
           Expense View
         </Button>
