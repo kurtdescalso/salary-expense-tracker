@@ -8,9 +8,6 @@ const styles = StyleSheet.create({
     paddingVertical: FONT_SIZE,
     paddingLeft: FONT_SIZE * 1.25,
   },
-  formPadding: {
-    paddingTop: FONT_SIZE,
-  },
 });
 
 export default styles;

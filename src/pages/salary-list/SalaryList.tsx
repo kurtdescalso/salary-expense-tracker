@@ -20,7 +20,7 @@ import BalanceView from '../../components/balance-view/BalanceView';
 import {FONT_SIZE} from '../../constants';
 import BottomTabs from '../../components/bottom-tabs/BottomTabs';
 import {IExpenseEntry} from '../../schemas/salaries';
-import CommonStyles from '../../styles/CommonStyles';
+// import CommonStyles from '../../styles/CommonStyles';
 import styles from './SalaryListStyles';
 
 type SalaryListPageStackScreenProps<T extends keyof AppStackParamList> =
@@ -113,9 +113,9 @@ const SalaryListPage = ({
         },
       ]}>
       <View style={styles.mainflexContainer}>
-        <View>
+        {/*<View>
           <Text style={CommonStyles.headerText}>Salary Records</Text>
-        </View>
+        </View>*/}
         {isLoading ? <ProgressBar indeterminate /> : null}
         <FlatList
           data={salaryList}

@@ -9,11 +9,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginRight: FONT_SIZE,
   },
-  headerText: {
-    fontWeight: 'bold',
-    fontSize: FONT_SIZE * 1.25,
-    paddingVertical: FONT_SIZE / 2,
-  },
   amountInputContainer: {
     display: 'flex',
     flexDirection: 'row',

@@ -8,18 +8,7 @@ const styles = StyleSheet.create({
   },
   mainflexContainer: {
     flex: 1,
-  },
-  headerText: {
-    fontWeight: 'bold',
-    fontSize: FONT_SIZE * 1.25,
-    paddingTop: FONT_SIZE,
-    paddingLeft: FONT_SIZE * 2,
-  },
-  noResultsContainer: {
-    paddingVertical: FONT_SIZE,
-  },
-  noResultsText: {
-    textAlign: 'center',
+    paddingTop: FONT_SIZE * 0.5,
   },
   salaryList: {
     flex: 1,
