@@ -39,6 +39,13 @@ const FormSelectField = (props: IFormSelectField) => {
     setIsMenuOpen(false);
   };
 
+  React.useEffect(() => {
+    console.log(props.control);
+    if (!props.value) {
+      setSelectedOptionLabel('-Select-');
+    }
+  }, [props.value]);
+
   return (
     <View style={[styles.inputContainer, props.style]}>
       <Controller

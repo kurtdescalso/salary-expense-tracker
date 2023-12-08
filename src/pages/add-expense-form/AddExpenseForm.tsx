@@ -102,6 +102,7 @@ const AddExpenseForm = ({
       <FormSelectField
         label="Category"
         name="category"
+        value={form.watch('category')}
         control={form.control}
         rules={{required: true}}
         options={CATEGORY_OPTIONS}
