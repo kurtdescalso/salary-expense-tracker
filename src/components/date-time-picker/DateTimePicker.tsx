@@ -17,9 +17,9 @@ interface IDateTimePickerProps {
 const DateTimePicker = (props: IDateTimePickerProps) => {
   const [isDatePickerOpen, setIsDatePickerOpen] = React.useState(false);
   const [isTimePickerOpen, setIsTimePickerOpen] = React.useState(false);
-  // const [internalCachedTime, setInternalCachedTime] = React.useState(
-  //   new Date(),
-  // );
+  const [internalCachedTime, setInternalCachedTime] = React.useState(
+    new Date(),
+  );
 
   const openDatePicker = () => {
     setIsDatePickerOpen(true);
@@ -69,7 +69,6 @@ const DateTimePicker = (props: IDateTimePickerProps) => {
 
   const confirmDate: SingleChange = (data: {date: CalendarDate}) => {
     const processedDate = data.date as Date;
-    /*
     if (internalCachedTime) {
       processedDate.setHours(
         internalCachedTime.getHours(),
@@ -78,7 +77,6 @@ const DateTimePicker = (props: IDateTimePickerProps) => {
         internalCachedTime.getMilliseconds(),
       );
     }
-    */
     props.setDateTime(processedDate);
     closeDatePicker();
   };

@@ -43,8 +43,12 @@ const DynamicExpenseItem = (props: IDynamicExpenseItemProps) => {
   return (
     <Card style={styles.mainContainer}>
       <View style={styles.detailsContainer}>
-        <Text>{props.expense.description}</Text>
-        <Text>{formatToPhp(props.expense.amount)}</Text>
+        <Text numberOfLines={1} style={styles.descriptionLabel}>
+          {props.expense.description}
+        </Text>
+        <Text style={styles.amountLabel}>
+          {formatToPhp(props.expense.amount)}
+        </Text>
       </View>
       <Animated.View style={{height: animationHeight}}>
         <Text>{props.expense.category}</Text>

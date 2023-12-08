@@ -61,12 +61,20 @@ const EditExpenseForm = ({
 
     const db = await getDBConnection();
 
+    const newAccountingDate = data.accounting_date
+      ? format(new Date(), 'uuuu-MM-dd HH:mm:ss')
+      : new Date().toISOString();
+    console.log('newAccountingDate:');
+    console.log(newAccountingDate);
+    return;
+
     await editExpenseRecord(db, {
       ...data,
       id: expenseItem.id,
       salary_id: expenseItem.salary_id,
-      accounting_date:
-        data.accounting_date || format(new Date(), 'uuuu-MM-dd HH:mm:ss'),
+      accounting_date: data.accounting_date
+        ? format(new Date(), 'uuuu-MM-dd HH:mm:ss')
+        : new Date().toISOString(),
       created_at: format(new Date(), 'uuuu-MM-dd HH:mm:ss'),
     });
 

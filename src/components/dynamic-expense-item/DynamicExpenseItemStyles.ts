@@ -11,6 +11,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
+  descriptionLabel: {
+    maxWidth: '60%',
+  },
+  amountLabel: {
+    maxWidth: '40%',
+  },
 });
 
 export default styles;
