@@ -6,7 +6,7 @@ import {
   SafeAreaView,
   View,
 } from 'react-native';
-import {IconButton, Text, ProgressBar} from 'react-native-paper';
+import {IconButton, ProgressBar, useTheme} from 'react-native-paper';
 import {useHeaderHeight} from '@react-navigation/elements';
 import {AppStackParamList} from '../../../App';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
@@ -30,6 +30,7 @@ const SalaryListPage = ({
   navigation,
 }: SalaryListPageStackScreenProps<'Salary List'>) => {
   const headerHeight = useHeaderHeight();
+  const theme = useTheme();
 
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [balance, setBalance] = React.useState<number>(0);
@@ -137,9 +138,9 @@ const SalaryListPage = ({
             </View>
             <IconButton
               icon="cash-plus"
-              color="#01645a"
+              color={theme.colors.backdrop}
               size={FONT_SIZE * 1.5}
-              style={styles.addSalaryIconButton}
+              style={{backgroundColor: theme.colors.accent}}
               onPress={goToAddSalaryRecord}
             />
           </View>

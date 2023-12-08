@@ -40,9 +40,6 @@ const styles = StyleSheet.create({
     bottom: FONT_SIZE * 10,
     right: FONT_SIZE * 2,
   },
-  addSalaryIconButton: {
-    backgroundColor: '#03dac4',
-  },
 });
 
 export default styles;

@@ -14,7 +14,7 @@ const AppBar = ({navigation, back}: NativeStackHeaderProps) => {
       {route.name !== 'Expense View' && back ? (
         <PaperAppBar.BackAction onPress={navigation.goBack} />
       ) : null}
-      <PaperAppBar.Content title="Salary Expense Tracker" />
+      <PaperAppBar.Content title={route.name} />
     </PaperAppBar.Header>
   );
 };

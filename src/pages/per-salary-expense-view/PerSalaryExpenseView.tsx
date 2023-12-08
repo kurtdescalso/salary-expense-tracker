@@ -6,7 +6,7 @@ import {
   SafeAreaView,
   View,
 } from 'react-native';
-import {ProgressBar, IconButton} from 'react-native-paper';
+import {ProgressBar, IconButton, useTheme} from 'react-native-paper';
 import {useHeaderHeight} from '@react-navigation/elements';
 import {getDBConnection} from '../../services/database';
 import {getSalaryRecordById} from '../../services/salary';
@@ -30,6 +30,7 @@ const PerSalaryExpenseViewPage = ({
   route,
 }: PerSalaryExpenseViewPageStackScreenProps<'Per Salary Expenses'>) => {
   const headerHeight = useHeaderHeight();
+  const theme = useTheme();
 
   const {salaryId} = route.params;
 
@@ -114,9 +115,9 @@ const PerSalaryExpenseViewPage = ({
             </View>
             <IconButton
               icon="cash-plus"
-              color="#01645a"
+              color={theme.colors.backdrop}
               size={FONT_SIZE * 1.5}
-              style={styles.addSalaryIconButton}
+              style={{backgroundColor: theme.colors.accent}}
               onPress={goToAddExpenseRecord}
             />
           </View>
