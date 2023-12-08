@@ -6,7 +6,8 @@ import ExpenseListFilterMenuListItem from './expense-list-filter-menu-list-item/
 interface IExpenseListFilterMenuProps {
   selectedCategories: ICategoryOptionWithCheckFlag[];
   handleSetSelectedCategories: (category: ICategoryOptionWithCheckFlag) => void;
-  resetSelectedCategories: () => void;
+  selectAllCategoriesCallback: () => void;
+  deselectAllCategoriesCallback: () => void;
 }
 
 const ExpenseListFilterMenu = (props: IExpenseListFilterMenuProps) => {
@@ -38,7 +39,14 @@ const ExpenseListFilterMenu = (props: IExpenseListFilterMenuProps) => {
           />
         );
       })}
-      <Menu.Item title="Reset" onPress={props.resetSelectedCategories} />
+      <Menu.Item
+        title="Select All"
+        onPress={props.selectAllCategoriesCallback}
+      />
+      <Menu.Item
+        title="Deselect All"
+        onPress={props.deselectAllCategoriesCallback}
+      />
     </Menu>
   );
 };

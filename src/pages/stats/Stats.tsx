@@ -81,8 +81,18 @@ const StatsPage = ({navigation}: StatsPageStackScreenProps<'Stats'>) => {
     setSelectedCategories(newSelectedCategories);
   };
 
-  const resetSelectedCategories = () => {
+  const selectAllCategories = () => {
     setSelectedCategories(CATEGORY_OPTIONS_WITH_CHECK_FLAG);
+  };
+  const deselectAllCategories = () => {
+    setSelectedCategories(
+      CATEGORY_OPTIONS_WITH_CHECK_FLAG.map(option => {
+        return {
+          ...option,
+          isChecked: false,
+        };
+      }),
+    );
   };
 
   const filteredExpensesList = React.useMemo<IExpenseEntry[]>(() => {
@@ -205,7 +215,8 @@ const StatsPage = ({navigation}: StatsPageStackScreenProps<'Stats'>) => {
             <ExpenseListFilterMenu
               selectedCategories={selectedCategories}
               handleSetSelectedCategories={handleSetSelectedCategories}
-              resetSelectedCategories={resetSelectedCategories}
+              selectAllCategoriesCallback={selectAllCategories}
+              deselectAllCategoriesCallback={deselectAllCategories}
             />
           </View>
         </View>
