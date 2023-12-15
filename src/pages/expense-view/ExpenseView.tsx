@@ -23,7 +23,7 @@ import {
   CATEGORY_OPTIONS_WITH_CHECK_FLAG,
   ICategoryOptionWithCheckFlag,
 } from '../../constants';
-import {isAfter, isEqual, parse} from 'date-fns';
+import {isAfter, isBefore, isEqual, parse} from 'date-fns';
 import ExpenseListDateTimeFilter from '../../components/expense-list-date-time-filter/ExpenseListDateTimeFilter';
 import styles from './ExpenseViewStyles';
 
@@ -133,14 +133,14 @@ const ExpenseViewPage = ({
     }
 
     if (endDate) {
-      filteredExpensesByDate = filteredExpensesByCategories.filter(expense => {
+      filteredExpensesByDate = filteredExpensesByDate.filter(expense => {
         const accountingDate = parse(
           expense.accounting_date,
           'uuuu-MM-dd HH:mm:ss',
           new Date(),
         );
         return (
-          isEqual(accountingDate, endDate) || isAfter(endDate, accountingDate)
+          isEqual(accountingDate, endDate) || isBefore(accountingDate, endDate)
         );
       });
     }
