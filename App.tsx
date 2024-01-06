@@ -51,7 +51,7 @@ export type AppStackParamList = {
 
 const Stack = createNativeStackNavigator<AppStackParamList>();
 
-const App = () => {
+const App = (): React.JSX.Element => {
   const initializeDatabase = React.useCallback(async () => {
     const db = await getDBConnection();
     await createTables(db);
@@ -75,13 +75,7 @@ const App = () => {
           screenOptions={{
             header: props => <AppBar {...props} />,
           }}>
-          <Stack.Screen
-            name="Salary List"
-            component={SalaryListPage}
-            options={{
-              animation: 'none',
-            }}
-          />
+          <Stack.Screen name="Salary List" component={SalaryListPage} />
           <Stack.Screen
             name="Expense View"
             component={ExpenseViewPage}
