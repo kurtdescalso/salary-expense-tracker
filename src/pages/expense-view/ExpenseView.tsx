@@ -12,8 +12,6 @@ import NoResultsView from '../../components/no-results-view/NoResultsView';
 import DynamicExpenseItem from '../../components/dynamic-expense-item/DynamicExpenseItem';
 import TotalExpensesView from '../../components/total-expenses-view/TotalExpensesView';
 import {useHeaderHeight} from '@react-navigation/elements';
-import {AppStackParamList} from '../../../App';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {getAllExpenses} from '../../services/expense';
 import {getDBConnection} from '../../services/database';
 import {IExpenseEntry} from '../../schemas/salaries';
@@ -27,12 +25,7 @@ import {isAfter, isBefore, isEqual, parse} from 'date-fns';
 import ExpenseListDateTimeFilter from '../../components/expense-list-date-time-filter/ExpenseListDateTimeFilter';
 import styles from './ExpenseViewStyles';
 
-type ExpenseViewPageStackScreenProps<T extends keyof AppStackParamList> =
-  NativeStackScreenProps<AppStackParamList, T>;
-
-const ExpenseViewPage = ({
-  navigation,
-}: ExpenseViewPageStackScreenProps<'Expense View'>) => {
+const ExpenseViewPage = () => {
   const headerHeight = useHeaderHeight();
   const theme = useTheme();
 
@@ -199,13 +192,13 @@ const ExpenseViewPage = ({
             value={searchQuery}
             onChangeText={setSearchQuery}
             placeholder="Search by description"
-            style={styles.searchBar}
+            style={[styles.searchBar, {backgroundColor: theme.colors.surface}]}
             inputStyle={styles.searchBarInput}
           />
           <View style={styles.controlsContainer}>
             <IconButton
               icon={isCompactView ? 'arrow-expand' : 'arrow-collapse'}
-              color={theme.colors.surface}
+              iconColor={theme.colors.inverseOnSurface}
               onPress={toggleCompactView}
             />
             <ExpenseListDateTimeFilter
@@ -239,7 +232,7 @@ const ExpenseViewPage = ({
         />
         <TotalExpensesView total={totalExpense} />
       </View>
-      <BottomTabs navigation={navigation} />
+      <BottomTabs />
     </SafeAreaView>
   );
 };

@@ -12,9 +12,15 @@ const AppBar = ({navigation, back}: NativeStackHeaderProps) => {
     <PaperAppBar.Header
       style={{elevation: 0, backgroundColor: theme.colors.primary}}>
       {route.name !== 'Expense View' && back ? (
-        <PaperAppBar.BackAction onPress={navigation.goBack} />
+        <PaperAppBar.BackAction
+          color={theme.colors.inverseOnSurface}
+          onPress={navigation.goBack}
+        />
       ) : null}
-      <PaperAppBar.Content title={route.name} />
+      <PaperAppBar.Content
+        title={route.name}
+        titleStyle={{color: theme.colors.onPrimary}}
+      />
     </PaperAppBar.Header>
   );
 };

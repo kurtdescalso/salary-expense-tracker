@@ -1,12 +1,20 @@
 import React from 'react';
 import {View} from 'react-native';
-import {Button, Dialog, Paragraph, Portal, Text} from 'react-native-paper';
+import {
+  Button,
+  Dialog,
+  Paragraph,
+  Portal,
+  Text,
+  useTheme,
+} from 'react-native-paper';
 import {IExpenseEntry} from '../../schemas/salaries';
 import {useNavigation} from '@react-navigation/native';
 import {getDBConnection} from '../../services/database';
 import {deleteExpenseRecord} from '../../services/expense';
 import {getSalaryRecords} from '../../services/salary';
 import useSalaryRecordStore from '../../stores/SalaryStore';
+import styles from './DeleteExpenseConfirmationDialog';
 
 interface IDeleteExpenseConfirmationDialog {
   expenseEntry: IExpenseEntry;
@@ -15,6 +23,8 @@ interface IDeleteExpenseConfirmationDialog {
 const DeleteExpenseConfirmationDialog = (
   props: IDeleteExpenseConfirmationDialog,
 ) => {
+  const theme = useTheme();
+
   const [isOpen, setIsOpen] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
 
@@ -44,7 +54,10 @@ const DeleteExpenseConfirmationDialog = (
 
   return (
     <View>
-      <Button icon="trash-can" color="red" onPress={() => setIsOpen(true)}>
+      <Button
+        icon="trash-can"
+        textColor={theme.colors.error}
+        onPress={() => setIsOpen(true)}>
         Delete
       </Button>
       <Portal>
@@ -59,7 +72,7 @@ const DeleteExpenseConfirmationDialog = (
           <Dialog.Actions>
             <Button
               icon="trash-can"
-              color="red"
+              textColor={theme.colors.error}
               onPress={handleDelete}
               disabled={isLoading}>
               Delete

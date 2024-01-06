@@ -10,7 +10,7 @@
 
 import React from 'react';
 
-import {NavigationContainer} from '@react-navigation/native';
+import {NavigationContainer, Theme} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {Provider as PaperProvider} from 'react-native-paper';
 import {CombinedDefaultTheme, CombinedDarkTheme} from './src/styles/Theme';
@@ -32,6 +32,7 @@ registerTranslation('en', en);
 import {IExpenseEntry, ISalaryRecord} from './src/schemas/salaries';
 
 export type AppStackParamList = {
+  Home: undefined;
   'Salary List': undefined;
   'Expense View': undefined;
   'Per Salary Expenses': {
@@ -68,7 +69,9 @@ const App = (): React.JSX.Element => {
       theme={colorScheme !== 'dark' ? CombinedDefaultTheme : CombinedDarkTheme}>
       <NavigationContainer
         theme={
-          colorScheme !== 'dark' ? CombinedDefaultTheme : CombinedDarkTheme
+          (colorScheme !== 'dark'
+            ? CombinedDefaultTheme
+            : CombinedDarkTheme) as unknown as Theme
         }>
         <Stack.Navigator
           initialRouteName="Salary List"

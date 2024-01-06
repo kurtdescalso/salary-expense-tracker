@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   salaryItemContainer: {
-    paddingVertical: FONT_SIZE,
+    paddingVertical: FONT_SIZE / 2,
   },
   expensesList: {
     flex: 1,

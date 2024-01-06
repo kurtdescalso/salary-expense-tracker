@@ -21,7 +21,7 @@ const FormCharField = (props: IFormCharField) => {
         render={({field: {onChange, onBlur, value}}) => (
           <TextInput
             label={props.label}
-            mode="flat"
+            mode="outlined"
             value={value}
             onBlur={onBlur}
             onChangeText={onChange}

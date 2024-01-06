@@ -1,6 +1,6 @@
 import * as React from 'react';
-import {View} from 'react-native';
-import {Card, Text} from 'react-native-paper';
+import {Pressable, View} from 'react-native';
+import {Surface, Text, useTheme} from 'react-native-paper';
 import {IExpenseEntry} from '../../schemas/salaries';
 import {formatToPhp} from '../../utils/currency';
 import {parseIsoString, formatToStandardDate} from '../../utils/datetime';
@@ -10,10 +10,19 @@ interface IExpenseEntryItemProps {
   navigation?: any;
 }
 
-const SalaryItem = (props: IExpenseEntryItemProps & IExpenseEntry) => {
+const ExpenseItem = (props: IExpenseEntryItemProps & IExpenseEntry) => {
+  const theme = useTheme();
+
   const dateDisplayString = React.useMemo(() => {
-    const newDateObject = parseIsoString(props.accounting_date);
-    return formatToStandardDate(newDateObject);
+    try {
+      const newDateObject = parseIsoString(props.accounting_date);
+      return formatToStandardDate(newDateObject);
+    } catch (error) {
+      console.log(
+        `ExpenseItem: dateDisplayString: formatToStandardDate(): ${props.accounting_date} error: ${error}`,
+      );
+      return '';
+    }
   }, [props.accounting_date]);
 
   const currencyDisplayString = React.useMemo(() => {
@@ -21,8 +30,8 @@ const SalaryItem = (props: IExpenseEntryItemProps & IExpenseEntry) => {
   }, [props.amount]);
 
   return (
-    <Card
-      style={styles.expenseItem}
+    <Pressable
+      style={[styles.expenseItem, {backgroundColor: theme.colors.surface}]}
       onLongPress={() => {
         if (props.navigation) {
           const targetExpense: IExpenseEntry = {
@@ -39,7 +48,11 @@ const SalaryItem = (props: IExpenseEntryItemProps & IExpenseEntry) => {
           });
         }
       }}>
-      <View style={styles.expenseItemInnerContainer}>
+      <Surface
+        style={[
+          styles.expenseItemInnerContainer,
+          {backgroundColor: theme.colors.surface},
+        ]}>
         <View style={styles.expenseDetails}>
           <Text style={styles.expenseDescription}>{props.description}</Text>
           <Text style={styles.itemFontStyle}>{props.category}</Text>
@@ -48,9 +61,9 @@ const SalaryItem = (props: IExpenseEntryItemProps & IExpenseEntry) => {
         <View style={styles.expenseAmount}>
           <Text style={styles.itemFontStyle}>{currencyDisplayString}</Text>
         </View>
-      </View>
-    </Card>
+      </Surface>
+    </Pressable>
   );
 };
 
-export default SalaryItem;
+export default ExpenseItem;

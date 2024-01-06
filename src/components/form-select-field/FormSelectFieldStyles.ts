@@ -9,6 +9,9 @@ const styles = StyleSheet.create({
   menu: {
     width: '92.5%',
   },
+  anchorButton: {
+    flexDirection: 'row-reverse',
+  },
 });
 
 export default styles;

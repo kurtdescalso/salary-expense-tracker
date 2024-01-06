@@ -115,9 +115,9 @@ const PerSalaryExpenseViewPage = ({
             </View>
             <IconButton
               icon="cash-plus"
-              color={theme.colors.backdrop}
+              iconColor={theme.colors.onPrimary}
+              containerColor={theme.colors.primary}
               size={FONT_SIZE * 1.5}
-              style={{backgroundColor: theme.colors.accent}}
               onPress={goToAddExpenseRecord}
             />
           </View>

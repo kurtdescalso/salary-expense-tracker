@@ -1,6 +1,6 @@
 import * as React from 'react';
-import {View} from 'react-native';
-import {Card, Text} from 'react-native-paper';
+import {Pressable, View} from 'react-native';
+import {Surface, Text, useTheme} from 'react-native-paper';
 import {ISalaryRecord} from '../../schemas/salaries';
 import {formatToPhp} from '../../utils/currency';
 import {parseIsoString, formatToStandardDate} from '../../utils/datetime';
@@ -11,9 +11,16 @@ interface ISalaryItemProps {
 }
 
 const SalaryItem = (props: ISalaryItemProps & ISalaryRecord) => {
+  const theme = useTheme();
+
   const dateDisplayString = React.useMemo(() => {
-    const newDateObject = parseIsoString(props.accounting_date);
-    return formatToStandardDate(newDateObject);
+    try {
+      const newDateObject = parseIsoString(props.accounting_date);
+      return formatToStandardDate(newDateObject);
+    } catch (error) {
+      console.log(`set dateDisplayString error: ${error}`);
+      return '';
+    }
   }, [props.accounting_date]);
 
   const currencyDisplayString = React.useMemo(() => {
@@ -39,11 +46,15 @@ const SalaryItem = (props: ISalaryItemProps & ISalaryRecord) => {
   };
 
   return (
-    <Card
+    <Pressable
       onPress={goToViewExpensesPage}
       onLongPress={goToEditSalaryPage}
-      style={styles.salaryItem}>
-      <View style={styles.salaryItemInnerContainer}>
+      style={[styles.salaryItem, {backgroundColor: theme.colors.surface}]}>
+      <Surface
+        style={[
+          styles.salaryItemInnerContainer,
+          {backgroundColor: theme.colors.surface},
+        ]}>
         <View style={styles.detailsContainer}>
           <Text style={[styles.itemFontStyle, styles.descriptionText]}>
             {props.description}
@@ -54,8 +65,8 @@ const SalaryItem = (props: ISalaryItemProps & ISalaryRecord) => {
         <View style={styles.amountContainer}>
           <Text style={styles.itemFontStyle}>{currencyDisplayString}</Text>
         </View>
-      </View>
-    </Card>
+      </Surface>
+    </Pressable>
   );
 };
 

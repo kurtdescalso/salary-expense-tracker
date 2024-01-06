@@ -1,10 +1,18 @@
 import React from 'react';
 import {View} from 'react-native';
-import {Button, Dialog, Paragraph, Portal, Text} from 'react-native-paper';
+import {
+  Button,
+  Dialog,
+  Paragraph,
+  Portal,
+  Text,
+  useTheme,
+} from 'react-native-paper';
 import {ISalaryRecord} from '../../schemas/salaries';
 import {getDBConnection} from '../../services/database';
 import {deleteSalaryRecord, getSalaryRecords} from '../../services/salary';
 import useSalaryRecordStore from '../../stores/SalaryStore';
+import styles from './DeleteSalaryConfirmationDialogStyles';
 
 interface IDeleteSalaryConfirmationDialog {
   salaryItem: ISalaryRecord;
@@ -14,6 +22,8 @@ interface IDeleteSalaryConfirmationDialog {
 const DeleteSalaryConfirmationDialog = (
   props: IDeleteSalaryConfirmationDialog,
 ) => {
+  const theme = useTheme();
+
   const [isOpen, setIsOpen] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
 
@@ -41,7 +51,10 @@ const DeleteSalaryConfirmationDialog = (
 
   return (
     <View>
-      <Button icon="trash-can" color="red" onPress={() => setIsOpen(true)}>
+      <Button
+        icon="trash-can"
+        textColor={theme.colors.error}
+        onPress={() => setIsOpen(true)}>
         Delete
       </Button>
       <Portal>
@@ -56,7 +69,7 @@ const DeleteSalaryConfirmationDialog = (
           <Dialog.Actions>
             <Button
               icon="trash-can"
-              color="red"
+              textColor={theme.colors.error}
               onPress={handleDelete}
               disabled={isLoading}>
               Delete

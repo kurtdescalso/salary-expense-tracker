@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {View} from 'react-native';
-import {Card, Text} from 'react-native-paper';
+import {Surface, Text, useTheme} from 'react-native-paper';
 import {formatToPhp} from '../../utils/currency';
 import styles from './TotalExpensesViewStyles';
 
@@ -9,13 +9,16 @@ interface ITotalExpensesViewProps {
 }
 
 const TotalExpensesView = (props: ITotalExpensesViewProps) => {
+  const theme = useTheme();
+
   return (
-    <Card style={styles.mainContainer}>
+    <Surface
+      style={[styles.mainContainer, {backgroundColor: theme.colors.surface}]}>
       <View style={styles.detailsContainer}>
         <Text style={styles.totalExpenseHeaderLabel}>Total:</Text>
         <Text style={styles.totalExpenseLabel}>{formatToPhp(props.total)}</Text>
       </View>
-    </Card>
+    </Surface>
   );
 };
 

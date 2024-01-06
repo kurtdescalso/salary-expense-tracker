@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {View} from 'react-native';
 import {useTheme, Surface, Button} from 'react-native-paper';
-import {useRoute} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import {AppStackParamList} from '../../../App';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import styles from './BottomTabsStyles';
@@ -10,40 +10,47 @@ type BottomTabsNavigableRoutes = 'Salary List' | 'Expense View';
 
 type BottomTabsNavigationProp = NativeStackNavigationProp<
   AppStackParamList,
-  BottomTabsNavigableRoutes
+  'Salary List' | 'Expense View'
 >;
 
-const BottomTabs = (navigation: BottomTabsNavigationProp) => {
+const BottomTabs = () => {
   const route = useRoute();
   const theme = useTheme();
+  const navigation = useNavigation<BottomTabsNavigationProp>();
 
   const navigateTo = (routeName: BottomTabsNavigableRoutes) => {
-    ((navigation as any).navigation as BottomTabsNavigationProp).navigate(
-      routeName,
-    );
+    navigation.navigate(routeName);
   };
 
   return (
     <View>
-      <Surface style={styles.navButtonsContainer}>
+      <Surface
+        style={[
+          styles.navButtonsContainer,
+          {backgroundColor: theme.colors.surface},
+        ]}>
         <Button
           icon="account-cash"
-          color={
+          mode="text"
+          textColor={
             route.name === 'Salary List'
               ? theme.colors.primary
               : theme.colors.onSurface
           }
+          rippleColor="#ffffff00"
           onPress={() => navigateTo('Salary List')}
           style={styles.navButton}>
           Salary List
         </Button>
         <Button
           icon="archive-search"
-          color={
+          mode="text"
+          textColor={
             route.name === 'Expense View'
               ? theme.colors.primary
               : theme.colors.onSurface
           }
+          rippleColor="#ffffff00"
           onPress={() => navigateTo('Expense View')}
           style={styles.navButton}>
           Expense View

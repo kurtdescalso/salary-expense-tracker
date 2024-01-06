@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {Checkbox} from 'react-native-paper';
 import {ICategoryOptionWithCheckFlag} from '../../../constants';
+import styles from './ExpenseListFilterMenuListItemStyles';
 
 interface IExpenseListFilterMenuListItemProps {
   category: ICategoryOptionWithCheckFlag;

@@ -5,6 +5,7 @@ const styles = StyleSheet.create({
   mainContainer: {
     paddingVertical: FONT_SIZE * 0.5,
     paddingHorizontal: FONT_SIZE,
+    marginHorizontal: FONT_SIZE,
     marginBottom: FONT_SIZE * 0.5,
   },
   detailsContainer: {

@@ -16,6 +16,7 @@ export const formatToStandardDate = (date: Date) => {
   } catch (error) {
     console.log('formatToStandardDate error:');
     console.log(error);
+    console.log(date);
     return '';
   }
 };

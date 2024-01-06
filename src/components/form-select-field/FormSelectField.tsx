@@ -62,7 +62,11 @@ const FormSelectField = (props: IFormSelectField) => {
               onDismiss={closeMenu}
               style={styles.menu}
               anchor={
-                <Button mode="outlined" onPress={openMenu}>
+                <Button
+                  mode="outlined"
+                  icon="menu-down"
+                  onPress={openMenu}
+                  contentStyle={styles.anchorButton}>
                   {selectedOptionLabel}
                 </Button>
               }>

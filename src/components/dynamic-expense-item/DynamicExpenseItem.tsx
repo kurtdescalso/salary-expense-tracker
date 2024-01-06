@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {View} from 'react-native';
-import {Card, Text} from 'react-native-paper';
+import {Surface, Text, useTheme} from 'react-native-paper';
 import Animated, {
   useSharedValue,
   withSpring,
@@ -22,6 +22,8 @@ const COMPACT_DETAILS_VIEW_HEIGHT = 0;
 const EXPANDED_DETAILS_VIEW_HEIGHT = FONT_SIZE * 3;
 
 const DynamicExpenseItem = (props: IDynamicExpenseItemProps) => {
+  const theme = useTheme();
+
   const parsedDate = React.useMemo(() => {
     return parse(
       props.expense.accounting_date,
@@ -29,6 +31,17 @@ const DynamicExpenseItem = (props: IDynamicExpenseItemProps) => {
       new Date(),
     );
   }, [props.expense.accounting_date]);
+
+  const standardDateDisplayString = React.useMemo(() => {
+    try {
+      return formatToStandardDate(parsedDate);
+    } catch (error) {
+      console.log(
+        `DynamicExpenseItem: standardDateDisplayString: formatToStandardDate(): ${parsedDate} error: ${error}`,
+      );
+      return '';
+    }
+  }, []);
 
   const animationHeight = useSharedValue(0);
 
@@ -41,7 +54,8 @@ const DynamicExpenseItem = (props: IDynamicExpenseItemProps) => {
   }, [props.isCompactView]);
 
   return (
-    <Card style={styles.mainContainer}>
+    <Surface
+      style={[styles.mainContainer, {backgroundColor: theme.colors.surface}]}>
       <View style={styles.detailsContainer}>
         <Text numberOfLines={1} style={styles.descriptionLabel}>
           {props.expense.description}
@@ -52,9 +66,9 @@ const DynamicExpenseItem = (props: IDynamicExpenseItemProps) => {
       </View>
       <Animated.View style={{height: animationHeight}}>
         <Text>{props.expense.category}</Text>
-        <Text>{formatToStandardDate(parsedDate)}</Text>
+        <Text>{standardDateDisplayString}</Text>
       </Animated.View>
-    </Card>
+    </Surface>
   );
 };
 

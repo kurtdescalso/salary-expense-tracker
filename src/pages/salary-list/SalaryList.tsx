@@ -9,28 +9,30 @@ import {
 import {IconButton, ProgressBar, useTheme} from 'react-native-paper';
 import {useHeaderHeight} from '@react-navigation/elements';
 import {AppStackParamList} from '../../../App';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {getDBConnection} from '../../services/database';
-import {getSalaryRecords, getTotalSalaries} from '../../services/salary';
-import {getAllExpenses, getTotalExpenses} from '../../services/expense';
-import useSalaryRecordStore from '../../stores/SalaryStore';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import SalaryItem from '../../components/salary-item/SalaryItem';
 import NoResultsView from '../../components/no-results-view/NoResultsView';
 import BalanceView from '../../components/balance-view/BalanceView';
-import {FONT_SIZE} from '../../constants';
 import BottomTabs from '../../components/bottom-tabs/BottomTabs';
+import {useNavigation} from '@react-navigation/native';
+import {getDBConnection} from '../../services/database';
+import {getSalaryRecords, getTotalSalaries} from '../../services/salary';
+import {getAllExpenses, getTotalExpenses} from '../../services/expense';
 import {IExpenseEntry} from '../../schemas/salaries';
-// import CommonStyles from '../../styles/CommonStyles';
+import useSalaryRecordStore from '../../stores/SalaryStore';
 import styles from './SalaryListStyles';
 
-type SalaryListPageStackScreenProps<T extends keyof AppStackParamList> =
-  NativeStackScreenProps<AppStackParamList, T>;
+type SalaryListPageNavigationProps = NativeStackNavigationProp<
+  AppStackParamList,
+  'Salary List'
+>;
 
-const SalaryListPage = ({
-  navigation,
-}: SalaryListPageStackScreenProps<'Salary List'>) => {
-  const headerHeight = useHeaderHeight();
+const SalaryListPage = () => {
   const theme = useTheme();
+
+  const headerHeight = useHeaderHeight();
+
+  const navigation = useNavigation<SalaryListPageNavigationProps>();
 
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [balance, setBalance] = React.useState<number>(0);
@@ -46,8 +48,19 @@ const SalaryListPage = ({
 
   React.useEffect(() => {
     (async () => {
-      setIsLoading(true);
-      const db = await getDBConnection();
+      try {
+        setIsLoading(true);
+        const db = await getDBConnection();
+        const result = await getSalaryRecords(db);
+        setSalaryList(result[0].rows.raw());
+      } catch (error) {
+        console.log('get salary records rejected');
+        console.log(error);
+      } finally {
+        setIsLoading(false);
+      }
+      setIsLoading(false);
+      /*
       getSalaryRecords(db)
         .then(result => {
           setSalaryList(result[0].rows.raw());
@@ -59,6 +72,7 @@ const SalaryListPage = ({
         .finally(() => {
           setIsLoading(false);
         });
+        */
     })();
   }, [setSalaryList]);
 
@@ -114,9 +128,6 @@ const SalaryListPage = ({
         },
       ]}>
       <View style={styles.mainflexContainer}>
-        {/*<View>
-          <Text style={CommonStyles.headerText}>Salary Records</Text>
-        </View>*/}
         {isLoading ? <ProgressBar indeterminate /> : null}
         <FlatList
           data={salaryList}
@@ -138,15 +149,14 @@ const SalaryListPage = ({
             </View>
             <IconButton
               icon="cash-plus"
-              color={theme.colors.backdrop}
-              size={FONT_SIZE * 1.5}
-              style={{backgroundColor: theme.colors.accent}}
+              iconColor={theme.colors.onPrimary}
+              containerColor={theme.colors.primary}
               onPress={goToAddSalaryRecord}
             />
           </View>
         </View>
       </View>
-      <BottomTabs navigation={navigation} />
+      <BottomTabs />
     </SafeAreaView>
   );
 };

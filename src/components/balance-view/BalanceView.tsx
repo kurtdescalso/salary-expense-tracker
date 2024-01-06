@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {View} from 'react-native';
-import {Card, Text} from 'react-native-paper';
+import {Surface, Text, useTheme} from 'react-native-paper';
 import {formatToPhp} from '../../utils/currency';
 import styles from './BalanceViewStyles';
 
@@ -9,8 +9,11 @@ interface IBalanceViewProps {
 }
 
 const BalanceView = (props: IBalanceViewProps) => {
+  const theme = useTheme();
+
   return (
-    <Card style={styles.balanceFooter}>
+    <Surface
+      style={[styles.balanceFooter, {backgroundColor: theme.colors.surface}]}>
       <View style={styles.innerFlexContainer}>
         <Text>Balance:</Text>
         <Text
@@ -22,7 +25,7 @@ const BalanceView = (props: IBalanceViewProps) => {
           {formatToPhp(props.balance)}
         </Text>
       </View>
-    </Card>
+    </Surface>
   );
 };
 

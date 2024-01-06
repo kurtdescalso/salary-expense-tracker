@@ -24,7 +24,7 @@ const FormNumberField = (props: IFormNumberField) => {
         render={({field: {onChange, onBlur, value}}) => (
           <TextInput
             label={props.label}
-            mode="flat"
+            mode="outlined"
             value={String(value)}
             onBlur={onBlur}
             onChangeText={onChange}

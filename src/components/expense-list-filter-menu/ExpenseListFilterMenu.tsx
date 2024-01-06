@@ -2,6 +2,7 @@ import * as React from 'react';
 import {IconButton, Menu, useTheme} from 'react-native-paper';
 import {ICategoryOptionWithCheckFlag} from '../../constants';
 import ExpenseListFilterMenuListItem from './expense-list-filter-menu-list-item/ExpenseListFilterMenuListItem';
+import styles from './ExpenseListFilterMenuStyles';
 
 interface IExpenseListFilterMenuProps {
   selectedCategories: ICategoryOptionWithCheckFlag[];
@@ -26,7 +27,7 @@ const ExpenseListFilterMenu = (props: IExpenseListFilterMenuProps) => {
       anchor={
         <IconButton
           icon="shape-plus"
-          color={theme.colors.surface}
+          iconColor={theme.colors.inverseOnSurface}
           onPress={() => setIsMenuOpen(!isMenuOpen)}
         />
       }>

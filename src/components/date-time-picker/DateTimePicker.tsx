@@ -17,9 +17,7 @@ interface IDateTimePickerProps {
 const DateTimePicker = (props: IDateTimePickerProps) => {
   const [isDatePickerOpen, setIsDatePickerOpen] = React.useState(false);
   const [isTimePickerOpen, setIsTimePickerOpen] = React.useState(false);
-  const [internalCachedTime, setInternalCachedTime] = React.useState(
-    new Date(),
-  );
+  const [internalCachedTime] = React.useState(new Date());
 
   const openDatePicker = () => {
     setIsDatePickerOpen(true);

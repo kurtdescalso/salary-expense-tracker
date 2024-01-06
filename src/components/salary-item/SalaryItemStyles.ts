@@ -3,13 +3,13 @@ import {FONT_SIZE} from '../../constants';
 
 const styles = StyleSheet.create({
   salaryItem: {
-    paddingHorizontal: FONT_SIZE * 1.5,
-    paddingVertical: FONT_SIZE,
     marginBottom: FONT_SIZE / 2,
   },
   salaryItemInnerContainer: {
     display: 'flex',
     flexDirection: 'row',
+    paddingHorizontal: FONT_SIZE * 1.5,
+    paddingVertical: FONT_SIZE,
   },
   detailsContainer: {
     flex: 2,

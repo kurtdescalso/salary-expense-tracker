@@ -41,7 +41,7 @@ const ExpenseListDateTimeFilter = (props: IExpenseListDateTimeFilterProps) => {
     <View>
       <IconButton
         icon="clock"
-        color={theme.colors.surface}
+        iconColor={theme.colors.inverseOnSurface}
         onPress={openModal}
       />
       <DatePickerModal
