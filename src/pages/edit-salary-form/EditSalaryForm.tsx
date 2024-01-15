@@ -18,6 +18,7 @@ import {useNavigation} from '@react-navigation/native';
 import {format} from 'date-fns';
 import CommonStyles from '../../styles/CommonStyles';
 import styles from './EditSalaryFormStyles';
+import {formatToStandardDate} from '../../utils/datetime';
 
 type EditSalaryFormStackScreenProps<T extends keyof AppStackParamList> =
   NativeStackScreenProps<AppStackParamList, T>;
@@ -55,7 +56,8 @@ const EditSalaryForm = ({
     await editSalaryRecord(db, {
       ...data,
       id: salaryItem.id,
-      created_at: new Date() as unknown as string,
+      // created_at: new Date() as unknown as string,
+      created_at: formatToStandardDate(new Date()),
     });
 
     const newSalaryRecords = await getSalaryRecords(db);

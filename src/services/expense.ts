@@ -1,14 +1,14 @@
 import {SQLiteDatabase} from 'react-native-sqlite-storage';
-import {EXPENSES_TABLE_NAME} from './database';
+import {EXPENSES_TABLE} from './database';
 import {IExpenseEntry} from '../schemas/salaries';
 
 export const getTotalExpenses = async (db: SQLiteDatabase) => {
-  const query = `SELECT SUM(${EXPENSES_TABLE_NAME}.amount) AS total_expenses FROM ${EXPENSES_TABLE_NAME}`;
+  const query = `SELECT SUM(${EXPENSES_TABLE}.amount) AS total_expenses FROM ${EXPENSES_TABLE}`;
   return await db.executeSql(query);
 };
 
 export const getAllExpenses = async (db: SQLiteDatabase) => {
-  const query = `SELECT * FROM ${EXPENSES_TABLE_NAME}`;
+  const query = `SELECT * FROM ${EXPENSES_TABLE}`;
 
   return await db.executeSql(query);
 };
@@ -17,7 +17,7 @@ export const getExpensesBySalaryRecordId = async (
   db: SQLiteDatabase,
   salaryId: number,
 ) => {
-  const query = `SELECT * FROM ${EXPENSES_TABLE_NAME} WHERE salary_id=${salaryId}`;
+  const query = `SELECT * FROM ${EXPENSES_TABLE} WHERE salary_id=${salaryId}`;
 
   return await db.executeSql(query);
 };
@@ -26,7 +26,7 @@ export const addExpenseRecord = async (
   db: SQLiteDatabase,
   expense: IExpenseEntry,
 ) => {
-  const query = `INSERT INTO ${EXPENSES_TABLE_NAME} (
+  const query = `INSERT INTO ${EXPENSES_TABLE} (
     amount,
     description,
     category,
@@ -54,7 +54,7 @@ export const editExpenseRecord = async (
   db: SQLiteDatabase,
   expense: IExpenseEntry,
 ) => {
-  const query = `UPDATE ${EXPENSES_TABLE_NAME} SET
+  const query = `UPDATE ${EXPENSES_TABLE} SET
     amount=?,
     description=?,
     category=?,
@@ -76,7 +76,7 @@ export const deleteExpenseRecord = async (
   db: SQLiteDatabase,
   expense: IExpenseEntry,
 ) => {
-  const query = `DELETE FROM ${EXPENSES_TABLE_NAME}
+  const query = `DELETE FROM ${EXPENSES_TABLE}
     WHERE id=?`;
 
   await db.transaction(async tx => {

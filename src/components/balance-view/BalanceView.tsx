@@ -11,6 +11,11 @@ interface IBalanceViewProps {
 const BalanceView = (props: IBalanceViewProps) => {
   const theme = useTheme();
 
+  const balanceString = React.useMemo(() => {
+    const newBalance = props.balance || 0;
+    return formatToPhp(newBalance);
+  }, [props.balance]);
+
   return (
     <Surface
       style={[styles.balanceFooter, {backgroundColor: theme.colors.surface}]}>
@@ -22,7 +27,7 @@ const BalanceView = (props: IBalanceViewProps) => {
               ? styles.balanceFooterAmountPositive
               : styles.balanceFooterAmountNegative
           }>
-          {formatToPhp(props.balance)}
+          {balanceString}
         </Text>
       </View>
     </Surface>

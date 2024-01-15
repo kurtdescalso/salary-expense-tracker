@@ -43,10 +43,10 @@ const DeleteSalaryConfirmationDialog = (
     } catch (e) {
       console.log('delete salary record rejected');
       console.log(e);
+    } finally {
+      setIsLoading(false);
+      props.navigation.navigate('Salary List');
     }
-
-    setIsLoading(false);
-    props.navigation.navigate('Salary List');
   };
 
   return (

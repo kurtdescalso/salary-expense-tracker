@@ -60,19 +60,6 @@ const SalaryListPage = () => {
         setIsLoading(false);
       }
       setIsLoading(false);
-      /*
-      getSalaryRecords(db)
-        .then(result => {
-          setSalaryList(result[0].rows.raw());
-        })
-        .catch(err => {
-          console.log('get salary records rejected');
-          console.log(err);
-        })
-        .finally(() => {
-          setIsLoading(false);
-        });
-        */
     })();
   }, [setSalaryList]);
 
@@ -99,21 +86,19 @@ const SalaryListPage = () => {
   }, [setAllExpensesList]);
 
   React.useEffect(() => {
-    if (salaryList && salaryList.length > 0) {
-      (async () => {
-        try {
-          const db = await getDBConnection();
-          const totalSalaries = (await getTotalSalaries(db))[0].rows.raw();
-          const totalExpenses = (await getTotalExpenses(db))[0].rows.raw();
-          const newBalance =
-            totalSalaries[0].total_salaries - totalExpenses[0].total_expenses;
-          setBalance(newBalance);
-        } catch (err) {
-          console.log('get balance queries rejected');
-          console.log(err);
-        }
-      })();
-    }
+    (async () => {
+      try {
+        const db = await getDBConnection();
+        const totalSalaries = (await getTotalSalaries(db))[0].rows.raw();
+        const totalExpenses = (await getTotalExpenses(db))[0].rows.raw();
+        const newBalance =
+          totalSalaries[0].total_salaries - totalExpenses[0].total_expenses;
+        setBalance(newBalance);
+      } catch (err) {
+        console.log('get balance queries rejected');
+        console.log(err);
+      }
+    })();
   }, [salaryList, setSalaryList]);
 
   return (

@@ -24,7 +24,11 @@ import AddSalaryForm from './src/pages/add-salary-form/AddSalaryForm';
 import EditSalaryForm from './src/pages/edit-salary-form/EditSalaryForm';
 import AddExpenseForm from './src/pages/add-expense-form/AddExpenseForm';
 import EditExpenseForm from './src/pages/edit-expense-form/EditExpenseForm';
-import {getDBConnection, createTables} from './src/services/database';
+import {
+  getDBConnection,
+  createTables,
+  setupSQLite,
+} from './src/services/database';
 
 import {en, registerTranslation} from 'react-native-paper-dates';
 registerTranslation('en', en);
@@ -56,6 +60,7 @@ const App = (): React.JSX.Element => {
   const initializeDatabase = React.useCallback(async () => {
     const db = await getDBConnection();
     await createTables(db);
+    await setupSQLite(db);
   }, []);
 
   const colorScheme = useColorScheme();

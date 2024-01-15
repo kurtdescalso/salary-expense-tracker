@@ -4,8 +4,8 @@ import {
   SQLiteDatabase,
 } from 'react-native-sqlite-storage';
 
-export const SALARIES_TABLE_NAME = 'salaries';
-export const EXPENSES_TABLE_NAME = 'expenses';
+export const SALARIES_TABLE = 'salaries';
+export const EXPENSES_TABLE = 'expenses';
 
 enablePromise(true);
 
@@ -17,7 +17,7 @@ export const getDBConnection = async () => {
 };
 
 export const createTables = async (db: SQLiteDatabase) => {
-  const createSalariesTableQuery = `CREATE TABLE IF NOT EXISTS ${SALARIES_TABLE_NAME} (
+  const createSalariesTableQuery = `CREATE TABLE IF NOT EXISTS ${SALARIES_TABLE} (
     id INTEGER NOT NULL PRIMARY KEY,
     amount REAL NOT NULL,
     description TEXT NOT NULL,
@@ -32,20 +32,31 @@ export const createTables = async (db: SQLiteDatabase) => {
     console.log(err);
   }
 
-  const createExpensesTableQuery = `CREATE TABLE IF NOT EXISTS ${EXPENSES_TABLE_NAME} (
+  const createExpensesTableQuery = `CREATE TABLE IF NOT EXISTS ${EXPENSES_TABLE} (
     id INTEGER NOT NULL PRIMARY KEY,
     amount REAL NOT NULL,
     description TEXT NOT NULL,
     category TEXT NOT NULL,
     accounting_date TEXT NOT NULL DEFAULT current_timestamp,
     created_at TEXT NOT NULL,
-    salary_id INTEGER NOT NULL
+    salary_id INTEGER NOT NULL,
+    FOREIGN KEY (salary_id) REFERENCES ${SALARIES_TABLE}(id)
+    ON DELETE CASCADE
   )`;
 
   try {
     await db.executeSql(createExpensesTableQuery);
   } catch (err) {
     console.log("error creating 'EXPENSES' table:");
+    console.log(err);
+  }
+};
+
+export const setupSQLite = async (db: SQLiteDatabase) => {
+  try {
+    await db.executeSql(`PRAGMA foreign_keys = ON`);
+  } catch (err) {
+    console.log('error setting up SQLite');
     console.log(err);
   }
 };
