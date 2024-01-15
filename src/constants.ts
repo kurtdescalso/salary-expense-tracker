@@ -42,6 +42,10 @@ export const CATEGORY_OPTIONS: ISelectOption[] = [
     label: 'Emergency',
     value: 'Emergency',
   },
+  {
+    label: 'Other',
+    value: 'Other',
+  },
 ];
 
 export interface ICategoryOptionWithCheckFlag extends ISelectOption {
