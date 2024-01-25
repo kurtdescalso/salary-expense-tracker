@@ -11,6 +11,7 @@ import {useHeaderHeight} from '@react-navigation/elements';
 import {getDBConnection} from '../../services/database';
 import {getSalaryRecordById} from '../../services/salary';
 import {getExpensesBySalaryRecordId} from '../../services/expense';
+import {IExpenseEntry} from '../../schemas/salaries';
 import useSalaryRecordStore from '../../stores/SalaryStore';
 import SalaryItem from '../../components/salary-item/SalaryItem';
 import ExpenseItem from '../../components/expense-item/ExpenseItem';
@@ -86,6 +87,13 @@ const PerSalaryExpenseViewPage = ({
     setSalaryRecord,
   ]);
 
+  const renderItem = React.useCallback(
+    ({item}: {item: IExpenseEntry}) => (
+      <ExpenseItem {...item} navigation={navigation} />
+    ),
+    [navigation],
+  );
+
   return (
     <SafeAreaView
       style={[
@@ -103,14 +111,12 @@ const PerSalaryExpenseViewPage = ({
           <ProgressBar indeterminate />
         ) : (
           <View style={styles.salaryItemContainer}>
-            {salaryRecord ? <SalaryItem {...salaryRecord} /> : null}
+            {salaryRecord ? <SalaryItem {...salaryRecord} isReadOnly /> : null}
           </View>
         )}
         <FlatList
           data={expenseList}
-          renderItem={({item}) => (
-            <ExpenseItem {...item} navigation={navigation} />
-          )}
+          renderItem={renderItem}
           keyExtractor={(item, index) => `expense-item-${item.id}-${index}`}
           ListEmptyComponent={
             <NoResultsView message="No expenses found for salary record." />

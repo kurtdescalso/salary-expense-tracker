@@ -18,7 +18,14 @@ import {
 } from '../../services/expense';
 import {getSalaryRecords} from '../../services/salary';
 import useSalaryRecordStore from '../../stores/SalaryStore';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {SalaryExpenseManagementStackParamList} from '../../stacks/SalaryExpenseManagementStack';
 import styles from './DeleteExpenseConfirmationDialog';
+
+type DeleteExpenseConfirmationDialogNavigationProps = NativeStackNavigationProp<
+  SalaryExpenseManagementStackParamList,
+  'Per Salary Expenses'
+>;
 
 interface IDeleteExpenseConfirmationDialog {
   expenseEntry: IExpenseEntry;
@@ -32,7 +39,8 @@ const DeleteExpenseConfirmationDialog = (
   const [isOpen, setIsOpen] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
 
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<DeleteExpenseConfirmationDialogNavigationProps>();
 
   const setSalaryRecords = useSalaryRecordStore(
     state => state.setSalaryRecords,

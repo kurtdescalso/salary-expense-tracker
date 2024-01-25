@@ -9,15 +9,22 @@ import {
   useTheme,
 } from 'react-native-paper';
 import {ISalaryRecord} from '../../schemas/salaries';
+import {useNavigation} from '@react-navigation/native';
 import {getDBConnection} from '../../services/database';
 import {deleteSalaryRecord, getSalaryRecords} from '../../services/salary';
 import {getAllExpenses} from '../../services/expense';
 import useSalaryRecordStore from '../../stores/SalaryStore';
+import {SalaryExpenseManagementStackParamList} from '../../stacks/SalaryExpenseManagementStack';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import styles from './DeleteSalaryConfirmationDialogStyles';
+
+type DeleteSalaryConfirmationDialogNavigationProps = NativeStackNavigationProp<
+  SalaryExpenseManagementStackParamList,
+  'Salary List'
+>;
 
 interface IDeleteSalaryConfirmationDialog {
   salaryItem: ISalaryRecord;
-  navigation: any;
 }
 
 const DeleteSalaryConfirmationDialog = (
@@ -27,6 +34,9 @@ const DeleteSalaryConfirmationDialog = (
 
   const [isOpen, setIsOpen] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
+
+  const navigation =
+    useNavigation<DeleteSalaryConfirmationDialogNavigationProps>();
 
   const setSalaryRecords = useSalaryRecordStore(
     state => state.setSalaryRecords,
@@ -53,7 +63,7 @@ const DeleteSalaryConfirmationDialog = (
       console.log(e);
     } finally {
       setIsLoading(false);
-      props.navigation.navigate('Salary List');
+      navigation.navigate('Salary List');
     }
   };
 

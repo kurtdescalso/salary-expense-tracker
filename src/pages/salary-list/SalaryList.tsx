@@ -18,6 +18,7 @@ import {useNavigation} from '@react-navigation/native';
 import {getDBConnection} from '../../services/database';
 import {getSalaryRecords} from '../../services/salary';
 import {getAllExpenses} from '../../services/expense';
+import {ISalaryRecord} from '../../schemas/salaries';
 import useSalaryRecordStore from '../../stores/SalaryStore';
 import styles from './SalaryListStyles';
 
@@ -95,6 +96,13 @@ const SalaryListPage = () => {
     })();
   }, [salaryList, allExpensesList]);
 
+  const renderItem = React.useCallback(
+    ({item}: {item: ISalaryRecord}) => {
+      return <SalaryItem {...item} navigation={navigation} />;
+    },
+    [navigation],
+  );
+
   return (
     <SafeAreaView
       style={[
@@ -111,9 +119,7 @@ const SalaryListPage = () => {
         {isLoading ? <ProgressBar indeterminate /> : null}
         <FlatList
           data={salaryList}
-          renderItem={({item}) => {
-            return <SalaryItem navigation={navigation} {...item} />;
-          }}
+          renderItem={renderItem}
           keyExtractor={(item, index) =>
             `salary-record-item-${item.id}-${index}`
           }
