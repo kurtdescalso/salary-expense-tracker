@@ -11,8 +11,7 @@ const styles = StyleSheet.create({
   },
   searchBarContainer: {
     flexDirection: 'row',
-    paddingHorizontal: FONT_SIZE * 0.5,
-    paddingBottom: FONT_SIZE * 0.5,
+    padding: FONT_SIZE * 0.5,
     marginBottom: FONT_SIZE * 0.25,
   },
   searchBar: {

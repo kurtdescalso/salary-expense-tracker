@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {View} from 'react-native';
-import {Button, Text} from 'react-native-paper';
-import {AppStackParamList} from '../../../App';
+import {Button, ProgressBar, Text} from 'react-native-paper';
+import {SalaryExpenseManagementStackParamList} from '../../stacks/SalaryExpenseManagementStack';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import DeleteSalaryConfirmationDialog from '../../components/delete-salary-confirmation-dialog/DeleteSalaryConfirmationDialog';
 import FormCharField from '../../components/form-char-field/FormCharField';
@@ -20,8 +20,9 @@ import CommonStyles from '../../styles/CommonStyles';
 import styles from './EditSalaryFormStyles';
 import {formatToStandardDate} from '../../utils/datetime';
 
-type EditSalaryFormStackScreenProps<T extends keyof AppStackParamList> =
-  NativeStackScreenProps<AppStackParamList, T>;
+type EditSalaryFormStackScreenProps<
+  T extends keyof SalaryExpenseManagementStackParamList,
+> = NativeStackScreenProps<SalaryExpenseManagementStackParamList, T>;
 
 const EditSalaryForm = ({
   route,
@@ -110,6 +111,11 @@ const EditSalaryForm = ({
           Update Salary Record
         </Button>
       </View>
+      {isLoading ? (
+        <View>
+          <ProgressBar indeterminate />
+        </View>
+      ) : null}
     </View>
   );
 };

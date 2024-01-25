@@ -8,12 +8,12 @@ import {
 } from 'react-native';
 import {IconButton, ProgressBar, useTheme} from 'react-native-paper';
 import {useHeaderHeight} from '@react-navigation/elements';
-import {AppStackParamList} from '../../../App';
+import {BOTTOM_TABBAR_HEIGHT} from '../../constants';
+import {SalaryExpenseManagementStackParamList} from '../../stacks/SalaryExpenseManagementStack';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import SalaryItem from '../../components/salary-item/SalaryItem';
 import NoResultsView from '../../components/no-results-view/NoResultsView';
 import BalanceView from '../../components/balance-view/BalanceView';
-import BottomTabs from '../../components/bottom-tabs/BottomTabs';
 import {useNavigation} from '@react-navigation/native';
 import {getDBConnection} from '../../services/database';
 import {getSalaryRecords, getTotalSalaries} from '../../services/salary';
@@ -23,7 +23,7 @@ import useSalaryRecordStore from '../../stores/SalaryStore';
 import styles from './SalaryListStyles';
 
 type SalaryListPageNavigationProps = NativeStackNavigationProp<
-  AppStackParamList,
+  SalaryExpenseManagementStackParamList,
   'Salary List'
 >;
 
@@ -109,6 +109,7 @@ const SalaryListPage = () => {
           height:
             Dimensions.get('window').height -
             headerHeight -
+            BOTTOM_TABBAR_HEIGHT -
             (StatusBar.currentHeight || 0),
         },
       ]}>
@@ -141,7 +142,6 @@ const SalaryListPage = () => {
           </View>
         </View>
       </View>
-      <BottomTabs />
     </SafeAreaView>
   );
 };

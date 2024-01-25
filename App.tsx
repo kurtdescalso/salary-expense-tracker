@@ -11,19 +11,17 @@
 import React from 'react';
 
 import {NavigationContainer, Theme} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {createMaterialBottomTabNavigator} from 'react-native-paper/react-navigation';
 import {Provider as PaperProvider} from 'react-native-paper';
 import {CombinedDefaultTheme, CombinedDarkTheme} from './src/styles/Theme';
 import {useColorScheme} from 'react-native';
-import AppBar from './src/components/app-bar/AppBar';
 
-import SalaryListPage from './src/pages/salary-list/SalaryList';
+import SalaryExpenseManagementStack from './src/stacks/SalaryExpenseManagementStack';
 import ExpenseViewPage from './src/pages/expense-view/ExpenseView';
-import PerSalaryExpenseViewPage from './src/pages/per-salary-expense-view/PerSalaryExpenseView';
-import AddSalaryForm from './src/pages/add-salary-form/AddSalaryForm';
-import EditSalaryForm from './src/pages/edit-salary-form/EditSalaryForm';
-import AddExpenseForm from './src/pages/add-expense-form/AddExpenseForm';
-import EditExpenseForm from './src/pages/edit-expense-form/EditExpenseForm';
+
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {BOTTOM_TABBAR_HEIGHT, FONT_SIZE} from './src/constants';
+
 import {
   getDBConnection,
   createTables,
@@ -33,28 +31,12 @@ import {
 import {en, registerTranslation} from 'react-native-paper-dates';
 registerTranslation('en', en);
 
-import {IExpenseEntry, ISalaryRecord} from './src/schemas/salaries';
-
-export type AppStackParamList = {
+export type AppTabParamList = {
   Home: undefined;
-  'Salary List': undefined;
   'Expense View': undefined;
-  'Per Salary Expenses': {
-    salaryId: number;
-  };
-  'Add Salary': undefined;
-  'Edit Salary': {
-    salaryItem: ISalaryRecord;
-  };
-  'Add Expense': {
-    salaryId: number;
-  };
-  'Edit Expense': {
-    expenseItem: IExpenseEntry;
-  };
 };
 
-const Stack = createNativeStackNavigator<AppStackParamList>();
+const Tab = createMaterialBottomTabNavigator();
 
 const App = (): React.JSX.Element => {
   const initializeDatabase = React.useCallback(async () => {
@@ -65,43 +47,45 @@ const App = (): React.JSX.Element => {
 
   const colorScheme = useColorScheme();
 
+  const selectedTheme = React.useMemo(() => {
+    return colorScheme !== 'dark' ? CombinedDefaultTheme : CombinedDarkTheme;
+  }, [colorScheme]);
+
   React.useEffect(() => {
     initializeDatabase();
   }, [initializeDatabase]);
 
   return (
-    <PaperProvider
-      theme={colorScheme !== 'dark' ? CombinedDefaultTheme : CombinedDarkTheme}>
-      <NavigationContainer
-        theme={
-          (colorScheme !== 'dark'
-            ? CombinedDefaultTheme
-            : CombinedDarkTheme) as unknown as Theme
-        }>
-        <Stack.Navigator
-          initialRouteName="Salary List"
-          screenOptions={{
-            header: props => <AppBar {...props} />,
-          }}>
-          <Stack.Screen name="Salary List" component={SalaryListPage} />
-          <Stack.Screen
+    <PaperProvider theme={selectedTheme}>
+      <NavigationContainer theme={selectedTheme as unknown as Theme}>
+        <Tab.Navigator barStyle={{maxHeight: BOTTOM_TABBAR_HEIGHT}}>
+          <Tab.Screen
+            name="Salary Management"
+            component={SalaryExpenseManagementStack}
+            options={{
+              tabBarIcon: () => (
+                <MaterialCommunityIcons
+                  name="account-cash"
+                  color={selectedTheme.colors.primary}
+                  size={FONT_SIZE * 1.5}
+                />
+              ),
+            }}
+          />
+          <Tab.Screen
             name="Expense View"
             component={ExpenseViewPage}
             options={{
-              headerLeft: () => null,
-              headerBackVisible: false,
-              animation: 'none',
+              tabBarIcon: () => (
+                <MaterialCommunityIcons
+                  name="archive-search"
+                  color={selectedTheme.colors.primary}
+                  size={FONT_SIZE * 1.5}
+                />
+              ),
             }}
           />
-          <Stack.Screen
-            name="Per Salary Expenses"
-            component={PerSalaryExpenseViewPage}
-          />
-          <Stack.Screen name="Add Salary" component={AddSalaryForm} />
-          <Stack.Screen name="Edit Salary" component={EditSalaryForm} />
-          <Stack.Screen name="Add Expense" component={AddExpenseForm} />
-          <Stack.Screen name="Edit Expense" component={EditExpenseForm} />
-        </Stack.Navigator>
+        </Tab.Navigator>
       </NavigationContainer>
     </PaperProvider>
   );

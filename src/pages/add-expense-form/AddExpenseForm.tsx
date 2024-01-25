@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {View} from 'react-native';
 import {Button, ProgressBar, Text} from 'react-native-paper';
-import {AppStackParamList} from '../../../App';
+import {SalaryExpenseManagementStackParamList} from '../../stacks/SalaryExpenseManagementStack';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import FormCharField from '../../components/form-char-field/FormCharField';
 import FormNumberField from '../../components/form-number-field/FormNumberField';
@@ -22,8 +22,9 @@ import {format} from 'date-fns';
 import CommonStyles from '../../styles/CommonStyles';
 import styles from './AddExpenseFormStyles';
 
-type AddExpenseFormStackScreenProps<T extends keyof AppStackParamList> =
-  NativeStackScreenProps<AppStackParamList, T>;
+type AddExpenseFormStackScreenProps<
+  T extends keyof SalaryExpenseManagementStackParamList,
+> = NativeStackScreenProps<SalaryExpenseManagementStackParamList, T>;
 
 const AddExpenseForm = ({
   route,

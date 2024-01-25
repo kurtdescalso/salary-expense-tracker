@@ -16,14 +16,14 @@ import SalaryItem from '../../components/salary-item/SalaryItem';
 import ExpenseItem from '../../components/expense-item/ExpenseItem';
 import BalanceView from '../../components/balance-view/BalanceView';
 import NoResultsView from '../../components/no-results-view/NoResultsView';
-import {AppStackParamList} from '../../../App';
+import {SalaryExpenseManagementStackParamList} from '../../stacks/SalaryExpenseManagementStack';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {FONT_SIZE} from '../../constants';
+import {BOTTOM_TABBAR_HEIGHT, FONT_SIZE} from '../../constants';
 import styles from './PerSalaryExpenseViewStyles';
 
 type PerSalaryExpenseViewPageStackScreenProps<
-  T extends keyof AppStackParamList,
-> = NativeStackScreenProps<AppStackParamList, T>;
+  T extends keyof SalaryExpenseManagementStackParamList,
+> = NativeStackScreenProps<SalaryExpenseManagementStackParamList, T>;
 
 const PerSalaryExpenseViewPage = ({
   navigation,
@@ -86,6 +86,7 @@ const PerSalaryExpenseViewPage = ({
           height:
             Dimensions.get('window').height -
             headerHeight -
+            BOTTOM_TABBAR_HEIGHT -
             (StatusBar.currentHeight || 0),
         },
       ]}>

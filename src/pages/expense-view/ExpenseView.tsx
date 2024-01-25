@@ -7,17 +7,16 @@ import {
   FlatList,
 } from 'react-native';
 import {IconButton, Searchbar, useTheme} from 'react-native-paper';
-import BottomTabs from '../../components/bottom-tabs/BottomTabs';
 import NoResultsView from '../../components/no-results-view/NoResultsView';
 import DynamicExpenseItem from '../../components/dynamic-expense-item/DynamicExpenseItem';
 import TotalExpensesView from '../../components/total-expenses-view/TotalExpensesView';
-import {useHeaderHeight} from '@react-navigation/elements';
 import {getAllExpenses} from '../../services/expense';
 import {getDBConnection} from '../../services/database';
 import {IExpenseEntry} from '../../schemas/salaries';
 import useSalaryRecordStore from '../../stores/SalaryStore';
 import ExpenseListFilterMenu from '../../components/expense-list-filter-menu/ExpenseListFilterMenu';
 import {
+  BOTTOM_TABBAR_HEIGHT,
   CATEGORY_OPTIONS_WITH_CHECK_FLAG,
   ICategoryOptionWithCheckFlag,
 } from '../../constants';
@@ -26,7 +25,6 @@ import ExpenseListDateTimeFilter from '../../components/expense-list-date-time-f
 import styles from './ExpenseViewStyles';
 
 const ExpenseViewPage = () => {
-  const headerHeight = useHeaderHeight();
   const theme = useTheme();
 
   const allExpenses = useSalaryRecordStore(state => state.allExpenseRecords);
@@ -178,7 +176,7 @@ const ExpenseViewPage = () => {
         {
           height:
             Dimensions.get('window').height -
-            headerHeight -
+            BOTTOM_TABBAR_HEIGHT -
             (StatusBar.currentHeight || 0),
         },
       ]}>
@@ -232,7 +230,6 @@ const ExpenseViewPage = () => {
         />
         <TotalExpensesView total={totalExpense} />
       </View>
-      <BottomTabs />
     </SafeAreaView>
   );
 };
