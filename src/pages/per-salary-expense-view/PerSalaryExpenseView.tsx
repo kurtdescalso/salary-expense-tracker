@@ -55,18 +55,26 @@ const PerSalaryExpenseViewPage = ({
     if (salaryId) {
       (async () => {
         setIsLoading(true);
+
         const db = await getDBConnection();
+
         const targetSalaryRecord = await getSalaryRecordById(db, salaryId);
         setSalaryRecord(targetSalaryRecord[0].rows.raw()[0]);
-        const result = await getExpensesBySalaryRecordId(db, salaryId);
-        const targetExpenses = result[0].rows.raw();
-        setExpenseList(result[0].rows.raw());
+
+        const targetExpensesQueryResult = await getExpensesBySalaryRecordId(
+          db,
+          salaryId,
+        );
+        const targetExpenses = targetExpensesQueryResult[0].rows.raw();
+        setExpenseList(targetExpenses[0].rows.raw());
+
         const totalExpenses = targetExpenses
           .map(expense => expense.amount)
           .reduce<number>((prevExpense, nextExpense) => {
             return prevExpense + nextExpense;
           }, 0);
         setBalance(salaryRecord.amount - totalExpenses);
+
         setIsLoading(false);
       })();
     }

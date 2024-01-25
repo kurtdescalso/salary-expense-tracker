@@ -150,22 +150,8 @@ const ExpenseViewPage = () => {
   React.useEffect(() => {
     (async () => {
       const db = await getDBConnection();
-      const result = await getAllExpenses(db);
-      const rawExpenseList = result[0].rows.raw();
-      const mappedExpenseList: IExpenseEntry[] = rawExpenseList.map(
-        (expense: IExpenseEntry) => {
-          return {
-            id: expense.id,
-            amount: expense.amount,
-            description: expense.description,
-            category: expense.category,
-            accounting_date: expense.accounting_date,
-            created_at: expense.created_at,
-            salary_id: expense.salary_id,
-          };
-        },
-      );
-      setAllExpenses(mappedExpenseList);
+      const newAllExpenseRecords = await getAllExpenses(db);
+      setAllExpenses(newAllExpenseRecords[0].rows.raw());
     })();
   }, []);
 

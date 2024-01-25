@@ -13,6 +13,7 @@ import 'intl/locale-data/jsonp/en';
 import {getDBConnection} from '../../services/database';
 import {
   editExpenseRecord,
+  getAllExpenses,
   getExpensesBySalaryRecordId,
 } from '../../services/expense';
 import {getSalaryRecords} from '../../services/salary';
@@ -40,6 +41,9 @@ const EditExpenseForm = ({
   );
   const setExpenseRecords = useSalaryRecordStore(
     state => state.setExpenseRecords,
+  );
+  const setAllExpenses = useSalaryRecordStore(
+    state => state.setAllExpenseRecords,
   );
 
   const {expenseItem} = route.params;
@@ -79,6 +83,9 @@ const EditExpenseForm = ({
       expenseItem.salary_id,
     );
     setExpenseRecords(newExpenseRecords[0].rows.raw());
+
+    const newAllExpenseRecords = await getAllExpenses(db);
+    setAllExpenses(newAllExpenseRecords[0].rows.raw());
 
     setIsLoading(false);
     navigation.goBack();
@@ -121,7 +128,7 @@ const EditExpenseForm = ({
       />
       <View style={styles.submitButtonContainer}>
         <Button mode="contained" onPress={onSubmit}>
-          Save Expense Record
+          Update Expense Record
         </Button>
       </View>
       {isLoading ? (

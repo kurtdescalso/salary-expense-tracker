@@ -16,9 +16,8 @@ import NoResultsView from '../../components/no-results-view/NoResultsView';
 import BalanceView from '../../components/balance-view/BalanceView';
 import {useNavigation} from '@react-navigation/native';
 import {getDBConnection} from '../../services/database';
-import {getSalaryRecords, getTotalSalaries} from '../../services/salary';
-import {getAllExpenses, getTotalExpenses} from '../../services/expense';
-import {IExpenseEntry} from '../../schemas/salaries';
+import {getSalaryRecords} from '../../services/salary';
+import {getAllExpenses} from '../../services/expense';
 import useSalaryRecordStore from '../../stores/SalaryStore';
 import styles from './SalaryListStyles';
 
@@ -38,6 +37,9 @@ const SalaryListPage = () => {
   const [balance, setBalance] = React.useState<number>(0);
   const salaryList = useSalaryRecordStore(state => state.salaryRecords);
   const setSalaryList = useSalaryRecordStore(state => state.setSalaryRecords);
+  const allExpensesList = useSalaryRecordStore(
+    state => state.allExpenseRecords,
+  );
   const setAllExpensesList = useSalaryRecordStore(
     state => state.setAllExpenseRecords,
   );
@@ -67,39 +69,31 @@ const SalaryListPage = () => {
     (async () => {
       const db = await getDBConnection();
       const allExpensesRaw = await getAllExpenses(db);
-      const allExpensesList = allExpensesRaw[0].rows.raw();
-
-      setAllExpensesList(
-        allExpensesList.map(expense => {
-          return {
-            id: expense.id,
-            amount: expense.amount,
-            description: expense.description,
-            category: expense.category,
-            accounting_date: expense.accounting_date,
-            created_at: expense.created_at,
-            salary_id: expense.salary_id,
-          } as IExpenseEntry;
-        }),
-      );
+      setAllExpensesList(allExpensesRaw[0].rows.raw());
     })();
   }, [setAllExpensesList]);
 
   React.useEffect(() => {
     (async () => {
       try {
-        const db = await getDBConnection();
-        const totalSalaries = (await getTotalSalaries(db))[0].rows.raw();
-        const totalExpenses = (await getTotalExpenses(db))[0].rows.raw();
-        const newBalance =
-          totalSalaries[0].total_salaries - totalExpenses[0].total_expenses;
+        let totalSalaries = 0;
+        salaryList.forEach(salary => {
+          totalSalaries += salary.amount;
+        });
+
+        let totalExpenses = 0;
+        allExpensesList.forEach(expense => {
+          totalExpenses += expense.amount;
+        });
+
+        const newBalance = totalSalaries - totalExpenses;
         setBalance(newBalance);
       } catch (err) {
         console.log('get balance queries rejected');
         console.log(err);
       }
     })();
-  }, [salaryList, setSalaryList]);
+  }, [salaryList, allExpensesList]);
 
   return (
     <SafeAreaView

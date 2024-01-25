@@ -14,6 +14,7 @@ import {getDBConnection} from '../../services/database';
 import {getSalaryRecords} from '../../services/salary';
 import {
   addExpenseRecord,
+  getAllExpenses,
   getExpensesBySalaryRecordId,
 } from '../../services/expense';
 import useSalaryRecordStore from '../../stores/SalaryStore';
@@ -39,6 +40,9 @@ const AddExpenseForm = ({
   const setExpenseRecords = useSalaryRecordStore(
     state => state.setExpenseRecords,
   );
+  const setAllExpenses = useSalaryRecordStore(
+    state => state.setAllExpenseRecords,
+  );
 
   const form = useForm({
     defaultValues: {
@@ -51,6 +55,7 @@ const AddExpenseForm = ({
 
   const onSubmit = async () => {
     setIsLoading(true);
+
     const data = form.getValues();
     if (!data.accounting_date) {
       data.accounting_date = format(new Date(), 'uuuu-MM-dd HH:mm:ss');
@@ -70,6 +75,9 @@ const AddExpenseForm = ({
 
     const newExpenseRecords = await getExpensesBySalaryRecordId(db, salaryId);
     setExpenseRecords(newExpenseRecords[0].rows.raw());
+
+    const newAllExpenseRecords = await getAllExpenses(db);
+    setAllExpenses(newAllExpenseRecords[0].rows.raw());
 
     form.reset({
       accounting_date: data.accounting_date,

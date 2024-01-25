@@ -11,7 +11,11 @@ import {
 import {IExpenseEntry} from '../../schemas/salaries';
 import {useNavigation} from '@react-navigation/native';
 import {getDBConnection} from '../../services/database';
-import {deleteExpenseRecord} from '../../services/expense';
+import {
+  deleteExpenseRecord,
+  getAllExpenses,
+  getExpensesBySalaryRecordId,
+} from '../../services/expense';
 import {getSalaryRecords} from '../../services/salary';
 import useSalaryRecordStore from '../../stores/SalaryStore';
 import styles from './DeleteExpenseConfirmationDialog';
@@ -33,6 +37,12 @@ const DeleteExpenseConfirmationDialog = (
   const setSalaryRecords = useSalaryRecordStore(
     state => state.setSalaryRecords,
   );
+  const setExpenseRecords = useSalaryRecordStore(
+    state => state.setExpenseRecords,
+  );
+  const setAllExpenses = useSalaryRecordStore(
+    state => state.setAllExpenseRecords,
+  );
 
   const handleDelete = async () => {
     setIsLoading(true);
@@ -41,8 +51,17 @@ const DeleteExpenseConfirmationDialog = (
 
     try {
       await deleteExpenseRecord(db, props.expenseEntry);
+
       const newSalaryRecords = await getSalaryRecords(db);
       setSalaryRecords(newSalaryRecords[0].rows.raw());
+      const newExpenseRecords = await getExpensesBySalaryRecordId(
+        db,
+        props.expenseEntry.salary_id,
+      );
+      setExpenseRecords(newExpenseRecords[0].rows.raw());
+
+      const newAllExpenseRecords = await getAllExpenses(db);
+      setAllExpenses(newAllExpenseRecords[0].rows.raw());
     } catch (e) {
       console.log('delete expense record rejected');
       console.log(e);

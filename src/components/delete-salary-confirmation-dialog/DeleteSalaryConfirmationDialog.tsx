@@ -11,6 +11,7 @@ import {
 import {ISalaryRecord} from '../../schemas/salaries';
 import {getDBConnection} from '../../services/database';
 import {deleteSalaryRecord, getSalaryRecords} from '../../services/salary';
+import {getAllExpenses} from '../../services/expense';
 import useSalaryRecordStore from '../../stores/SalaryStore';
 import styles from './DeleteSalaryConfirmationDialogStyles';
 
@@ -30,6 +31,9 @@ const DeleteSalaryConfirmationDialog = (
   const setSalaryRecords = useSalaryRecordStore(
     state => state.setSalaryRecords,
   );
+  const setAllExpensesRecords = useSalaryRecordStore(
+    state => state.setAllExpenseRecords,
+  );
 
   const handleDelete = async () => {
     setIsLoading(true);
@@ -38,8 +42,12 @@ const DeleteSalaryConfirmationDialog = (
 
     try {
       await deleteSalaryRecord(db, props.salaryItem);
+
       const newSalaryRecords = await getSalaryRecords(db);
       setSalaryRecords(newSalaryRecords[0].rows.raw());
+
+      const newAllExpenseRecords = await getAllExpenses(db);
+      setAllExpensesRecords(newAllExpenseRecords[0].rows.raw());
     } catch (e) {
       console.log('delete salary record rejected');
       console.log(e);
