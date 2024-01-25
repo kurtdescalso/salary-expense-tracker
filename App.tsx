@@ -58,7 +58,19 @@ const App = (): React.JSX.Element => {
   return (
     <PaperProvider theme={selectedTheme}>
       <NavigationContainer theme={selectedTheme as unknown as Theme}>
-        <Tab.Navigator barStyle={{maxHeight: BOTTOM_TABBAR_HEIGHT}}>
+        <Tab.Navigator
+          activeColor={selectedTheme.colors.primary}
+          barStyle={{
+            maxHeight: BOTTOM_TABBAR_HEIGHT,
+            backgroundColor: selectedTheme.colors.background,
+            borderTopColor: selectedTheme.colors.elevation.level3,
+            borderTopWidth: 1,
+          }}
+          theme={{
+            colors: {
+              secondaryContainer: selectedTheme.colors.secondaryContainer,
+            },
+          }}>
           <Tab.Screen
             name="Salary Management"
             component={SalaryExpenseManagementStack}
