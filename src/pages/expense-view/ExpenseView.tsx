@@ -155,6 +155,15 @@ const ExpenseViewPage = () => {
     })();
   }, []);
 
+  const renderItem = React.useCallback(
+    ({item}: {item: IExpenseEntry}) => {
+      return (
+        <DynamicExpenseItem expense={item} isCompactView={isCompactView} />
+      );
+    },
+    [isCompactView],
+  );
+
   return (
     <SafeAreaView
       style={[
@@ -204,14 +213,7 @@ const ExpenseViewPage = () => {
           keyExtractor={(item, index) =>
             `stats-expense-list-${item.id}-${index}`
           }
-          renderItem={({item}) => {
-            return (
-              <DynamicExpenseItem
-                expense={item}
-                isCompactView={isCompactView}
-              />
-            );
-          }}
+          renderItem={renderItem}
           ListEmptyComponent={<NoResultsView message="No expenses found." />}
         />
         <TotalExpensesView total={totalExpense} />

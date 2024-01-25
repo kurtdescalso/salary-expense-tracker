@@ -17,7 +17,6 @@ const ExpenseListFilterMenuListItem = (
       ...props.category,
       isChecked: newIsCheckedValue,
     });
-    // setIsChecked(newIsCheckedValue);
   };
 
   return (

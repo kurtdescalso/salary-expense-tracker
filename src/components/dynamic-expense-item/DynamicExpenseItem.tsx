@@ -2,6 +2,7 @@ import * as React from 'react';
 import {View} from 'react-native';
 import {Surface, Text, useTheme} from 'react-native-paper';
 import Animated, {
+  useAnimatedReaction,
   useSharedValue,
   withSpring,
   withTiming,
@@ -45,13 +46,19 @@ const DynamicExpenseItem = (props: IDynamicExpenseItemProps) => {
 
   const animationHeight = useSharedValue(0);
 
-  React.useEffect(() => {
-    if (props.isCompactView) {
-      animationHeight.value = withTiming(COMPACT_DETAILS_VIEW_HEIGHT);
-    } else {
-      animationHeight.value = withSpring(EXPANDED_DETAILS_VIEW_HEIGHT);
-    }
-  }, [props.isCompactView]);
+  useAnimatedReaction(
+    () => props.isCompactView,
+    (isCompactView, previousIsCompactViewValue) => {
+      if (previousIsCompactViewValue === isCompactView) return;
+
+      if (isCompactView) {
+        animationHeight.value = withTiming(COMPACT_DETAILS_VIEW_HEIGHT);
+      } else {
+        animationHeight.value = withSpring(EXPANDED_DETAILS_VIEW_HEIGHT);
+      }
+    },
+    [props.isCompactView],
+  );
 
   return (
     <Surface

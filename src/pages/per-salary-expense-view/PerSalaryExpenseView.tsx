@@ -66,7 +66,7 @@ const PerSalaryExpenseViewPage = ({
           salaryId,
         );
         const targetExpenses = targetExpensesQueryResult[0].rows.raw();
-        setExpenseList(targetExpenses[0].rows.raw());
+        setExpenseList(targetExpenses);
 
         const totalExpenses = targetExpenses
           .map(expense => expense.amount)
