@@ -11,7 +11,7 @@ import {ISalaryRecord} from '../../schemas/salaries';
 import {getDBConnection} from '../../services/database';
 import {addSalaryRecord, getSalaryRecords} from '../../services/salary';
 import useSalaryRecordStore from '../../stores/SalaryStore';
-import {format} from 'date-fns';
+import {formatToStandardDateTimeWithSeconds} from '../../utils/datetime';
 import CommonStyles from '../../styles/CommonStyles';
 import styles from './AddSalaryFormStyles';
 
@@ -26,7 +26,7 @@ const AddSalaryForm = () => {
     defaultValues: {
       description: '',
       amount: 0,
-      accounting_date: format(new Date(), 'uuuu-MM-dd HH:mm:ss'),
+      accounting_date: formatToStandardDateTimeWithSeconds(new Date()),
     },
   });
 
@@ -35,14 +35,14 @@ const AddSalaryForm = () => {
 
     const data: ISalaryRecord = form.getValues();
     if (!data.accounting_date) {
-      data.accounting_date = format(new Date(), 'uuuu-MM-dd HH:mm:ss');
+      data.accounting_date = formatToStandardDateTimeWithSeconds(new Date());
     }
 
     const db = await getDBConnection();
 
     await addSalaryRecord(db, {
       ...data,
-      created_at: format(new Date(), 'uuuu-MM-dd HH:mm:ss'),
+      created_at: formatToStandardDateTimeWithSeconds(new Date()),
     });
 
     const newSalaryRecords = await getSalaryRecords(db);
@@ -77,7 +77,7 @@ const AddSalaryForm = () => {
         setDateTime={value => {
           form.setValue(
             'accounting_date',
-            format(value, 'uuuu-MM-dd HH:mm:ss'),
+            formatToStandardDateTimeWithSeconds(value),
           );
         }}
       />

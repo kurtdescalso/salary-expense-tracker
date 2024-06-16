@@ -3,6 +3,7 @@ import {View} from 'react-native';
 import {Button, Text} from 'react-native-paper';
 import {DatePickerModal, TimePickerModal} from 'react-native-paper-dates';
 import {format, parse} from 'date-fns';
+import {formatToStandardDate} from '../../utils/datetime';
 import {
   CalendarDate,
   SingleChange,
@@ -17,7 +18,18 @@ interface IDateTimePickerProps {
 const DateTimePicker = (props: IDateTimePickerProps) => {
   const [isDatePickerOpen, setIsDatePickerOpen] = React.useState(false);
   const [isTimePickerOpen, setIsTimePickerOpen] = React.useState(false);
-  const [internalCachedTime] = React.useState(new Date());
+  const [internalCachedTime, setInternalCachedTime] = React.useState(() => {
+    const cachedDateTime = parse(
+      props.dateTime,
+      'uuuu-MM-dd HH:mm:ss',
+      new Date(),
+    );
+    return cachedDateTime;
+  });
+
+  const [dateDisplayString, setDateDisplayString] = React.useState(
+    props.dateTime,
+  );
 
   const openDatePicker = () => {
     setIsDatePickerOpen(true);
@@ -35,18 +47,18 @@ const DateTimePicker = (props: IDateTimePickerProps) => {
     setIsTimePickerOpen(false);
   };
 
-  const dateButtonLabel = React.useMemo(() => {
+  React.useEffect(() => {
     try {
-      const formattedTime = format(
+      const formattedDate = format(
         parse(props.dateTime, 'uuuu-MM-dd HH:mm:ss', new Date()),
         'uuuu-MM-dd',
       );
-      return formattedTime;
+      setDateDisplayString(formattedDate);
     } catch (error) {
       console.log('dateButtonLabel error:');
       console.log(error);
       const formattedTime = format(new Date(), 'uuuu-MM-dd');
-      return formattedTime;
+      setDateDisplayString(formattedTime);
     }
   }, [props.dateTime]);
 
@@ -76,6 +88,7 @@ const DateTimePicker = (props: IDateTimePickerProps) => {
       );
     }
     props.setDateTime(processedDate);
+    setDateDisplayString(formatToStandardDate(processedDate));
     closeDatePicker();
   };
 
@@ -94,7 +107,7 @@ const DateTimePicker = (props: IDateTimePickerProps) => {
         mode="outlined"
         onPress={openDatePicker}
         style={styles.controlButton}>
-        {dateButtonLabel}
+        {dateDisplayString}
       </Button>
       <DatePickerModal
         locale="en"

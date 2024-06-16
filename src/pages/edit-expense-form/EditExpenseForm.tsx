@@ -20,7 +20,7 @@ import {getSalaryRecords} from '../../services/salary';
 import useSalaryRecordStore from '../../stores/SalaryStore';
 import DeleteExpenseConfirmationDialog from '../../components/delete-expense-confirmation-dialog/DeleteExpenseConfirmationDialog';
 import {useNavigation} from '@react-navigation/native';
-import {format} from 'date-fns';
+import {formatToStandardDateTimeWithSeconds} from '../../utils/datetime';
 import {CATEGORY_OPTIONS} from '../../constants';
 import CommonStyles from '../../styles/CommonStyles';
 import styles from './EditExpenseFormStyles';
@@ -60,8 +60,10 @@ const EditExpenseForm = ({
   const onSubmit = async () => {
     setIsLoading(true);
     const data = form.getValues();
+    console.log('data.accounting_date:');
+    console.log(data.accounting_date);
     if (!data.accounting_date) {
-      data.accounting_date = format(new Date(), 'uuuu-MM-dd HH:mm:ss');
+      data.accounting_date = formatToStandardDateTimeWithSeconds(new Date());
     }
 
     const db = await getDBConnection();
@@ -71,8 +73,8 @@ const EditExpenseForm = ({
       id: expenseItem.id,
       salary_id: expenseItem.salary_id,
       accounting_date:
-        data.accounting_date || format(new Date(), 'uuuu-MM-dd HH:mm:ss'),
-      created_at: format(new Date(), 'uuuu-MM-dd HH:mm:ss'),
+        data.accounting_date || formatToStandardDateTimeWithSeconds(new Date()),
+      created_at: formatToStandardDateTimeWithSeconds(new Date()),
     });
 
     const newSalaryRecords = await getSalaryRecords(db);
@@ -123,8 +125,13 @@ const EditExpenseForm = ({
         options={CATEGORY_OPTIONS}
       />
       <DateTimePicker
-        dateTime={form.getValues().accounting_date}
-        setDateTime={value => value}
+        dateTime={form.watch('accounting_date')}
+        setDateTime={value => {
+          form.setValue(
+            'accounting_date',
+            formatToStandardDateTimeWithSeconds(value),
+          );
+        }}
       />
       <View style={styles.submitButtonContainer}>
         <Button mode="contained" onPress={onSubmit}>

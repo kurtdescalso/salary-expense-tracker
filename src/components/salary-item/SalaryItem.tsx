@@ -9,7 +9,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import {ISalaryRecord} from '../../schemas/salaries';
 import {formatToPhp} from '../../utils/currency';
-import {parseIsoString, formatToStandardDate} from '../../utils/datetime';
+import {parseIsoString, formatToStandardDateTime} from '../../utils/datetime';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {SalaryExpenseManagementStackParamList} from '../../stacks/SalaryExpenseManagementStack';
 import styles from './SalaryItemStyles';
@@ -31,10 +31,13 @@ const SalaryItem = (props: ISalaryItemProps & ISalaryRecord) => {
 
   const dateDisplayString = React.useMemo(() => {
     try {
+      if (!props.accounting_date) {
+        throw 'missing accounting date: uninitialized (?)';
+      }
       const newDateObject = parseIsoString(props.accounting_date);
-      return formatToStandardDate(newDateObject);
+      return formatToStandardDateTime(newDateObject);
     } catch (error) {
-      console.log(`set dateDisplayString error: ${error}`);
+      console.error(`set dateDisplayString error: ${error}`);
       return '';
     }
   }, [props.accounting_date]);

@@ -9,7 +9,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import {IExpenseEntry} from '../../schemas/salaries';
 import {formatToPhp} from '../../utils/currency';
-import {parseIsoString, formatToStandardDate} from '../../utils/datetime';
+import {parseIsoString, formatToStandardDateTime} from '../../utils/datetime';
 import {SalaryExpenseManagementStackParamList} from '../../stacks/SalaryExpenseManagementStack';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import styles from './ExpenseItemStyles';
@@ -38,10 +38,10 @@ const ExpenseItem = (props: IExpenseEntryItemProps & IExpenseEntry) => {
   const dateDisplayString = React.useMemo(() => {
     try {
       const newDateObject = parseIsoString(props.accounting_date);
-      return formatToStandardDate(newDateObject);
+      return formatToStandardDateTime(newDateObject);
     } catch (error) {
       console.log(
-        `ExpenseItem: dateDisplayString: formatToStandardDate(): ${props.accounting_date} error: ${error}`,
+        `ExpenseItem: dateDisplayString: formatToStandardDateTime(): ${props.accounting_date} error: ${error}`,
       );
       return '';
     }

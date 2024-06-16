@@ -9,7 +9,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import {IExpenseEntry} from '../../schemas/salaries';
 import {formatToPhp} from '../../utils/currency';
-import {formatToStandardDate} from '../../utils/datetime';
+import {formatToStandardDateTime} from '../../utils/datetime';
 import {parse} from 'date-fns';
 import {FONT_SIZE} from '../../constants';
 import styles from './DynamicExpenseItemStyles';
@@ -35,10 +35,10 @@ const DynamicExpenseItem = (props: IDynamicExpenseItemProps) => {
 
   const standardDateDisplayString = React.useMemo(() => {
     try {
-      return formatToStandardDate(parsedDate);
+      return formatToStandardDateTime(parsedDate);
     } catch (error) {
       console.log(
-        `DynamicExpenseItem: standardDateDisplayString: formatToStandardDate(): ${parsedDate} error: ${error}`,
+        `DynamicExpenseItem: standardDateDisplayString: formatToStandardDateTime(): ${parsedDate} error: ${error}`,
       );
       return '';
     }

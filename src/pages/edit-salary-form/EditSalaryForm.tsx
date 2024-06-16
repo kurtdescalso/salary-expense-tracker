@@ -16,9 +16,9 @@ import {editSalaryRecord, getSalaryRecords} from '../../services/salary';
 import useSalaryRecordStore from '../../stores/SalaryStore';
 import {useNavigation} from '@react-navigation/native';
 import {format} from 'date-fns';
+import {formatToStandardDateTimeWithSeconds} from '../../utils/datetime';
 import CommonStyles from '../../styles/CommonStyles';
 import styles from './EditSalaryFormStyles';
-import {formatToStandardDate} from '../../utils/datetime';
 
 type EditSalaryFormStackScreenProps<
   T extends keyof SalaryExpenseManagementStackParamList,
@@ -57,8 +57,7 @@ const EditSalaryForm = ({
     await editSalaryRecord(db, {
       ...data,
       id: salaryItem.id,
-      // created_at: new Date() as unknown as string,
-      created_at: formatToStandardDate(new Date()),
+      created_at: formatToStandardDateTimeWithSeconds(new Date()),
     });
 
     const newSalaryRecords = await getSalaryRecords(db);
@@ -73,10 +72,7 @@ const EditSalaryForm = ({
     <View>
       <View style={styles.headerContainer}>
         <Text style={CommonStyles.headerText}>Edit Salary Record</Text>
-        <DeleteSalaryConfirmationDialog
-          salaryItem={salaryItem}
-          navigation={navigation}
-        />
+        <DeleteSalaryConfirmationDialog salaryItem={salaryItem} />
       </View>
       <FormCharField
         label="Description"
@@ -102,7 +98,7 @@ const EditSalaryForm = ({
         setDateTime={value => {
           form.setValue(
             'accounting_date',
-            format(value, 'uuuu-MM-dd HH:mm:ss'),
+            formatToStandardDateTimeWithSeconds(value),
           );
         }}
       />
