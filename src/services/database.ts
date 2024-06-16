@@ -6,6 +6,7 @@ import {
 
 export const SALARIES_TABLE = 'salaries';
 export const EXPENSES_TABLE = 'expenses';
+export const PINNED_SALARIES_TABLE = 'pinned_salaries';
 
 enablePromise(true);
 
@@ -28,8 +29,8 @@ export const createTables = async (db: SQLiteDatabase) => {
   try {
     await db.executeSql(createSalariesTableQuery);
   } catch (err) {
-    console.log("error creating 'SALARIES' table:");
-    console.log(err);
+    console.error(`error creating '${SALARIES_TABLE}' table:`);
+    console.error(err);
   }
 
   const createExpensesTableQuery = `CREATE TABLE IF NOT EXISTS ${EXPENSES_TABLE} (
@@ -47,8 +48,23 @@ export const createTables = async (db: SQLiteDatabase) => {
   try {
     await db.executeSql(createExpensesTableQuery);
   } catch (err) {
-    console.log("error creating 'EXPENSES' table:");
-    console.log(err);
+    console.error(`error creating '${EXPENSES_TABLE}' table:`);
+    console.error(err);
+  }
+
+  const createPinnedSalariesTableQuery = `CREATE TABLE IF NOT EXISTS ${PINNED_SALARIES_TABLE} (
+    id INTEGER NOT NULL PRIMARY KEY,
+    salary_id INTEGER NOT NULL,
+    created_at TEXT NOT NULL DEFAULT current_timestamp,
+    FOREIGN KEY (salary_id) REFERENCES ${SALARIES_TABLE}(id)
+    ON DELETE CASCADE
+  )`;
+
+  try {
+    await db.executeSql(createPinnedSalariesTableQuery);
+  } catch (err) {
+    console.error(`error creating '${PINNED_SALARIES_TABLE}' table:`);
+    console.error(err);
   }
 };
 
@@ -56,7 +72,7 @@ export const setupSQLite = async (db: SQLiteDatabase) => {
   try {
     await db.executeSql(`PRAGMA foreign_keys = ON`);
   } catch (err) {
-    console.log('error setting up SQLite');
-    console.log(err);
+    console.error('error setting up SQLite');
+    console.error(err);
   }
 };

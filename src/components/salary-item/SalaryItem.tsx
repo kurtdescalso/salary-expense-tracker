@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Pressable, View} from 'react-native';
-import {Surface, Text, useTheme} from 'react-native-paper';
+import {Surface, Text, IconButton, Icon, useTheme} from 'react-native-paper';
 import Animated, {
   useSharedValue,
   withDelay,
@@ -12,6 +12,14 @@ import {formatToPhp} from '../../utils/currency';
 import {parseIsoString, formatToStandardDateTime} from '../../utils/datetime';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {SalaryExpenseManagementStackParamList} from '../../stacks/SalaryExpenseManagementStack';
+import {
+  addSalaryRecordPin,
+  deleteSalaryRecordPin,
+  getPinnedSalaryRecords,
+} from '../../services/salary';
+import {getDBConnection} from '../../services/database';
+import useSalaryRecordStore from '../../stores/SalaryStore';
+import {FONT_SIZE} from '../../constants';
 import styles from './SalaryItemStyles';
 
 type SalaryItemNavigationProps = NativeStackNavigationProp<
@@ -22,10 +30,29 @@ type SalaryItemNavigationProps = NativeStackNavigationProp<
 interface ISalaryItemProps {
   navigation?: SalaryItemNavigationProps;
   isReadOnly?: boolean;
+  isPinnedAndIsUnderSalaryListComponent?: boolean;
 }
 
 const SalaryItem = (props: ISalaryItemProps & ISalaryRecord) => {
   const theme = useTheme();
+
+  const [isPinned, setIsPinned] = React.useState(false);
+
+  const pinnedSalaryRecords = useSalaryRecordStore(
+    state => state.pinnedSalaryRecords,
+  );
+  const setPinnedSalaryRecords = useSalaryRecordStore(
+    state => state.setPinnedSalaryRecords,
+  );
+
+  React.useEffect(() => {
+    // properly set the state of the pin button if salary id is in pinned list
+    const isCurrentRecordPinned = pinnedSalaryRecords
+      .filter(record => Boolean(record.id))
+      .map(record => record.id)
+      .includes(props.id);
+    setIsPinned(isCurrentRecordPinned);
+  }, [pinnedSalaryRecords, props.id]);
 
   const longPressBackgroundColor = useSharedValue(theme.colors.background);
 
@@ -79,6 +106,27 @@ const SalaryItem = (props: ISalaryItemProps & ISalaryRecord) => {
     }
   };
 
+  const handleSalaryRecordPinning = async () => {
+    const salaryId = (props as ISalaryRecord).id as number;
+    const db = await getDBConnection();
+    if (!isPinned) {
+      await addSalaryRecordPin(db, salaryId);
+    } else {
+      await deleteSalaryRecordPin(db, salaryId);
+    }
+
+    try {
+      const db = await getDBConnection();
+      const result = await getPinnedSalaryRecords(db);
+      console.log(result[0].rows.raw());
+      setPinnedSalaryRecords(result[0].rows.raw());
+    } catch (error) {
+      console.error('post-handling get pinned salary records rejected');
+      console.error(error);
+    }
+    setIsPinned(!isPinned);
+  };
+
   return (
     <Pressable
       onPress={goToViewExpensesPage}
@@ -92,15 +140,30 @@ const SalaryItem = (props: ISalaryItemProps & ISalaryRecord) => {
             {backgroundColor: longPressBackgroundColor},
           ]}>
           <View style={[styles.detailsContainer]}>
-            <Text style={[styles.itemFontStyle, styles.descriptionText]}>
-              {props.description}
-            </Text>
-            <Text style={styles.itemFontStyle}>Recorded on:</Text>
-            <Text style={styles.itemFontStyle}>{dateDisplayString}</Text>
+            <View>
+              <Text style={[styles.itemFontStyle, styles.descriptionText]}>
+                {props.description}
+              </Text>
+              <Text style={styles.itemFontStyle}>Recorded on:</Text>
+              <Text style={styles.itemFontStyle}>{dateDisplayString}</Text>
+            </View>
+            <View style={styles.amountContainer}>
+              <Text style={styles.itemFontStyle}>{currencyDisplayString}</Text>
+              {props.isReadOnly ? (
+                <IconButton
+                  icon={isPinned ? 'pin-off' : 'pin'}
+                  size={FONT_SIZE * 1.25}
+                  iconColor={theme.colors.primary}
+                  onPress={handleSalaryRecordPinning}
+                />
+              ) : null}
+            </View>
           </View>
-          <View style={styles.amountContainer}>
-            <Text style={styles.itemFontStyle}>{currencyDisplayString}</Text>
-          </View>
+          {props.isPinnedAndIsUnderSalaryListComponent ? (
+            <Surface style={styles.pinContainer}>
+              <Icon source="pin" size={FONT_SIZE} />
+            </Surface>
+          ) : null}
         </Animated.View>
       </Surface>
     </Pressable>

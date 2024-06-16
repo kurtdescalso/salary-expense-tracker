@@ -12,11 +12,12 @@ import {BOTTOM_TABBAR_HEIGHT} from '../../constants';
 import {SalaryExpenseManagementStackParamList} from '../../stacks/SalaryExpenseManagementStack';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import SalaryItem from '../../components/salary-item/SalaryItem';
+import PinnedSalariesList from '../../components/pinned-salaries-list/PinnedSalariesList';
 import NoResultsView from '../../components/no-results-view/NoResultsView';
 import BalanceView from '../../components/balance-view/BalanceView';
 import {useNavigation} from '@react-navigation/native';
 import {getDBConnection} from '../../services/database';
-import {getSalaryRecords} from '../../services/salary';
+import {getPinnedSalaryRecords, getSalaryRecords} from '../../services/salary';
 import {getAllExpenses} from '../../services/expense';
 import {ISalaryRecord} from '../../schemas/salaries';
 import useSalaryRecordStore from '../../stores/SalaryStore';
@@ -35,9 +36,20 @@ const SalaryListPage = () => {
   const navigation = useNavigation<SalaryListPageNavigationProps>();
 
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [isPinnedSalariesLoading, setIsPinnedSalariesLoading] =
+    React.useState<boolean>(false);
   const [balance, setBalance] = React.useState<number>(0);
+
   const salaryList = useSalaryRecordStore(state => state.salaryRecords);
   const setSalaryList = useSalaryRecordStore(state => state.setSalaryRecords);
+
+  const pinnedSalaryRecords = useSalaryRecordStore(
+    state => state.pinnedSalaryRecords,
+  );
+  const setPinnedSalaryRecords = useSalaryRecordStore(
+    state => state.setPinnedSalaryRecords,
+  );
+
   const allExpensesList = useSalaryRecordStore(
     state => state.allExpenseRecords,
   );
@@ -57,14 +69,32 @@ const SalaryListPage = () => {
         const result = await getSalaryRecords(db);
         setSalaryList(result[0].rows.raw());
       } catch (error) {
-        console.log('get salary records rejected');
-        console.log(error);
+        console.error('get salary records rejected');
+        console.error(error);
       } finally {
         setIsLoading(false);
       }
       setIsLoading(false);
     })();
   }, [setSalaryList]);
+
+  React.useEffect(() => {
+    (async () => {
+      try {
+        setIsPinnedSalariesLoading(true);
+        const db = await getDBConnection();
+        const result = await getPinnedSalaryRecords(db);
+        console.log(result[0].rows.raw());
+        setPinnedSalaryRecords(result[0].rows.raw());
+      } catch (error) {
+        console.error('get pinned salary records rejected');
+        console.error(error);
+      } finally {
+        setIsPinnedSalariesLoading(false);
+      }
+      setIsPinnedSalariesLoading(false);
+    })();
+  }, [setPinnedSalaryRecords]);
 
   React.useEffect(() => {
     (async () => {
@@ -119,6 +149,7 @@ const SalaryListPage = () => {
         {isLoading ? <ProgressBar indeterminate /> : null}
         <FlatList
           data={salaryList}
+          ListHeaderComponent={<PinnedSalariesList navigation={navigation} />}
           renderItem={renderItem}
           keyExtractor={(item, index) =>
             `salary-record-item-${item.id}-${index}`

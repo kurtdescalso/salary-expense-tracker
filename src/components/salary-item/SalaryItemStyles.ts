@@ -6,13 +6,14 @@ const styles = StyleSheet.create({
     marginBottom: FONT_SIZE / 2,
   },
   salaryItemInnerContainer: {
-    display: 'flex',
     flexDirection: 'row',
     paddingHorizontal: FONT_SIZE * 1.5,
     paddingVertical: FONT_SIZE,
   },
   detailsContainer: {
     flex: 2,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   amountContainer: {
     flex: 1,
@@ -25,6 +26,12 @@ const styles = StyleSheet.create({
   },
   itemFontStyle: {
     fontSize: FONT_SIZE,
+  },
+  pinContainer: {
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    padding: FONT_SIZE / 2,
   },
 });
 
